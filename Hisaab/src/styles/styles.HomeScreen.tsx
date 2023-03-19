@@ -29,9 +29,6 @@ const styles_HomeScreen = StyleSheet.create({
         paddingTop: 20,
         paddingBottom: 20,
     },
-
-
-
   });
 
 
