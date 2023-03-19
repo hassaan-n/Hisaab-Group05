@@ -65,8 +65,9 @@ const HomeScreen = () => {
             style={styles.input}
             onChangeText={onChangeNumber}
             value={number}
-            placeholder="*****"
+            placeholder="Enter password"
             keyboardType="numeric"
+            secureTextEntry={true}
           />
         </View>
       </View>
