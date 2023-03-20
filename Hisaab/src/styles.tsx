@@ -65,8 +65,11 @@ const styles = StyleSheet.create({
 
 
       tutorialImage: {
-        height:'100%' ,
+        height:'90%' ,
         resizeMode: 'contain',
+        width: "90%",
+        bottom: 50,
+        top: -30
       },
 
 
