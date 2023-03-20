@@ -1,12 +1,10 @@
-import React from "react";
+0import React from "react";
 import {View, Text, TouchableOpacity, Image, TextInput,} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles_HomeScreen from "../styles/styles.HomeScreen";
 import styles from "../styles";
-import db from "../database"
 
 import Toggle from "react-native-toggle-input";
-import { err } from "react-native-svg/lib/typescript/xml";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -16,7 +14,7 @@ const HomeScreen = () => {
   //props for the pin input
   const [number, onChangeNumber] = React.useState("");
   //props for the pin state
-  const [toggle, setToggle] = React.useState(true);
+  const [toggle, setToggle] = React.useState(false);
 
   return (
     // mega container with all the elements
@@ -76,7 +74,7 @@ const HomeScreen = () => {
       {/* Button Sectoion*/}
       <View style={styles_HomeScreen.buttonContainer}>
         <TouchableOpacity
-          onPress={() => {navigation.navigate("Tut1"); addUser(text,toggle,number); getAllUsers();}}
+          onPress={() => navigation.navigate("Tut1")}
           style={styles.appButtonContainer}
         >
           <Text style={styles.appButtonText}>Continue</Text>
@@ -85,31 +83,5 @@ const HomeScreen = () => {
     </View>
   );
 };
-
-  
-const addUser = (name, pinstate, pin) => {
-  db.transaction(tx => {
-    tx.executeSql(
-      'INSERT INTO user (name, pinstate, pin) VALUES (?, ?, ?);',
-      [name, pinstate, pin],
-    );
-  });
-};
-
-const getAllUsers = () => {
-  db.transaction(tx => {
-    tx.executeSql(
-      'SELECT * FROM user;',
-      [],
-      (_, { rows }) => {
-        console.log(rows);
-      },
-      (_,error) => {
-        console.log(error)
-      }
-    );
-  });
-};
-
 
 export default HomeScreen;
