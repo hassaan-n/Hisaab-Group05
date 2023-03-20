@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text, Pressable, FlatList,Button } from 'react-native';
 
 
-const styles_HomeScreen = StyleSheet.create({
+const styles_SignUp = StyleSheet.create({
   imageContainer: {
     alignItems: "center",
     justifyContent: "center",
@@ -35,5 +35,5 @@ const styles_HomeScreen = StyleSheet.create({
 
 
 
-export default styles_HomeScreen;
+export default styles_SignUp;
 

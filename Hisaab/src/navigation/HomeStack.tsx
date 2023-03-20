@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HomeScreen from '../screens/HomeScreen';
+import SignUp from '../screens/SignUp';
 import DetailsScreen from '../screens/DetailsScreen';
 // import LoginScreen from '../screens/LoginScreen';
 import Tut1 from '../screens/tut1';
@@ -17,7 +17,7 @@ const HomeStack = createNativeStackNavigator();
 const HomeStackNavigator = () => {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
+      <HomeStack.Screen name="Sign Up" component={SignUp} />
       <HomeStack.Screen name="Details" component={DetailsScreen} />
       <HomeStack.Screen name="Tut1" component={Tut1} />
       <HomeStack.Screen name="Tut2" component={Tut2} />

@@ -1,12 +1,12 @@
-0import React from "react";
+import React from "react";
 import {View, Text, TouchableOpacity, Image, TextInput,} from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import styles_HomeScreen from "../styles/styles.HomeScreen";
+import styles_HomeScreen from "../styles/styles.SignUp";
 import styles from "../styles";
 
 import Toggle from "react-native-toggle-input";
 
-const HomeScreen = () => {
+const SignUp = () => {
   const navigation = useNavigation();
   
   //props for the profile input
@@ -84,4 +84,4 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export default SignUp;
