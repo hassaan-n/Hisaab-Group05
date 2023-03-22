@@ -8,7 +8,9 @@ import db from "../database"
 import Toggle from "react-native-toggle-input";
 import { err } from "react-native-svg/lib/typescript/xml";
 
-const SignUp = () => {
+
+
+  const SignUp = () => {
   const navigation = useNavigation();
   
   //props for the profile input
@@ -16,7 +18,39 @@ const SignUp = () => {
   //props for the pin input
   const [number, onChangeNumber] = React.useState("");
   //props for the pin state
-  const [toggle, setToggle] = React.useState(true);
+  const [toggle, setToggle] = React.useState(false);
+  
+  //function to handle the submit button
+  const Card = ({ pinstate }) => {
+    let content
+  
+    if (pinstate) {
+      content = <View style={styles_HomeScreen.inputSingleContainer}>
+          
+          
+      <Text style={styles.subHeading}>Pin</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={onChangeNumber}
+        value={number}
+        placeholder="Enter password"
+        keyboardType="numeric"
+        secureTextEntry={true}
+      />
+    </View>
+    }  
+    else {
+      content = (
+        <View>
+        </View>
+      )
+    }
+  
+    return <View style={{ padding: 0 }}>{content}</View>
+  }
+  
+  
+
 
   return (
     // mega container with all the elements
@@ -47,6 +81,8 @@ const SignUp = () => {
           />
         </View>
 
+      
+
         {/* Pin Toggle*/}
         <View style={styles_HomeScreen.inputSingleContainer}>
           <Text style={styles.subHeading}>Enable Pin</Text>
@@ -60,8 +96,17 @@ const SignUp = () => {
           />
         </View>
 
+        <Card pinstate={toggle} />
+
+        {/* render pin setter view only if pin set to on*/}
+        
+
+
+
         {/* Pin setter*/}
-        <View style={styles_HomeScreen.inputSingleContainer}>
+        {/* <View style={styles_HomeScreen.inputSingleContainer}>
+          
+          
           <Text style={styles.subHeading}>Pin</Text>
           <TextInput
             style={styles.input}
@@ -71,13 +116,18 @@ const SignUp = () => {
             keyboardType="numeric"
             secureTextEntry={true}
           />
-        </View>
+        </View> */}
       </View>
 
       {/* Button Sectoion*/}
       <View style={styles_HomeScreen.buttonContainer}>
         <TouchableOpacity
-          onPress={() => {navigation.navigate("Tut1"); addUser(text,toggle,number); getAllUsers();}}
+          
+          // onPress={() => {navigation.navigate("Tut1"); addUser(text,toggle,number); getAllUsers();}}
+
+          onPress={() => {if (text=="" || number=="") {alert("Please fill all the fields");} else {navigation.navigate("Tut1"); addUser(text,toggle,number); getAllUsers();}}}
+          
+          
           style={styles.appButtonContainer}
         >
           <Text style={styles.appButtonText}>Continue</Text>
