@@ -28,6 +28,7 @@ const styles_SignUp = StyleSheet.create({
     buttonContainer: {
         paddingTop: 20,
         paddingBottom: 20,
+        
     },
   });
 
