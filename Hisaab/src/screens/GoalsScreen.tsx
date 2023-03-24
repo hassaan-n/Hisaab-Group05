@@ -13,7 +13,7 @@ import styles_GoalsScreen from "../styles/styles.GoalsScreen";
 import styles from "../styles";
 import RadioButton from "../components/radioButton";
 
-const GoalScreen = () => {
+const GoalsScreen = () => {
   const navigation = useNavigation();
 
   //props for budget input
@@ -23,7 +23,7 @@ const GoalScreen = () => {
 
   return (
     // mega container with all the elements
-    <ScrollView style={{ flex: 1 }}>
+    
       <View style={styles.container}>
         <View style={styles_GoalsScreen.welcomeContainer}>
           <Text style={styles.text}>Please select the </Text>
@@ -73,7 +73,7 @@ const GoalScreen = () => {
         <View style={styles_GoalsScreen.buttonContainer}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Home");
+              navigation.navigate("Let's Start");
             }}
             style={styles.appButtonContainer}
           >
@@ -92,8 +92,7 @@ const GoalScreen = () => {
           </TouchableOpacity>
         </View>
       </View>
-    </ScrollView>
   );
 };
 
-export default GoalScreen;
+export default GoalsScreen;

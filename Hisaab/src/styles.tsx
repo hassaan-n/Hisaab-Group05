@@ -1,16 +1,10 @@
-import {
-  StyleSheet,
-  View,
-  Text,
-  Pressable,
-  FlatList,
-  Button,
-} from "react-native";
+import { StyleSheet, View, Text, Pressable, FlatList, Button } from 'react-native';
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: '#FFFFFF',
     //alignItems: 'center',
     padding: 30,
   },
@@ -19,6 +13,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     justifyContent: "center",
+
   },
   appButtonText: {
     fontSize: 16,
@@ -30,7 +25,7 @@ const styles = StyleSheet.create({
   input: {
     height: 50,
     marginTop: 5,
-    borderColor: "grey",
+    borderColor: 'grey',
     borderWidth: 1,
     padding: 10,
     borderRadius: 10,
@@ -55,25 +50,27 @@ const styles = StyleSheet.create({
 
   tutorialPage: {
     flex: 1,
-    backgroundColor: "#FFFFFF",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 
   tutorialButton: {
     position: "absolute",
-    bottom: 20,
-    width: "100%",
-    padding: 20,
+    top: "85%",
+    left: 20,
+    right: 20,
   },
+
 
   tutorialImage: {
-    height:'90%' ,
+    height: '100%',
     resizeMode: 'contain',
-    width: "100%",
-    bottom: 50,
-    top: -30
   },
+
+
 });
 
+
 export default styles;
+
