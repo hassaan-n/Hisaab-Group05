@@ -15,7 +15,7 @@ const Tut6 = () => {
 
       <View style={styles.tutorialButton}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Let's Start")}
+          onPress={() => navigation.navigate("Goals")}
           style={styles.appButtonContainer}
         >
           <Text style={styles.appButtonText}>Continue</Text>

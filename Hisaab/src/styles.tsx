@@ -13,8 +13,6 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     justifyContent: "center",
-    //width: "100%",
-
 
   },
   appButtonText: {
