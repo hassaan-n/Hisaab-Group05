@@ -125,8 +125,11 @@ const SignUp = () => {
 
           // onPress={() => {navigation.navigate("Tut1"); addUser(text,toggle,number); getAllUsers();}}
 
-          onPress={() => { if (text == "" || (number == "" && toggle)) { alert("Please fill all the fields"); } else { navigation.navigate("Tut1"); addUser(text, toggle, number); getAllUsers(); } }}
-
+          onPress={() => { 
+          if (text == "" || (number == "" && toggle)) { alert("Please fill all the fields");} 
+          else { navigation.navigate("Tut1"); 
+          addUser(text, toggle, number);}
+          getAllUsers();}}
 
           style={styles.appButtonContainer}
         >
@@ -141,8 +144,18 @@ const SignUp = () => {
 const addUser = (name, pinstate, pin) => {
   db.transaction(tx => {
     tx.executeSql(
-      'INSERT INTO user (name, pinstate, pin) VALUES (?, ?, ?);',
-      [name, pinstate, pin],
+      'SELECT * FROM user WHERE name = ?;',
+      [name],
+      (_, { rows: { _array } }) => {
+        if (_array.length === 0) {
+          tx.executeSql(
+            'INSERT INTO user (name, pinstate, pin) VALUES (?, ?, ?);',
+            [name, pinstate, pin],
+          );
+        } else {
+          console.log(`User with name ${name} already exists`);
+        }
+      },
     );
   });
 };
@@ -164,3 +177,6 @@ const getAllUsers = () => {
 
 
 export default SignUp;
+
+
+// DROP TABLE IF EXISTS user

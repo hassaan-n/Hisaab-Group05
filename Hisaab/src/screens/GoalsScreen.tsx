@@ -12,6 +12,8 @@ import { useNavigation } from "@react-navigation/native";
 import styles_GoalsScreen from "../styles/styles.GoalsScreen";
 import styles from "../styles";
 import RadioButton from "../components/radioButton";
+import db from "../database"
+
 
 const GoalsScreen = () => {
   const navigation = useNavigation();
@@ -85,6 +87,7 @@ const GoalsScreen = () => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Tut6");
+              addGoal();
             }}
             style={styles.appButtonContainer}
           >
@@ -93,6 +96,15 @@ const GoalsScreen = () => {
         </View>
       </View>
   );
+};
+
+const addGoal = (title, amount, type) => {
+  db.transaction(tx => {
+    tx.executeSql(
+      'INSERT INTO goal (title, amount, type) VALUES (?, ?, ?);',
+      [title, amount, type],
+    );
+  });
 };
 
 export default GoalsScreen;
