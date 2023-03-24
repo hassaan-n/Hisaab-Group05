@@ -1,7 +1,7 @@
 import { StyleSheet, View, Text, Pressable, FlatList,Button } from 'react-native';
 
 
-const styles_SignUp = StyleSheet.create({
+const styles_HomeScreen = StyleSheet.create({
   imageContainer: {
     alignItems: "center",
     justifyContent: "center",
@@ -9,9 +9,23 @@ const styles_SignUp = StyleSheet.create({
     paddingBottom: 50,
     },
 
-    welcomeContainer: {
+    helloText: {
         marginBottom: 15,
     },
+
+    welcomeContainer: {
+        flexDirection: "row",
+        marginBottom: 15,
+    },
+
+    profilePicture: {
+        width: 50,
+        height: 50,
+        borderRadius: 50,
+        marginRight: 10,
+    },
+    
+
     Hisaab_Title: {
       fontSize: 30,
       fontFamily : "Poppins-Bold",
@@ -42,5 +56,5 @@ const styles_SignUp = StyleSheet.create({
 
 
 
-export default styles_SignUp;
+export default styles_HomeScreen;
 

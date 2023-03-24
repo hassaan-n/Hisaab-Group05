@@ -1,33 +1,31 @@
 import React from "react";
 import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
-import textStyles from "../styles";
-// type props = {
-//   time: string;
-// };
+import styles from "../styles";
+
 
 const RadioButton = () => {
     const [selected, setSelected] = React.useState(0);
 
     return (
-        <View style={styles.main}>
+        <View>
             <TouchableOpacity onPress={() => setSelected(1)}>
-                <View style={styles.radioWrap}>
-                    <View style={styles.radio}>
-                        {selected === 1 ? <View style={styles.radioBg} /> : null}
+                <View style={stylesRadioButton.radioWrap}>
+                    <View style={stylesRadioButton.radio}>
+                        {selected === 1 ? <View style={stylesRadioButton.radioBg} /> : null}
                     </View>
-                    <Text style={styles.radioText}>
-                        <Text style={textStyles.subHeading}>Monthly</Text>
+                    <Text style={stylesRadioButton.radioText}>
+                        <Text style={styles.text}>Monthly</Text>
                     </Text>
                 </View>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => setSelected(2)}>
-                <View style={styles.radioWrap}>
-                    <View style={styles.radio}>
-                        {selected === 2 ? <View style={styles.radioBg} /> : null}
+                <View style={stylesRadioButton.radioWrap}>
+                    <View style={stylesRadioButton.radio}>
+                        {selected === 2 ? <View style={stylesRadioButton.radioBg} /> : null}
                     </View>
-                    <Text style={styles.radioText}>
-                        <Text style={textStyles.subHeading}>Weekly</Text>
+                    <Text style={stylesRadioButton.radioText}>
+                        <Text style={styles.text}>Weekly</Text>
                     </Text>
                 </View>
             </TouchableOpacity>
@@ -35,12 +33,7 @@ const RadioButton = () => {
     );
 };
 
-const styles = StyleSheet.create({
-    main: {
-        flex: 1,
-        justifyContent: "center",
-    },
-    radioText: { fontSize: 20 },
+const stylesRadioButton = StyleSheet.create({
 
     radio: {
         height: 20,
@@ -52,6 +45,7 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
     },
 
+
     radioWrap: {
         flexDirection: "row",
         alignItems: "center",
@@ -61,7 +55,7 @@ const styles = StyleSheet.create({
         width: 10,
         borderRadius: 5,
         backgroundColor: "black",
-        margin: 3.3,
+        margin: 3,
     },
 });
 

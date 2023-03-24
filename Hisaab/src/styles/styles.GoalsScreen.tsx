@@ -8,12 +8,6 @@ import {
 } from "react-native";
 
 const styles_GoalsScreen = StyleSheet.create({
-    imageContainer: {
-        alignItems: "center",
-        justifyContent: "center",
-        paddingTop: 10,
-        paddingBottom: 50,
-    },
 
     budgetContainer: {
         marginBottom: 15,
@@ -23,12 +17,13 @@ const styles_GoalsScreen = StyleSheet.create({
         flexDirection: "column",
         justifyContent: "space-between",
     },
+    
     inputSingleContainer: {
         flexDirection: "column",
         justifyContent: "space-between",
-
-        paddingBottom: 20,
+        paddingBottom: 25,
     },
+
 
     buttonContainer: {
         paddingTop: 20,

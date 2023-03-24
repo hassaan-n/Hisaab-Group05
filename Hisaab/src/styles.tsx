@@ -15,6 +15,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
 
   },
+
+  appButtonContainerAlt: {
+    backgroundColor: "#D9D9D9",
+    height: 50,
+    borderRadius: 10,
+    justifyContent: "center",
+  },
+
   appButtonText: {
     fontSize: 16,
     fontFamily: "Poppins-Bold",

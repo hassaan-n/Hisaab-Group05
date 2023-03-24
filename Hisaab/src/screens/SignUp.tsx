@@ -1,14 +1,12 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image, TextInput, } from "react-native";
+import { View, Text, TouchableOpacity, Image, TextInput,Keyboard,TouchableWithoutFeedback } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles_HomeScreen from "../styles/styles.SignUp";
 import styles from "../styles";
-import db from "../database"
+import db from "../database";
 
 import Toggle from "react-native-toggle-input";
 import { err } from "react-native-svg/lib/typescript/xml";
-
-
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -22,38 +20,32 @@ const SignUp = () => {
 
   //function to handle the submit button
   const Card = ({ pinstate }) => {
-    let content
+    let content;
 
     if (pinstate) {
-      content = <View style={styles_HomeScreen.inputSingleContainer}>
-
-
-        <Text style={styles.subHeading}>Pin</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={onChangeNumber}
-          value={number}
-          placeholder="Enter password"
-          keyboardType="numeric"
-          secureTextEntry={true}
-        />
-      </View>
-    }
-    else {
       content = (
-        <View>
+        <View style={styles_HomeScreen.inputSingleContainer}>
+          <Text style={styles.subHeading}>Pin</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeNumber}
+            value={number}
+            placeholder="Enter password"
+            keyboardType="numeric"
+            secureTextEntry={true}
+          />
         </View>
-      )
+      );
+    } else {
+      content = <View></View>;
     }
 
-    return <View style={{ padding: 0 }}>{content}</View>
-  }
-
-
-
+    return <View style={{ padding: 0 }}>{content}</View>;
+  };
 
   return (
     // mega container with all the elements
+    
     <View style={styles.container}>
       {/* image inside the container */}
       <View style={styles_HomeScreen.imageContainer}>
@@ -81,8 +73,6 @@ const SignUp = () => {
           />
         </View>
 
-
-
         {/* Pin Toggle*/}
         <View style={styles_HomeScreen.inputSingleContainer}>
           <Text style={styles.subHeading}>Enable Pin</Text>
@@ -97,70 +87,55 @@ const SignUp = () => {
         </View>
 
         <Card pinstate={toggle} />
-
-        {/* render pin setter view only if pin set to on*/}
-
-
-
-
-        {/* Pin setter*/}
-        {/* <View style={styles_HomeScreen.inputSingleContainer}>
-          
-          
-          <Text style={styles.subHeading}>Pin</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={onChangeNumber}
-            value={number}
-            placeholder="Enter password"
-            keyboardType="numeric"
-            secureTextEntry={true}
-          />
-        </View> */}
       </View>
 
       {/* Button Sectoion*/}
       <View style={styles_HomeScreen.buttonContainer}>
         <TouchableOpacity
-
-          // onPress={() => {navigation.navigate("Tut1"); addUser(text,toggle,number); getAllUsers();}}
-
-          onPress={() => { if (text == "" || (number == "" && toggle)) { alert("Please fill all the fields"); } else { navigation.navigate("Tut1"); addUser(text, toggle, number); getAllUsers(); } }}
-
-
+          onPress={() => {
+            if (text == "" || (number == "" && toggle)) {
+              alert("Please fill all the fields");
+            } else {
+              navigation.navigate("Tut1");
+              addUser(text, toggle, number);
+              getAllUsers();
+            }
+          }}
           style={styles.appButtonContainer}
         >
           <Text style={styles.appButtonText}>Continue</Text>
         </TouchableOpacity>
       </View>
     </View>
+
+    
+    
   );
 };
 
-
 const addUser = (name, pinstate, pin) => {
-  db.transaction(tx => {
-    tx.executeSql(
-      'INSERT INTO user (name, pinstate, pin) VALUES (?, ?, ?);',
-      [name, pinstate, pin],
-    );
+  db.transaction((tx) => {
+    tx.executeSql("INSERT INTO user (name, pinstate, pin) VALUES (?, ?, ?);", [
+      name,
+      pinstate,
+      pin,
+    ]);
   });
 };
 
 const getAllUsers = () => {
-  db.transaction(tx => {
+  db.transaction((tx) => {
     tx.executeSql(
-      'SELECT * FROM user;',
+      "SELECT * FROM user;",
       [],
       (_, { rows }) => {
         console.log(rows);
       },
       (_, error) => {
-        console.log(error)
+        console.log(error);
       }
     );
   });
 };
-
 
 export default SignUp;
