@@ -11,7 +11,7 @@ const HomeScreen = () => {
   return (
     // mega container with all the elements
     <View style={styles.container}>
-      <View style={styles_HomeScreen.welcomeContainer}>
+      {/* <View style={styles_HomeScreen.welcomeContainer}>
         <View style={styles_HomeScreen.helloText}>
           <Text style={styles.text}>Hello</Text>
           <Text style={styles.heading}>{username}</Text>
@@ -20,7 +20,7 @@ const HomeScreen = () => {
             <Image source={require("../images/profile.png")} />
         </View>
         </View>
-      </View>
+      </View> */}
     </View>
   );
 };
