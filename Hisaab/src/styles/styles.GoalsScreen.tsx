@@ -15,7 +15,7 @@ const styles_GoalsScreen = StyleSheet.create({
         paddingBottom: 50,
     },
 
-    welcomeContainer: {
+    budgetContainer: {
         marginBottom: 15,
     },
 
