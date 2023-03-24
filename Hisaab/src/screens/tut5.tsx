@@ -10,7 +10,7 @@ const Tut5 = () => {
     <View style={styles.tutorialPage}>
       <Image
         style={styles.tutorialImage}
-        source={require("../images/tut5.png")}
+        source={require("../images/(5).png")}
       />
 
       <View style={styles.tutorialButton}>
