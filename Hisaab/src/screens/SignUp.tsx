@@ -32,7 +32,6 @@ const SignUp = () => {
             value={number}
             placeholder="Enter password"
             keyboardType="numeric"
-            secureTextEntry={true}
           />
         </View>
       );
@@ -87,6 +86,7 @@ const SignUp = () => {
         </View>
 
         <Card pinstate={toggle} />
+        
       </View>
 
       {/* Button Sectoion*/}
