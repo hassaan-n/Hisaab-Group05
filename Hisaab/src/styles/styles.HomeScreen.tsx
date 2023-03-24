@@ -28,6 +28,7 @@ const styles_HomeScreen = StyleSheet.create({
     buttonContainer: {
         paddingTop: 20,
         paddingBottom: 20,
+        
     },
 
 
