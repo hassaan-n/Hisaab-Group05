@@ -22,7 +22,7 @@ import Tut6 from '../screens/tut6';
 // import Tut4 from "../screens/tut4";
 // import Tut5 from "../screens/tut5";
 // import Tut6 from "../screens/tut6";
-// import GoalsScreen from "../screens/GoalsScreen";
+import GoalsScreen from "../screens/GoalsScreen";
 
 const HomeStack = createNativeStackNavigator();
 
