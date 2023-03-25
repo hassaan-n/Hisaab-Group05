@@ -4,7 +4,7 @@ const db = SQLite.openDatabase("HisaabDB.db");
 
 db.transaction( 
     tx => {
-    tx.executeSql("CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, pinstate INTEGER, pin INTEGER);")
+    tx.executeSql("CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, goals_id INTEGER, budget_id INTEGER, pinstate INTEGER, pin INTEGER, FOREIGN KEY ('goals_id') REFERENCES goal('id'), FOREIGN KEY ('budget_id') REFERENCES budget('budget_id'));")
 });
 
 // bring schema to life
@@ -14,28 +14,33 @@ db.transaction(
 
 db.transaction( 
     tx => {
-    tx.executeSql("CREATE TABLE IF NOT EXISTS goal (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, amount INTEGER, type TEXT);")
+    tx.executeSql("CREATE TABLE IF NOT EXISTS goal (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, a mount INTEGER, type TEXT);")
 });
 
 db.transaction(
     tx => {
-    tx.executeSql("CREATE TABLE IF NOT EXISTS transaction (transaction_id INTEGER AUTO_INCREMENT PRIMARY KEY, username TEXT, category_id INTEGER, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)");
+    tx.executeSql("CREATE TABLE IF NOT EXISTS transaction (transaction_id INTEGER AUTO_INCREMENT, username TEXT, category_id INTEGER, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT, PRIMARY KEY (transaction_id, username))");
     });
     
-db.transaction(tx => {
-tx.executeSql("CREATE TABLE IF NOT EXISTS goals (goal_id INTEGER AUTO_INCREMENT PRIMARY KEY, title TEXT, amount INTEGER, type TEXT, starting_time TIMESTAMP)");
-});
+// db.transaction(tx => {
+// tx.executeSql("CREATE TABLE IF NOT EXISTS goals (goal_id INTEGER AUTO_INCREMENT PRIMARY KEY, title TEXT, amount INTEGER, type TEXT, starting_time TIMESTAMP)");
+// });
     
 db.transaction(
     tx => {
-    tx.executeSql("CREATE TABLE IF NOT EXISTS budget (budget_id INTEGER PRIMARY KEY, time_stamp TIMESTAMP, current_state TEXT)");
+    tx.executeSql("CREATE TABLE IF NOT EXISTS budget (budget_id INTEGER PRIMARY KEY, time_stamp TIMESTAMP, current_state TEXT, FOREIGN KEY ('current_state') REFERENCES budget_notifications('message'))");
 });
 
 db.transaction(
     tx => {
-    tx.executeSql("CREATE TABLE IF NOT EXISTS categories (category_id INTEGER PRIMARY KEY, food_id INTEGER, transport_id INTEGER, subscriptions INTEGER, laundry INTEGER, grocery INTEGER, education_expenses INTEGER, clothing INTEGER, miscellaneous INTEGER)");
+    tx.executeSql("CREATE TABLE IF NOT EXISTS categories (category_id INTEGER PRIMARY KEY, food_id INTEGER, transport_id INTEGER, subscriptions INTEGER, laundry INTEGER, grocery INTEGER, education_expenses INTEGER, clothing INTEGER, miscellaneous INTEGER, FOREIGN KEY ('food_id') REFERENCES food('food_id'), FOREIGN KEY ('transport_id') REFERENCES transport('transport_id'), FOREIGN KEY ('subscriptions') REFERENCES subscription('subscriptions'))");
     });
-    
+
+db.transaction(
+    tx => {
+    tx.executeSql("CREATE TABLE IF NOT EXISTS subscriptions (subscriptions INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT)");
+    });    
+
 db.transaction(
     tx => {
     tx.executeSql("CREATE TABLE IF NOT EXISTS budget_notifications (notification_id INTEGER AUTO_INCREMENT PRIMARY KEY, message TEXT, time TIMESTAMP, is_read BOOLEAN DEFAULT FALSE)");
@@ -53,7 +58,7 @@ db.transaction(
 
 db.transaction(
     tx => {
-    tx.executeSql("CREATE TABLE IF NOT EXISTS transport (transport_id INTEGER PRIMARY KEY, fuel INTEGER, uber_bike INTEGER)");
+    tx.executeSql("CREATE TABLE IF NOT EXISTS transport (transport_id INTEGER PRIMARY KEY, fuel INTEGER, taxi INTEGER)");
 });
 
 db.transaction(
