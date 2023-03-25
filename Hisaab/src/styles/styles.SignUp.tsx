@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text, Pressable, FlatList, Button } from 'react-native';
+import { StyleSheet, View, Text, Pressable, FlatList,Button } from 'react-native';
 
 
 const styles_SignUp = StyleSheet.create({
@@ -7,34 +7,30 @@ const styles_SignUp = StyleSheet.create({
     justifyContent: "center",
     paddingTop: 10,
     paddingBottom: 50,
-  },
+    },
 
-  welcomeContainer: {
-    marginBottom: 10,
-  },
+    welcomeContainer: {
+        marginBottom: 15,
+    },
 
-  inputContainer: {
-    flexDirection: "column",
-    justifyContent: "space-between",
+    inputContainer: {
+        flexDirection: "column",
+        justifyContent: "space-between",
+       
+    },
+    inputSingleContainer: {
+        flexDirection: "column",
+        justifyContent: "space-between",
+        
+        paddingBottom: 20,
+    },
 
-  },
-  inputSingleContainer: {
-    flexDirection: "column",
-    justifyContent: "space-between",
-
-    paddingBottom: 20,
-  },
-
-  buttonContainer: {
-    position: "absolute",
-    top: "90%",
-    left: 20,
-    right: 20,
-    justifyContent: "center",
-    paddingTop: 20,
-    paddingBottom: 20,
-  },
-});
+    buttonContainer: {
+        paddingTop: 20,
+        paddingBottom: 20,
+        
+    },
+  });
 
 
 

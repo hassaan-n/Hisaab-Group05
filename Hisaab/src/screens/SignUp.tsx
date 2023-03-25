@@ -126,10 +126,25 @@ const SignUp = () => {
           // onPress={() => {navigation.navigate("Tut1"); addUser(text,toggle,number); getAllUsers();}}
 
           onPress={() => { 
-          if (text == "" || (number == "" && toggle)) { alert("Please fill all the fields");} 
-          else { navigation.navigate("Tut1"); 
-          addUser(text, toggle, number);}
-          getAllUsers();}}
+          if (text == "" || (number == "" && toggle)) 
+            { alert("Please fill all the fields");} 
+            
+          userExists(text, (nameExists, error) => {
+            if (error) {
+              console.error(error);
+            } else {
+              if (nameExists)
+              {
+                alert(`User with name ${text} already exists`)
+              } // true or false
+              else 
+              {
+                addUser(text, toggle, number)
+                navigation.navigate("Tut1")
+              }
+            }
+          });
+        }}
 
           style={styles.appButtonContainer}
         >
@@ -144,19 +159,28 @@ const SignUp = () => {
 const addUser = (name, pinstate, pin) => {
   db.transaction(tx => {
     tx.executeSql(
+      'INSERT INTO user (name, pinstate, pin) VALUES (?, ?, ?);',
+      [name, pinstate, pin],
+    );
+  });
+};
+
+const userExists = (name, callback) => {
+  db.transaction( tx => {
+    tx.executeSql(
       'SELECT * FROM user WHERE name = ?;',
       [name],
       (_, { rows: { _array } }) => {
         if (_array.length === 0) {
-          tx.executeSql(
-            'INSERT INTO user (name, pinstate, pin) VALUES (?, ?, ?);',
-            [name, pinstate, pin],
-          );
+          callback(false);
         } else {
-          console.log(`User with name ${name} already exists`);
+          callback(true);
         }
       },
-    );
+      (_, error) => {
+        callback(null, error);
+      }
+    )
   });
 };
 
