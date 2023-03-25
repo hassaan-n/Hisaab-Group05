@@ -147,6 +147,9 @@ const SignUp = () => {
           addUser(text, toggle, number)
           navigation.navigate("Tut1")
           getAllUsers();
+          const currentTime = new Date().toLocaleString();
+          console.log(typeof(currentTime))
+          console.log(currentTime)
         }}
 
           style={styles.appButtonContainer}
