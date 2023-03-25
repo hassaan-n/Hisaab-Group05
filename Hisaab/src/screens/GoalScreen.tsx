@@ -12,8 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 import styles_GoalsScreen from "../styles/styles.GoalsScreen";
 import styles from "../styles";
 import RadioButton from "../components/radioButton";
-import db from "../database"
-
+import db from "../database";
 
 const GoalScreen = () => {
   const navigation = useNavigation();
@@ -23,6 +22,8 @@ const GoalScreen = () => {
   //props for goal input
   const [number, onChangeNumber] = React.useState("");
 
+  const [selectedRadioButton, setSelectedRadioButton] = React.useState(null);
+
   return (
     // mega container with all the elements
     <ScrollView style={{ flex: 1 }}>
@@ -31,7 +32,8 @@ const GoalScreen = () => {
           <Text style={styles.text}>Please select the </Text>
           <Text style={styles.heading}>Budget Cycle</Text>
         </View>
-        <RadioButton />
+        <RadioButton onRadioButtonPress={setSelectedRadioButton} />
+
         {/* <RadioButton time="Weekly" /> */}
 
         {/* Budget*/}
@@ -76,6 +78,8 @@ const GoalScreen = () => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("spending");
+              // console.log(selectedRadioButton);
+              addGoal(selectedRadioButton, budget, number);
             }}
             style={styles.appButtonContainer}
           >
@@ -100,12 +104,12 @@ const GoalScreen = () => {
 
 export default GoalScreen;
 
-
 const addGoal = (title, amount, type) => {
-  db.transaction(tx => {
-    tx.executeSql(
-      'INSERT INTO goal (title, amount, type) VALUES (?, ?, ?);',
-      [title, amount, type],
-    );
+  db.transaction((tx) => {
+    tx.executeSql("INSERT INTO goal (title, amount, type) VALUES (?, ?, ?);", [
+      title,
+      amount,
+      type,
+    ]);
   });
 };
