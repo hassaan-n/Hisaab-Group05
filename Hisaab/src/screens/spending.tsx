@@ -51,7 +51,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 
-const MyComponent = () => {
+const spendingChart = () => {
   const data = {
     labels: ['19/3', '20/3', '21/3', '22/3', '23/3', '24/3', '25/3'],
     datasets: [
@@ -67,11 +67,11 @@ const MyComponent = () => {
     <View>
       <LineChart
         data={data}
-        width={400}
-        height={300}
+        width={300}
+        height={200}
         chartConfig={{
-          backgroundGradientFrom: '#ffffff',
-          backgroundGradientTo: '#ffffff',
+          backgroundGradientFrom: '#f2f8f2',
+          backgroundGradientTo: '#f2f8f2',
           decimalPlaces: 0,
           color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // black
           labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`, // black
@@ -94,4 +94,4 @@ const MyComponent = () => {
   );
 };
 
-export default MyComponent;
+export default spendingChart;
