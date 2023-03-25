@@ -42,12 +42,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: "Poppins-Bold",
   },
-  analytics: {
-    flex: 1,
-    padding: 10
-
-  }
-  ,
   text: {
     fontSize: 16,
     fontFamily: "Poppins",
@@ -76,7 +70,7 @@ const styles = StyleSheet.create({
     top: -35
   },
 
-
+  
 });
 
 

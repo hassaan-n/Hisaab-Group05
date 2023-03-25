@@ -13,7 +13,7 @@ import Tut6 from '../screens/tut6';
 import StartSaving from '../screens/StartSaving';
 import GoalScreen from '../screens/GoalScreen';
 import spendings from '../screens/spending';
-import home from '../screens/home';
+import analytics from '../screens/analytics';
 
 
 
@@ -34,7 +34,7 @@ const HomeStackNavigator = () => {
       <HomeStack.Screen name="Let's Start" component={StartSaving} />
       <HomeStack.Screen name="Goals" component={GoalScreen} />
       <HomeStack.Screen name="spending" component={spendings} />
-      <HomeStack.Screen name="home" component={home} />
+      <HomeStack.Screen name="analytics" component={analytics} />
 
 
       {/* <HomeStack.Screen name="Login" component={LoginScreen} /> */}

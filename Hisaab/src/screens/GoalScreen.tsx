@@ -75,7 +75,7 @@ const GoalScreen = () => {
         <View style={styles_GoalsScreen.buttonContainer}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("home");
+              navigation.navigate("analytics");
             }}
             style={styles.appButtonContainer}
           >
