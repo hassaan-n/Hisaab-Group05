@@ -9,6 +9,9 @@
     "web": "expo start --web"
   },
   "dependencies": {
+    "@chartiful/react-chart-builder": "^0.1.6",
+    "@chartiful/react-native-chart-builder": "^0.1.8",
+    "@chartiful/react-native-vertical-bar-graph": "^0.1.2",
     "@expo-google-fonts/inter": "^0.2.3",
     "@expo-google-fonts/poppins": "^0.2.3",
     "@expo/webpack-config": "^18.0.1",

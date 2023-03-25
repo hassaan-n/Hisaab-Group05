@@ -13,6 +13,8 @@ import Tut6 from '../screens/tut6';
 import StartSaving from '../screens/StartSaving';
 import GoalsScreen from '../screens/GoalsScreen';
 import Home from '../screens/HomeScreen';
+import AddExpenseTitle from '../screens/AddExpenseTitle';
+import AddExpenseCategory from '../screens/AddExpenseCategory';
 
 
 //need to implement in this file
@@ -24,7 +26,10 @@ const HomeStack = createNativeStackNavigator();
 const HomeStackNavigator = () => {
   return (
     <HomeStack.Navigator>
-       <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="Add Expense" component={AddExpenseTitle} />
+      <HomeStack.Screen name="Choose Category" component={AddExpenseCategory} />
+
       <HomeStack.Screen name="Sign Up" component={SignUp} />
       <HomeStack.Screen name="Details" component={DetailsScreen} />
       <HomeStack.Screen name="Tut1" component={Tut1} />

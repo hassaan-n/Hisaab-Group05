@@ -20,9 +20,9 @@ const GoalsScreen = () => {
   const navigation = useNavigation();
 
   //props for budget input
-  const [budget, onChangeBudget] = React.useState("");
+  const [budgetAmount, onChangeBudget] = React.useState("");
   //props for goal input
-  const [number, onChangeNumber] = React.useState("");
+  const [goalAmount, onChangeGoal] = React.useState("");
 
   return (
     // mega container with all the elements
@@ -42,7 +42,7 @@ const GoalsScreen = () => {
             onChangeText={onChangeBudget}
             placeholder={"400"}
             keyboardType="numeric"
-            value={budget}
+            value={budgetAmount}
           />
         </View>
 
@@ -51,10 +51,10 @@ const GoalsScreen = () => {
           <Text style={styles.heading}>Goal</Text>
           <TextInput
             style={styles.input}
-            onChangeText={onChangeBudget}
+            onChangeText={onChangeGoal}
             placeholder={"1000"}
             keyboardType="numeric"
-            value={budget}
+            value={goalAmount}
             autoFocus={true}
           />
         </View>
