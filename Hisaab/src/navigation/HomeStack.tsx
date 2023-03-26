@@ -1,8 +1,8 @@
-import * as React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import * as React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import SignUp from '../screens/SignUp';
-import DetailsScreen from '../screens/DetailsScreen';
+import SignUp from "../screens/SignUp";
+import DetailsScreen from "../screens/DetailsScreen";
 // import LoginScreen from '../screens/LoginScreen';
 import Tut1 from '../screens/tut1';
 import Tut2 from '../screens/tut2';
