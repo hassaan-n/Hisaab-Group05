@@ -26,9 +26,8 @@ const HomeStack = createNativeStackNavigator();
 const HomeStackNavigator = () => {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={Home} />
-      <HomeStack.Screen name="Add Expense" component={AddExpenseTitle} />
-      <HomeStack.Screen name="Choose Category" component={AddExpenseCategory} />
+
+
 
       <HomeStack.Screen name="Sign Up" component={SignUp} />
       <HomeStack.Screen name="Details" component={DetailsScreen} />
@@ -38,9 +37,12 @@ const HomeStackNavigator = () => {
       <HomeStack.Screen name="Tut4" component={Tut4} />
       <HomeStack.Screen name="Tut5" component={Tut5} />
       <HomeStack.Screen name="Tut6" component={Tut6} />
-      <HomeStack.Screen name="Let's Start" component={StartSaving} />
       <HomeStack.Screen name="Goals" component={GoalsScreen} />
-     
+      <HomeStack.Screen name="Let's Start" component={StartSaving} />
+      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="Add Expense" component={AddExpenseTitle} />
+      <HomeStack.Screen name="Choose Category" component={AddExpenseCategory} />
+
       {/* <HomeStack.Screen name="Login" component={LoginScreen} /> */}
     </HomeStack.Navigator>
   );
