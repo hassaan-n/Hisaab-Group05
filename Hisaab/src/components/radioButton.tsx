@@ -2,10 +2,10 @@ import React from "react";
 import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import textStyles from "../styles";
 type props = {
-  func: any;
+  onRadioButtonPress: (value: string) => void;
 };
 
-const RadioButton = ({ onRadioButtonPress }) => {
+const RadioButton = ({ onRadioButtonPress }: props) => {
   const [selected, setSelected] = React.useState(0);
 
   return (
