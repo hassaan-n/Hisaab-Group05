@@ -15,7 +15,7 @@ import RadioButton from "../components/logradiobutton";
 import db from "../database"
 
 
-const logbook = () => {
+const Logbook = () => {
   const navigation = useNavigation();
 
   //props for budget input
@@ -144,7 +144,7 @@ const logbook = () => {
   );
 };
 
-export default logbook;
+export default Logbook;
 
 
 const addGoal = (title, amount, type) => {
