@@ -42,6 +42,11 @@ const HomeStackNavigator = () => {
       <HomeStack.Screen name="Home" component={Home} />
       <HomeStack.Screen name="Add Expense" component={AddExpenseTitle} />
       <HomeStack.Screen name="Choose Category" component={AddExpenseCategory} />
+      <HomeStack.Screen name="Let's Start" component={StartSaving} />
+      {/* <HomeStack.Screen name="Goals" component={GoalScreen} />
+      <HomeStack.Screen name="spending" component={spendings} />
+      <HomeStack.Screen name="analytics" component={analytics} /> */}
+
 
       {/* <HomeStack.Screen name="Login" component={LoginScreen} /> */}
     </HomeStack.Navigator>

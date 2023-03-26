@@ -110,6 +110,31 @@ const styles_HomeScreen = StyleSheet.create({
     width: "100%",
     fontFamily: "Poppins",
   },
+
+  centerText: {
+    alignItems: "center",
+    fontSize: 16,
+    fontFamily: "Poppins",
+    flex: 1,
+    padding: 5
+  },
+
+  progressBar: {
+    alignContent: 'center',
+    padding: 10,
+    backgroundColor: '#f2f8f2',
+  },
+
+  chart: {
+    // alignContent: 'center',
+    padding: 10,
+    backgroundColor: '#f2f8f2',
+    flex: 1,
+    alignItems: 'center',
+    alignContent: 'center',
+    left: 10
+  }
+
 });
 
 export default styles_HomeScreen;

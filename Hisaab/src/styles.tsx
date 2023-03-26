@@ -50,7 +50,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: "Poppins-Bold",
   },
-
   text: {
     fontSize: 16,
     fontFamily: "Poppins",
@@ -72,11 +71,14 @@ const styles = StyleSheet.create({
 
 
   tutorialImage: {
-    height: '100%',
+    height:'90%' ,
     resizeMode: 'contain',
+    width: "95%",
+    bottom: 50,
+    top: -35
   },
 
-
+  
 });
 
 

@@ -92,15 +92,36 @@ const SignUp = () => {
       {/* Button Sectoion*/}
       <View style={styles_HomeScreen.buttonContainer}>
         <TouchableOpacity
-          onPress={() => {
-            if (text == "" || (number == "" && toggle)) {
-              alert("Please fill all the fields");
-            } else {
-              navigation.navigate("Tut1");
-              addUser(text, toggle, number);
-              getAllUsers();
-            }
-          }}
+
+          // onPress={() => {navigation.navigate("Tut1"); addUser(text,toggle,number); getAllUsers();}}
+
+          onPress={() => { 
+          if (text == "" || (number == "" && toggle)) 
+            { alert("Please fill all the fields");} 
+            
+          // userExists(text, (nameExists, error) => {
+          //   if (error) {
+          //     console.error(error);
+          //   } else {
+          //     if (nameExists)
+          //     {
+          //       alert(`User with name ${text} already exists`)
+          //     } // true or false
+          //     else 
+          //     {
+          //       addUser(text, toggle, number)
+          //       navigation.navigate("Tut1")
+          //     }
+          //   }
+          // });
+          addUser(text, toggle, number)
+          navigation.navigate("Tut1")
+          getAllUsers();
+          const currentTime = new Date().toLocaleString();
+          console.log(typeof(currentTime))
+          console.log(currentTime)
+        }}
+
           style={styles.appButtonContainer}
         >
           <Text style={styles.appButtonText}>Continue</Text>
@@ -123,6 +144,25 @@ const addUser = (name, pinstate, pin) => {
   });
 };
 
+const userExists = (name, callback) => {
+  db.transaction( tx => {
+    tx.executeSql(
+      'SELECT * FROM user WHERE name = ?;',
+      [name],
+      (_, { rows: { _array } }) => {
+        if (_array.length === 0) {
+          callback(false);
+        } else {
+          callback(true);
+        }
+      },
+      (_, error) => {
+        callback(null, error);
+      }
+    )
+  });
+};
+
 const getAllUsers = () => {
   db.transaction((tx) => {
     tx.executeSql(
@@ -139,3 +179,6 @@ const getAllUsers = () => {
 };
 
 export default SignUp;
+
+
+// DROP TABLE IF EXISTS user
