@@ -159,7 +159,7 @@ const HomeScreen = () => {
         <View style={styles_HomeScreen.card}>
           <View style={styles_HomeScreen.cardHeader}>
             <Text style={styles_HomeScreen.cardHeading}>Week Overview</Text>
-            <Pressable onPressIn={() => navigation.navigate("Statistics")}>
+            <Pressable onPressIn={() => navigation.navigate("Analytics")}>
               <Image
                 style={{ marginTop: 3 }}
                 source={require("../images/Arrow.png")}

@@ -18,7 +18,7 @@ import RadioButton from "../components/radioButton";
 import db from "../database"
 
 
-const GoalScreen = () => {
+const GoalsScreen = () => {
   const navigation = useNavigation();
 
   //props for budget input

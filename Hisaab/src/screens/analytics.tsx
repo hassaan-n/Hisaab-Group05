@@ -37,34 +37,34 @@ const Analytics = () => {
           <View style={styles_HomeScreen.cardHeader}>
             <Text style={styles_HomeScreen.cardHeading}>Spending Report</Text>
           </View>
-          <View style = {styles_analytics.analytics}>
+          <View style={styles_analytics.analytics}>
             < SpendingChart />
           </View>
         </View>
         <View style={styles_HomeScreen.card}>
 
           <View style={styles_HomeScreen.cardHeader}>
-          <Text style={styles_HomeScreen.cardHeading}>Progress to Goal</Text>
+            <Text style={styles_HomeScreen.cardHeading}>Progress to Goal</Text>
           </View>
-          <View style = {styles_HomeScreen.progressBar}>
-            < ProgressBar value={77} goal={1000}/>
+          <View style={styles_HomeScreen.progressBar}>
+            < ProgressBar value={77} goal={1000} />
           </View>
-          <View style = {styles_HomeScreen.centerText}>
-          <Text>
-            5 Days till end of week
-          </Text>
+          <View style={styles_HomeScreen.centerText}>
+            <Text>
+              5 Days till end of week
+            </Text>
           </View>
-      </View>
+        </View>
 
-      <View style={styles_HomeScreen.card}>
+        <View style={styles_HomeScreen.card}>
 
           <View style={styles_HomeScreen.cardHeader}>
-          <Text style={styles_HomeScreen.cardHeading}>Category Wise Spending</Text>
+            <Text style={styles_HomeScreen.cardHeading}>Category Wise Spending</Text>
           </View>
-          <View style = {styles_HomeScreen.chart}>
+          <View style={styles_HomeScreen.chart}>
             < MyChart />
           </View>
-      </View>
+        </View>
       </View>
 
 
