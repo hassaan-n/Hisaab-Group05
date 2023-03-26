@@ -147,11 +147,11 @@ const Logbook = () => {
 export default Logbook;
 
 
-const addGoal = (title, amount, type) => {
-  db.transaction(tx => {
-    tx.executeSql(
-      'INSERT INTO goal (title, amount, type) VALUES (?, ?, ?);',
-      [title, amount, type],
-    );
-  });
-};
+// const addGoal = (title, amount, type) => {
+//   db.transaction(tx => {
+//     tx.executeSql(
+//       'INSERT INTO goal (title, amount, type) VALUES (?, ?, ?);',
+//       [title, amount, type],
+//     );
+//   });
+// };
