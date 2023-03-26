@@ -185,7 +185,7 @@ const HomeScreen = () => {
         <View style={styles_HomeScreen.card}>
           <View style={styles_HomeScreen.cardHeader}>
             <Text style={styles_HomeScreen.cardHeading}>Recent Expenses</Text>
-            <Pressable onPressIn={() => navigation.navigate("Log Book")}>
+            <Pressable onPressIn={() => navigation.navigate("Logs")}>
               <Image
                 style={{ marginTop: 3 }}
                 source={require("../images/Arrow.png")}

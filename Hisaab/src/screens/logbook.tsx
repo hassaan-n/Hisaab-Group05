@@ -36,12 +36,12 @@ const logbook = () => {
           <Text style={styles.filter_text}>Filters :</Text>
           <RadioButton />
         </View>
-         
-        {/* <RadioButton time="Weekly" /> */}
- 
 
-          {/* Input section inside the container which contains seperate items as single containers */}
- 
+        {/* <RadioButton time="Weekly" /> */}
+
+
+        {/* Input section inside the container which contains seperate items as single containers */}
+
 
         {/* Button Sectoion*/}
         {/* <View style={styles_GoalsScreen.buttonContainer}>
@@ -56,83 +56,83 @@ const logbook = () => {
         </View> */}
 
         <View style={styles_GoalsScreen.card}>
-        
-        <Text style={styles_GoalsScreen.cardText}>Fusion Burger</Text>
-        <Text style={styles.card_subheading}>Food - Dinner</Text>
-        <Text style={styles.card_timestmap}> 9:00PM 1st March 2023</Text>
-        <Text style={styles_GoalsScreen.price}> RS.400 </Text>
+
+          <Text style={styles_GoalsScreen.cardText}>Fusion Burger</Text>
+          <Text style={styles.card_subheading}>Food - Dinner</Text>
+          <Text style={styles.card_timestmap}> 9:00PM 1st March 2023</Text>
+          <Text style={styles_GoalsScreen.price}> RS.400 </Text>
 
         </View>
 
         <View style={styles_GoalsScreen.card}>
 
-        <Text style={styles_GoalsScreen.cardText}>Pasta</Text>
-        <Text style={styles.card_subheading}>Food - Dinner</Text>
-        <Text style={styles.card_timestmap}> 8:00PM 1st March 2023</Text>
-        <Text style={styles_GoalsScreen.price}> RS.400 </Text>
+          <Text style={styles_GoalsScreen.cardText}>Pasta</Text>
+          <Text style={styles.card_subheading}>Food - Dinner</Text>
+          <Text style={styles.card_timestmap}> 8:00PM 1st March 2023</Text>
+          <Text style={styles_GoalsScreen.price}> RS.400 </Text>
 
         </View>
 
         <View style={styles_GoalsScreen.card}>
 
-        <Text style={styles_GoalsScreen.cardText}>Mcdonalds</Text>
-        <Text style={styles.card_subheading}>Food - Dinner</Text>
-        <Text style={styles.card_timestmap}> 9:00PM 2st March 2023</Text>
-        <Text style={styles_GoalsScreen.price}> RS.100 </Text>
+          <Text style={styles_GoalsScreen.cardText}>Mcdonalds</Text>
+          <Text style={styles.card_subheading}>Food - Dinner</Text>
+          <Text style={styles.card_timestmap}> 9:00PM 2st March 2023</Text>
+          <Text style={styles_GoalsScreen.price}> RS.100 </Text>
 
         </View>
 
         <View style={styles_GoalsScreen.card}>
 
-        <Text style={styles_GoalsScreen.cardText}>Fusion Burger</Text>
-        <Text style={styles.card_subheading}>Food - Lunch</Text>
-        <Text style={styles.card_timestmap}> 9:30PM 1st March 2022</Text>
-        <Text style={styles_GoalsScreen.price}> RS.300 </Text>
+          <Text style={styles_GoalsScreen.cardText}>Fusion Burger</Text>
+          <Text style={styles.card_subheading}>Food - Lunch</Text>
+          <Text style={styles.card_timestmap}> 9:30PM 1st March 2022</Text>
+          <Text style={styles_GoalsScreen.price}> RS.300 </Text>
 
         </View>
 
 
         <View style={styles_GoalsScreen.card}>
 
-        <Text style={styles_GoalsScreen.cardText}>Omellete</Text>
-        <Text style={styles.card_subheading}>Food -  Breakfast</Text>
-        <Text style={styles.card_timestmap}> 7:00 AM 1st March 201</Text>
-        <Text style={styles_GoalsScreen.price}> RS.200 </Text>
+          <Text style={styles_GoalsScreen.cardText}>Omellete</Text>
+          <Text style={styles.card_subheading}>Food -  Breakfast</Text>
+          <Text style={styles.card_timestmap}> 7:00 AM 1st March 201</Text>
+          <Text style={styles_GoalsScreen.price}> RS.200 </Text>
 
         </View>
 
         <View style={styles_GoalsScreen.card}>
 
-        <Text style={styles_GoalsScreen.cardText}>Pasta</Text>
-        <Text style={styles.card_subheading}>Food - Dinner</Text>
-        <Text style={styles.card_timestmap}> 8:00PM 1st March 2023</Text>
-        <Text style={styles_GoalsScreen.price}> RS.400 </Text>
+          <Text style={styles_GoalsScreen.cardText}>Pasta</Text>
+          <Text style={styles.card_subheading}>Food - Dinner</Text>
+          <Text style={styles.card_timestmap}> 8:00PM 1st March 2023</Text>
+          <Text style={styles_GoalsScreen.price}> RS.400 </Text>
 
         </View>
 
         <View style={styles_GoalsScreen.card}>
 
-        <Text style={styles_GoalsScreen.cardText}>Pasta</Text>
-        <Text style={styles.card_subheading}>Food - Dinner</Text>
-        <Text style={styles.card_timestmap}> 8:00PM 1st March 2023</Text>
-        <Text style={styles_GoalsScreen.price}> RS.400 </Text>
+          <Text style={styles_GoalsScreen.cardText}>Pasta</Text>
+          <Text style={styles.card_subheading}>Food - Dinner</Text>
+          <Text style={styles.card_timestmap}> 8:00PM 1st March 2023</Text>
+          <Text style={styles_GoalsScreen.price}> RS.400 </Text>
 
         </View>
 
         <View style={styles_GoalsScreen.card}>
 
-        <Text style={styles_GoalsScreen.cardText}>Pasta</Text>
-        <Text style={styles.card_subheading}>Food - Dinner</Text>
-        <Text style={styles.card_timestmap}> 8:00PM 1st March 2023</Text>
-        <Text style={styles_GoalsScreen.price}> RS.400 </Text>
+          <Text style={styles_GoalsScreen.cardText}>Pasta</Text>
+          <Text style={styles.card_subheading}>Food - Dinner</Text>
+          <Text style={styles.card_timestmap}> 8:00PM 1st March 2023</Text>
+          <Text style={styles_GoalsScreen.price}> RS.400 </Text>
 
         </View>
-         
+
 
         <View style={styles_GoalsScreen.buttonContainer}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Goals");
+              navigation.navigate("Home");
             }}
             style={styles.appButtonContainer}
           >

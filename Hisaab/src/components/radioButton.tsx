@@ -21,7 +21,7 @@ const RadioButton = ({ onRadioButtonPress }) => {
             {selected === 1 ? <View style={styles.radioBg} /> : null}
           </View>
           <Text style={styles.radioText}>
-            <Text style={textStyles.subHeading}>Monthly</Text>
+            <Text style={textStyles.text}>Monthly</Text>
           </Text>
         </View>
       </TouchableOpacity>
@@ -37,7 +37,7 @@ const RadioButton = ({ onRadioButtonPress }) => {
             {selected === 2 ? <View style={styles.radioBg} /> : null}
           </View>
           <Text style={styles.radioText}>
-            <Text style={textStyles.subHeading}>Weekly</Text>
+            <Text style={textStyles.text}>Weekly</Text>
           </Text>
         </View>
       </TouchableOpacity>
@@ -46,11 +46,16 @@ const RadioButton = ({ onRadioButtonPress }) => {
 };
 
 const styles = StyleSheet.create({
-  main: {
-    flex: 1,
-    justifyContent: "center",
+  // main: {
+  //   flex: 1,
+  //   justifyContent: "center",
+  // },
+  radioText: {
+    fontSize: 20,
+    fontFamily: "Poppins",
+
+
   },
-  radioText: { fontSize: 20 },
 
   radio: {
     height: 20,
