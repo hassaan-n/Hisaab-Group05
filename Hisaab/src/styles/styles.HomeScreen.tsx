@@ -66,7 +66,7 @@ const styles_HomeScreen = StyleSheet.create({
 
   budgetNumberContainer: {
     height: 60,
-    width: 70,
+    width: "auto",
     paddingTop: 0,
     flexDirection: "column",
     justifyContent: "center",

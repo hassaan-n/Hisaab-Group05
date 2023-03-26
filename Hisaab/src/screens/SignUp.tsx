@@ -16,7 +16,7 @@ const SignUp = () => {
   //props for the pin input
   const [number, onChangeNumber] = React.useState("");
   //props for the pin state
-  const [toggle, setToggle] = React.useState(true);
+  const [toggle, setToggle] = React.useState(false);
 
   //function to handle the submit button
   const Card = ({ pinstate }) => {

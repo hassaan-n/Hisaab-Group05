@@ -32,7 +32,7 @@ const HomeStackNavigator = () => {
     <HomeStack.Navigator>
 
 
-
+      
       <HomeStack.Screen name="Sign Up" component={SignUp} />
       <HomeStack.Screen name="Details" component={DetailsScreen} />
       <HomeStack.Screen name="Tut1" component={Tut1} />
@@ -48,6 +48,7 @@ const HomeStackNavigator = () => {
       <HomeStack.Screen name="Choose Category" component={AddExpenseCategory} />
       <HomeStack.Screen name="Analytics" component={Analytics} />
       <HomeStack.Screen name="Logs" component={Logbook} />
+      
 
       {/* <HomeStack.Screen name="Goals" component={GoalScreen} />
       <HomeStack.Screen name="spending" component={spendings} />

@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import styles_GoalsScreen from "../styles/styles.GoalsScreen";
+import styles_Logbook from "../styles/styles.Logbook";
 import styles from "../styles";
 import RadioButton from "../components/logradiobutton";
 import db from "../database"
@@ -27,12 +27,12 @@ const Logbook = () => {
     // mega container with all the elements
     <ScrollView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <View style={styles_GoalsScreen.welcomeContainer}>
+        <View>
           <Text style={styles.text}>View all Expenses</Text>
           <Text style={styles.heading}>Log Book</Text>
         </View>
 
-        <View style={styles_GoalsScreen.welcomeContainer}>
+        <View>
           <Text style={styles.filter_text}>Filters :</Text>
           <RadioButton />
         </View>
@@ -44,7 +44,7 @@ const Logbook = () => {
 
 
         {/* Button Sectoion*/}
-        {/* <View style={styles_GoalsScreen.buttonContainer}>
+        {/* <View style={styles_Logbook.buttonContainer}>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Home");
@@ -55,81 +55,113 @@ const Logbook = () => {
           </TouchableOpacity>
         </View> */}
 
-        <View style={styles_GoalsScreen.card}>
+        <View style={styles_Logbook.card}>
+          <View style={styles_Logbook.cardLeft}>
 
-          <Text style={styles_GoalsScreen.cardText}>Fusion Burger</Text>
-          <Text style={styles.card_subheading}>Food - Dinner</Text>
-          <Text style={styles.card_timestmap}> 9:00PM 1st March 2023</Text>
-          <Text style={styles_GoalsScreen.price}> RS.400 </Text>
-
+          <Text style={styles_Logbook.cardText}>Fusion Burger</Text>
+          <Text style={styles_Logbook.card_subheading}>Food - Dinner</Text>
+          <Text style={styles_Logbook.card_timestmap}> 9:00PM 1st March 2023</Text>
+          </View>
+          <View style={styles_Logbook.cardRight}>
+          <Text style={styles_Logbook.price}> RS.400 </Text>
+          </View>
+          
         </View>
 
-        <View style={styles_GoalsScreen.card}>
+        <View style={styles_Logbook.card}>
+          <View style={styles_Logbook.cardLeft}>
 
-          <Text style={styles_GoalsScreen.cardText}>Pasta</Text>
-          <Text style={styles.card_subheading}>Food - Dinner</Text>
-          <Text style={styles.card_timestmap}> 8:00PM 1st March 2023</Text>
-          <Text style={styles_GoalsScreen.price}> RS.400 </Text>
-
+          <Text style={styles_Logbook.cardText}>Pasta</Text>
+          <Text style={styles_Logbook.card_subheading}>Food - Dinner</Text>
+          <Text style={styles_Logbook.card_timestmap}> 8:00PM 1st March 2023</Text>
+          </View>
+          <View style={styles_Logbook.cardRight}>
+          <Text style={styles_Logbook.price}> RS.400 </Text>
+          </View>
+          
         </View>
 
-        <View style={styles_GoalsScreen.card}>
+        <View style={styles_Logbook.card}>
+          <View style={styles_Logbook.cardLeft}>
 
-          <Text style={styles_GoalsScreen.cardText}>Mcdonalds</Text>
-          <Text style={styles.card_subheading}>Food - Dinner</Text>
-          <Text style={styles.card_timestmap}> 9:00PM 2st March 2023</Text>
-          <Text style={styles_GoalsScreen.price}> RS.100 </Text>
-
+          <Text style={styles_Logbook.cardText}>McDonalds</Text>
+          <Text style={styles_Logbook.card_subheading}>Food - Dinner</Text>
+          <Text style={styles_Logbook.card_timestmap}> 9:00PM 2st March 2023</Text>
+          </View>
+          <View style={styles_Logbook.cardRight}>
+          <Text style={styles_Logbook.price}> RS.100 </Text>
+          </View>
+          
         </View>
 
-        <View style={styles_GoalsScreen.card}>
+        <View style={styles_Logbook.card}>
+          <View style={styles_Logbook.cardLeft}>
 
-          <Text style={styles_GoalsScreen.cardText}>Fusion Burger</Text>
-          <Text style={styles.card_subheading}>Food - Lunch</Text>
-          <Text style={styles.card_timestmap}> 9:30PM 1st March 2022</Text>
-          <Text style={styles_GoalsScreen.price}> RS.300 </Text>
-
-        </View>
-
-
-        <View style={styles_GoalsScreen.card}>
-
-          <Text style={styles_GoalsScreen.cardText}>Omellete</Text>
-          <Text style={styles.card_subheading}>Food -  Breakfast</Text>
-          <Text style={styles.card_timestmap}> 7:00 AM 1st March 201</Text>
-          <Text style={styles_GoalsScreen.price}> RS.200 </Text>
-
-        </View>
-
-        <View style={styles_GoalsScreen.card}>
-
-          <Text style={styles_GoalsScreen.cardText}>Pasta</Text>
-          <Text style={styles.card_subheading}>Food - Dinner</Text>
-          <Text style={styles.card_timestmap}> 8:00PM 1st March 2023</Text>
-          <Text style={styles_GoalsScreen.price}> RS.400 </Text>
-
-        </View>
-
-        <View style={styles_GoalsScreen.card}>
-
-          <Text style={styles_GoalsScreen.cardText}>Pasta</Text>
-          <Text style={styles.card_subheading}>Food - Dinner</Text>
-          <Text style={styles.card_timestmap}> 8:00PM 1st March 2023</Text>
-          <Text style={styles_GoalsScreen.price}> RS.400 </Text>
-
-        </View>
-
-        <View style={styles_GoalsScreen.card}>
-
-          <Text style={styles_GoalsScreen.cardText}>Pasta</Text>
-          <Text style={styles.card_subheading}>Food - Dinner</Text>
-          <Text style={styles.card_timestmap}> 8:00PM 1st March 2023</Text>
-          <Text style={styles_GoalsScreen.price}> RS.400 </Text>
-
+          <Text style={styles_Logbook.cardText}>Fusion Burger</Text>
+          <Text style={styles_Logbook.card_subheading}>Food - Dinner</Text>
+          <Text style={styles_Logbook.card_timestmap}> 9:30PM 1st March 2023</Text>
+          </View>
+          <View style={styles_Logbook.cardRight}>
+          <Text style={styles_Logbook.price}> RS.300 </Text>
+          </View>
+          
         </View>
 
 
-        <View style={styles_GoalsScreen.buttonContainer}>
+        <View style={styles_Logbook.card}>
+          <View style={styles_Logbook.cardLeft}>
+
+          <Text style={styles_Logbook.cardText}>Omelette</Text>
+          <Text style={styles_Logbook.card_subheading}>Food - Dinner</Text>
+          <Text style={styles_Logbook.card_timestmap}> 7:00AM 1st March 2023</Text>
+          </View>
+          <View style={styles_Logbook.cardRight}>
+          <Text style={styles_Logbook.price}> RS.200 </Text>
+          </View>
+          
+        </View>
+
+        <View style={styles_Logbook.card}>
+          <View style={styles_Logbook.cardLeft}>
+
+          <Text style={styles_Logbook.cardText}>Pasta</Text>
+          <Text style={styles_Logbook.card_subheading}>Food - Dinner</Text>
+          <Text style={styles_Logbook.card_timestmap}> 8:00PM 1st March 2023</Text>
+          </View>
+          <View style={styles_Logbook.cardRight}>
+          <Text style={styles_Logbook.price}> RS.400 </Text>
+          </View>
+          
+        </View>
+
+        <View style={styles_Logbook.card}>
+          <View style={styles_Logbook.cardLeft}>
+
+          <Text style={styles_Logbook.cardText}>Pasta</Text>
+          <Text style={styles_Logbook.card_subheading}>Food - Dinner</Text>
+          <Text style={styles_Logbook.card_timestmap}> 9:00PM 1st March 2023</Text>
+          </View>
+          <View style={styles_Logbook.cardRight}>
+          <Text style={styles_Logbook.price}> RS.400 </Text>
+          </View>
+          
+        </View>
+
+        <View style={styles_Logbook.card}>
+          <View style={styles_Logbook.cardLeft}>
+
+          <Text style={styles_Logbook.cardText}>Fusion Burger</Text>
+          <Text style={styles_Logbook.card_subheading}>Food - Dinner</Text>
+          <Text style={styles_Logbook.card_timestmap}> 9:00PM 1st March 2023</Text>
+          </View>
+          <View style={styles_Logbook.cardRight}>
+          <Text style={styles_Logbook.price}> RS.400 </Text>
+          </View>
+          
+        </View>
+
+
+        <View style={styles_Logbook.buttonContainer}>
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Home");
