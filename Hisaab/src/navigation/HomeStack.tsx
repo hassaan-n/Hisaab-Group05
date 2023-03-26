@@ -10,6 +10,15 @@ import Tut3 from '../screens/tut3';
 import Tut4 from '../screens/tut4';
 import Tut5 from '../screens/tut5';
 import Tut6 from '../screens/tut6';
+import StartSaving from '../screens/StartSaving';
+import GoalsScreen from '../screens/GoalsScreen';
+import Home from '../screens/HomeScreen';
+import AddExpenseTitle from '../screens/AddExpenseTitle';
+import AddExpenseCategory from '../screens/AddExpenseCategory';
+
+
+//need to implement in this file
+//first needs to check if intiial sigup is done, if done then load the home screen direcrlt or show pin as per settings
 
 
 const HomeStack = createNativeStackNavigator();
@@ -17,6 +26,10 @@ const HomeStack = createNativeStackNavigator();
 const HomeStackNavigator = () => {
   return (
     <HomeStack.Navigator>
+      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="Add Expense" component={AddExpenseTitle} />
+      <HomeStack.Screen name="Choose Category" component={AddExpenseCategory} />
+
       <HomeStack.Screen name="Sign Up" component={SignUp} />
       <HomeStack.Screen name="Details" component={DetailsScreen} />
       <HomeStack.Screen name="Tut1" component={Tut1} />
@@ -25,6 +38,9 @@ const HomeStackNavigator = () => {
       <HomeStack.Screen name="Tut4" component={Tut4} />
       <HomeStack.Screen name="Tut5" component={Tut5} />
       <HomeStack.Screen name="Tut6" component={Tut6} />
+      <HomeStack.Screen name="Let's Start" component={StartSaving} />
+      <HomeStack.Screen name="Goals" component={GoalsScreen} />
+     
       {/* <HomeStack.Screen name="Login" component={LoginScreen} /> */}
     </HomeStack.Navigator>
   );

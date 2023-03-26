@@ -1,79 +1,83 @@
-import { StyleSheet, View, Text, Pressable, FlatList,Button } from 'react-native';
+import { StyleSheet, View, Text, Pressable, FlatList, Button } from 'react-native';
 
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#FFFFFF',
-      //alignItems: 'center',
-      padding: 30,
-    },
-    appButtonContainer: {
-        backgroundColor: "#000000",
-        height: 50,
-        borderRadius: 10,
-        justifyContent: "center",
-       
+  container: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    //alignItems: 'center',
+    padding: 30,
+  },
+  appButtonContainer: {
+    backgroundColor: "#000000",
+    height: 50,
+    borderRadius: 10,
+    justifyContent: "center",
 
-      },
-      appButtonText: {
-        fontSize: 16,
-        fontFamily : "Poppins-Bold",
-        color: "#fff",
-        alignSelf: "center",
-      },
-      
-      input: {
-        height: 50,
-        marginTop: 5,
-        borderColor: 'grey',
-        borderWidth: 1,
-        padding: 10,
-        borderRadius: 10,
-        fontFamily : "Poppins",
-        fontSize: 16,
-      },
-      
-      heading: {
-        fontSize: 36,
-        fontFamily : "Poppins-Bold",
-        marginBottom:-5,
-      },
-      subHeading: {
-        fontSize: 18,
-        fontFamily : "Poppins-Bold", 
-      },
+  },
 
-      text: {
-        fontSize: 16,
-        fontFamily : "Poppins",
-      },
+  appButtonContainerAlt: {
+    backgroundColor: "#D9D9D9",
+    height: 50,
+    borderRadius: 10,
+    justifyContent: "center",
+  },
 
-      tutorialPage: {
-        flex: 1,
-        backgroundColor: '#FFFFFF',
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
+  appButtonText: {
+    fontSize: 16,
+    fontFamily: "Poppins-Bold",
+    color: "#fff",
+    alignSelf: "center",
+  },
 
-      tutorialButton: {
-        position: 'absolute',
-        bottom: 20,
-        width: '100%',
-        padding: 20,
-      },
+  input: {
+    height: 50,
+    marginTop: 5,
+    borderColor: 'grey',
+    borderWidth: 1,
+    padding: 10,
+    borderRadius: 10,
+    fontFamily: "Poppins",
+    fontSize: 16,
+  },
 
+  heading: {
+    fontSize: 36,
+    fontFamily: "Poppins-Bold",
+    marginBottom: -5,
+  },
+  subHeading: {
+    fontSize: 18,
+    fontFamily: "Poppins-Bold",
+  },
 
-      tutorialImage: {
-        height:'90%' ,
-        resizeMode: 'contain',
-        width: "90%",
-        bottom: 50,
-        top: -30
-      },
+  text: {
+    fontSize: 16,
+    fontFamily: "Poppins",
+  },
+
+  tutorialPage: {
+    flex: 1,
+    backgroundColor: '#FFFFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  tutorialButton: {
+    position: "absolute",
+    top: "85%",
+    left: 20,
+    right: 20,
+  },
 
 
-  });
+  tutorialImage: {
+    height: '100%',
+    resizeMode: 'contain',
+  },
+
+
+});
 
 
 export default styles;
