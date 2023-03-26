@@ -16,10 +16,13 @@ import Home from '../screens/HomeScreen';
 import AddExpenseTitle from '../screens/AddExpenseTitle';
 import AddExpenseCategory from '../screens/AddExpenseCategory';
 import Analytics from '../screens/analytics';
+import Logbook from '../screens/Logbook';
 
 
 //need to implement in this file
 //first needs to check if intiial sigup is done, if done then load the home screen direcrlt or show pin as per settings
+
+
 
 
 const HomeStack = createNativeStackNavigator();
@@ -44,6 +47,7 @@ const HomeStackNavigator = () => {
       <HomeStack.Screen name="Add Expense" component={AddExpenseTitle} />
       <HomeStack.Screen name="Choose Category" component={AddExpenseCategory} />
       <HomeStack.Screen name="Analytics" component={Analytics} />
+      <HomeStack.Screen name="Logs" component={Logbook} />
 
       {/* <HomeStack.Screen name="Goals" component={GoalScreen} />
       <HomeStack.Screen name="spending" component={spendings} />

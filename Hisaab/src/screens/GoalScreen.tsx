@@ -34,9 +34,10 @@ const GoalsScreen = () => {
         <View style={styles_GoalsScreen.inputSingleContainer}>
           <Text style={styles.text}>Please Select the</Text>
           <Text style={styles.heading}>Budget Cycle</Text>
-          <RadioButton />
+          <RadioButton onRadioButtonPress={setSelectedRadioButton} />
+
         </View>
-        <RadioButton onRadioButtonPress={setSelectedRadioButton} />
+
 
         {/* <RadioButton time="Weekly" /> */}
 
@@ -68,7 +69,7 @@ const GoalsScreen = () => {
         <View style={styles_GoalsScreen.buttonContainer}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("spending");
+              navigation.navigate("tut6");
               // console.log(selectedRadioButton);
               addGoal(selectedRadioButton, budget, number);
             }}
