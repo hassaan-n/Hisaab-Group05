@@ -193,7 +193,7 @@ const HomeScreen = () => {
             </Pressable>
           </View>
 
-          <Text style={styles.heading}>No recent expenses</Text>
+          <Text style={styles.subHeading}>No recent expenses</Text>
         </View>
       </ScrollView>
     </View>
