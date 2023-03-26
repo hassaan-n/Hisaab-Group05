@@ -6,11 +6,7 @@ db.transaction(
     tx => {
     tx.executeSql("CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, pinstate INTEGER, pin INTEGER);")
 });
-
-// bring schema to life
-// make appropriate functions that can be used with each relation
-// in sign up page, make so that if user already exists do not add
-// develop the backend framework
+ 
 
 db.transaction( 
     tx => {

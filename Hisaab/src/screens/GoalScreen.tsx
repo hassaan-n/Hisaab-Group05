@@ -15,7 +15,7 @@ import RadioButton from "../components/radioButton";
 import db from "../database"
 
 
-const GoalScreen = () => {
+const GoalsScreen = () => {
   const navigation = useNavigation();
 
   //props for budget input
@@ -71,11 +71,13 @@ const GoalScreen = () => {
           </View>
         </View>
 
+
+
         {/* Button Sectoion*/}
         <View style={styles_GoalsScreen.buttonContainer}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Home");
+              navigation.navigate("log");
             }}
             style={styles.appButtonContainer}
           >
@@ -98,7 +100,7 @@ const GoalScreen = () => {
   );
 };
 
-export default GoalScreen;
+export default GoalsScreen;
 
 
 const addGoal = (title, amount, type) => {

@@ -8,9 +8,10 @@ import {
 } from "react-native";
 
 const styles_GoalsScreen = StyleSheet.create({
+   
     imageContainer: {
-        alignItems: "center",
-        justifyContent: "center",
+        width: 500,
+        height: 600,
         paddingTop: 10,
         paddingBottom: 50,
     },
@@ -34,6 +35,31 @@ const styles_GoalsScreen = StyleSheet.create({
         paddingTop: 20,
         paddingBottom: 20,
     },
+
+    card: {
+       
+        marginBottom:1,
+        borderWidth: 0.01,
+        borderColor: '#FFFFFF',
+        borderRadius: 5,
+        height:70,
+        padding: 10,
+        backgroundColor: '#F2F8F2',
+        marginVertical: 10,
+      },
+
+      cardText: {
+        
+        fontSize: 20,
+        fontWeight: 'bold',
+      },
+
+      price: {
+        marginLeft:250,
+        marginVertical:-30,
+        fontSize: 20,
+        fontWeight: 'bold',
+      },
 });
 
 export default styles_GoalsScreen;
