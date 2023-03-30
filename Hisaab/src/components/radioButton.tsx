@@ -2,7 +2,7 @@ import React from "react";
 import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import textStyles from "../styles";
 type props = {
-  onRadioButtonPress: (value: string) => void;
+  onRadioButtonPress: (value: any) => void;
 };
 
 const RadioButton = ({ onRadioButtonPress }: props) => {
