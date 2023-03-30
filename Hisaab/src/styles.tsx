@@ -15,6 +15,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
 
   },
+
+  appButtonContainerAlt: {
+    backgroundColor: "#D9D9D9",
+    height: 50,
+    borderRadius: 10,
+    justifyContent: "center",
+  },
+
   appButtonText: {
     fontSize: 16,
     fontFamily: "Poppins-Bold",
@@ -42,7 +50,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: "Poppins-Bold",
   },
-
   text: {
     fontSize: 16,
     fontFamily: "Poppins",
@@ -62,6 +69,36 @@ const styles = StyleSheet.create({
     right: 20,
   },
 
+  filter_text: {
+    
+    position: "absolute",
+    fontSize: 15,
+    fontFamily: "Poppins-Bold",
+    paddingTop:30,
+
+  },
+
+  card_subheading: {
+    
+    position: "absolute",
+    fontSize: 13,
+    fontFamily: "Poppins-Bold",
+    marginLeft:10,
+    paddingTop:33,
+
+  },
+
+  card_timestmap: {
+    
+    position: "absolute",
+    fontSize: 10,
+    fontFamily: "Poppins ",
+    marginLeft:8,
+    paddingTop:50,
+    
+  },
+
+
 
   tutorialImage: {
     height:'90%' ,
@@ -71,7 +108,7 @@ const styles = StyleSheet.create({
     top: -35
   },
 
-
+  
 });
 
 

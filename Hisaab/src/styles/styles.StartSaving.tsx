@@ -25,11 +25,14 @@ const styles_SignUp = StyleSheet.create({
         paddingBottom: 70,
     },
 
-
-
     buttonContainer: {
-        paddingTop: 20,
-        paddingBottom: 20,
+      position: "absolute",
+      top: "90%",
+      left: 20,
+      right: 20,
+      justifyContent: "center",
+      paddingTop: 20,
+      paddingBottom: 20,
     },
   });
 

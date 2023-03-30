@@ -6,6 +6,9 @@ import { useEffect } from "react";
 import React from "react";
 import  AppLoading  from 'expo-app-loading'
 import { useFonts } from 'expo-font';
+import 'react-native-gesture-handler'
+import 'react-native-reanimated'
+
 
 
 

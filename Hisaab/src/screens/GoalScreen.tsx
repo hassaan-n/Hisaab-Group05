@@ -7,6 +7,9 @@ import {
   StyleSheet,
   TextInput,
   ScrollView,
+  KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  Keyboard,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles_GoalsScreen from "../styles/styles.GoalsScreen";
@@ -14,95 +17,83 @@ import styles from "../styles";
 import RadioButton from "../components/radioButton";
 import db from "../database";
 
-const GoalScreen = () => {
+const GoalsScreen = () => {
   const navigation = useNavigation();
 
   //props for budget input
-  const [budget, onChangeBudget] = React.useState("");
+  const [budgetAmount, onChangeBudget] = React.useState("");
   //props for goal input
-  const [number, onChangeNumber] = React.useState("");
+  const [goalAmount, onChangeGoal] = React.useState("");
 
   const [selectedRadioButton, setSelectedRadioButton] = React.useState(null);
 
   return (
     // mega container with all the elements
-    <ScrollView style={{ flex: 1 }}>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
-        <View style={styles_GoalsScreen.welcomeContainer}>
-          <Text style={styles.text}>Please select the </Text>
+        <View style={styles_GoalsScreen.inputSingleContainer}>
+          <Text style={styles.text}>Please Select the</Text>
           <Text style={styles.heading}>Budget Cycle</Text>
+          <RadioButton onRadioButtonPress={setSelectedRadioButton} />
+
         </View>
-        <RadioButton onRadioButtonPress={setSelectedRadioButton} />
+
 
         {/* <RadioButton time="Weekly" /> */}
 
-        {/* Budget*/}
-        <View style={styles_GoalsScreen.welcomeContainer}>
-          <Text style={styles.text}>Please enter the</Text>
+        <View style={styles_GoalsScreen.inputSingleContainer}>
+          <Text style={styles.text}>Please Enter your</Text>
           <Text style={styles.heading}>Budget</Text>
-          <View style={styles_GoalsScreen.inputContainer}>
-            {/* Profile*/}
-            <View style={styles_GoalsScreen.inputSingleContainer}>
-              <TextInput
-                style={styles.input}
-                keyboardType="numeric"
-                onChangeText={onChangeBudget}
-                placeholder={"400"}
-                value={budget}
-                maxLength={10}
-              />
-            </View>
-          </View>
-
-          {/* Input section inside the container which contains seperate items as single containers */}
-
-          {/* Budget setter*/}
-          <Text style={styles.text}>Please enter the</Text>
-          <View style={styles_GoalsScreen.inputSingleContainer}>
-            <Text style={styles.heading}>Goal</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={onChangeNumber}
-              value={number}
-              placeholder="1000"
-              keyboardType="numeric"
-            />
-            <Text style={{ marginTop: 6, marginRight: 5 }}>
-              *Leave Empty if you do not wish to save{" "}
-            </Text>
-          </View>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeBudget}
+            placeholder={"400"}
+            keyboardType="numeric"
+            value={budgetAmount}
+          />
         </View>
 
-        {/* Button Sectoion*/}
+        <View style={styles_GoalsScreen.inputSingleContainer}>
+          <Text style={styles.text}>Please Enter the</Text>
+          <Text style={styles.heading}>Goal</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeGoal}
+            placeholder={"1000"}
+            keyboardType="numeric"
+            value={goalAmount}
+            autoFocus={true}
+          />
+        </View>
+
         <View style={styles_GoalsScreen.buttonContainer}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("spending");
+              navigation.navigate("tut6");
               // console.log(selectedRadioButton);
               addGoal(selectedRadioButton, budget, number);
             }}
             style={styles.appButtonContainer}
+            onPress={() => navigation.navigate("Let's Start")}
           >
-            <Text style={styles.appButtonText}>Continue</Text>
+            <Text style={styles.appButtonText}>Submit</Text>
           </TouchableOpacity>
-        </View>
+          <View style={{ marginTop: 10 }}></View>
 
-        <View style={styles_GoalsScreen.buttonContainer}>
           <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Tut6");
-            }}
-            style={styles.appButtonContainer}
+            style={styles.appButtonContainerAlt}
+            onPress={() => navigation.navigate("Tut6")}
           >
             <Text style={styles.appButtonText}>Cancel</Text>
           </TouchableOpacity>
         </View>
       </View>
-    </ScrollView>
+    </TouchableWithoutFeedback>
   );
 };
 
-export default GoalScreen;
+export default GoalsScreen;
+
 
 const addGoal = (title, amount, type) => {
   db.transaction((tx) => {
