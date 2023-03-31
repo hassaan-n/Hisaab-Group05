@@ -14,11 +14,11 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import styles_AddExpenseCategory from "../styles/styles.AddExpenseCategory";
 import styles from "../styles";
+import db from "../database";
 
-const AddExpenseCategory = () => {
+const AddExpenseCategory = ({ route }: any) => {
   const navigation = useNavigation();
-  const [selected, setSelected] = React.useState(false);
-
+  const { title, amount } = route.params;
   const [selectedOption, setSelectedOption] = React.useState(null);
 
   const options = [
@@ -33,6 +33,42 @@ const AddExpenseCategory = () => {
 
   const handleOptionSelect = (option: any) => {
     setSelectedOption(option);
+  };
+
+  const addLog = (amount, transaction_title, currentTime, category) => {
+    db.transaction((tx) => {
+      // tx.executeSql("DROP TABLE IF EXISTS log;");
+      // tx.executeSql(
+      //   "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER AUTO_INCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT, PRIMARY KEY (transaction_id, username))"
+      // );
+      tx.executeSql(
+        "INSERT INTO log (amount,transaction_title,time_stamp, category) VALUES (?,?,?,?);",
+        [amount, transaction_title, currentTime, category], // pass in parameters as an array
+        (_, { rowsAffected }) => {
+          if (rowsAffected > 0) {
+            console.log("title and amount added successfully");
+          }
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+  const getLog = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM log;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
   };
 
   //   //props for budget input
@@ -76,7 +112,12 @@ const AddExpenseCategory = () => {
         <View style={styles_AddExpenseCategory.buttonContainer}>
           <TouchableOpacity
             style={styles.appButtonContainer}
-            onPress={() => navigation.navigate("Add Expense")}
+            onPress={() => {
+              const currentTime = new Date().toLocaleString();
+              addLog(amount, title, currentTime, selectedOption.name);
+              getLog();
+              navigation.navigate("Add Expense");
+            }}
           >
             <Text style={styles.appButtonText}>Submit</Text>
           </TouchableOpacity>

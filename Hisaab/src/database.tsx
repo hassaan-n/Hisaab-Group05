@@ -14,17 +14,16 @@ db.transaction((tx) => {
   );
 });
 
-db.transaction(
-    tx => {
-<<<<<<< Updated upstream
-    tx.executeSql("CREATE TABLE IF NOT EXISTS transaction (transaction_id INTEGER AUTO_INCREMENT PRIMARY KEY, username TEXT, category_id INTEGER, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)");
-=======
-    tx.executeSql("CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER AUTO_INCREMENT, username TEXT, category_id INTEGER, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT, PRIMARY KEY (transaction_id, username))");
->>>>>>> Stashed changes
-    });
-    
-db.transaction(tx => {
-tx.executeSql("CREATE TABLE IF NOT EXISTS goals (goal_id INTEGER AUTO_INCREMENT PRIMARY KEY, title TEXT, amount INTEGER, type TEXT, starting_time TIMESTAMP)");
+db.transaction((tx) => {
+  tx.executeSql(
+    "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER AUTO_INCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT, PRIMARY KEY (transaction_id, username))"
+  );
+});
+
+db.transaction((tx) => {
+  tx.executeSql(
+    "CREATE TABLE IF NOT EXISTS goals (goal_id INTEGER AUTO_INCREMENT PRIMARY KEY, title TEXT, amount INTEGER, type TEXT, starting_time TIMESTAMP)"
+  );
 });
 
 db.transaction((tx) => {

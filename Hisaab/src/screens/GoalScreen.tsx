@@ -84,19 +84,11 @@ const GoalsScreen = () => {
         <View style={styles_GoalsScreen.inputSingleContainer}>
           <Text style={styles.text}>Please Select the</Text>
           <Text style={styles.heading}>Budget Cycle</Text>
-<<<<<<< Updated upstream
           <RadioButton onRadioButtonPress={setSelectedRadioButton} />
         </View>
 
         <View style={styles_GoalsScreen.inputSingleContainer}>
           <Text style={styles.text}>Please Enter your</Text>
-=======
-          <RadioButton onRadioButtonPress={setSelectedRadioButton} />
-        </View>
-
-        <View style={styles_GoalsScreen.inputSingleContainer}>
-          <Text style={styles.text}>Please Enter your</Text>
->>>>>>> Stashed changes
           <Text style={styles.heading}>Budget</Text>
           <TextInput
             style={styles.input}
@@ -148,5 +140,4 @@ const GoalsScreen = () => {
   );
 };
 
-<<<<<<< Updated upstream
 export default GoalsScreen;

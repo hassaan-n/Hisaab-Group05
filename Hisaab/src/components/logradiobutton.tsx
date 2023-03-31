@@ -13,8 +13,8 @@ const RadioButton = ({ onRadioButtonPress }: props) => {
     <View style={styles.main}>
       <TouchableOpacity
         onPress={() => {
-          setSelected(1);
-          onRadioButtonPress("Food");
+          setSelected((prev) => (prev === 1 ? 0 : 1));
+          onRadioButtonPress((prev) => (prev === "Food" ? "" : "Food"));
         }}
       >
         <View style={styles.radioWrap}>
@@ -43,8 +43,10 @@ const RadioButton = ({ onRadioButtonPress }: props) => {
 
       <TouchableOpacity
         onPress={() => {
-          setSelected(2);
-          onRadioButtonPress("Subscriptions");
+          setSelected((prev) => (prev === 2 ? 0 : 2));
+          onRadioButtonPress((prev) =>
+            prev === "Subscriptions" ? "" : "Subscriptions"
+          );
         }}
       >
         <View style={styles.radioWrap}>
@@ -73,8 +75,8 @@ const RadioButton = ({ onRadioButtonPress }: props) => {
 
       <TouchableOpacity
         onPress={() => {
-          setSelected(3);
-          onRadioButtonPress("Laundry");
+          setSelected((prev) => (prev === 3 ? 0 : 3));
+          onRadioButtonPress((prev) => (prev === "Laundry" ? "" : "Laundry"));
         }}
       >
         <View style={styles.radioWrap}>
@@ -103,8 +105,10 @@ const RadioButton = ({ onRadioButtonPress }: props) => {
 
       <TouchableOpacity
         onPress={() => {
-          setSelected(4);
-          onRadioButtonPress("Transport");
+          setSelected((prev) => (prev === 4 ? 0 : 4));
+          onRadioButtonPress((prev) =>
+            prev === "Transport" ? "" : "Transport"
+          );
         }}
       >
         <View style={styles.radioWrap}>
@@ -133,8 +137,8 @@ const RadioButton = ({ onRadioButtonPress }: props) => {
 
       <TouchableOpacity
         onPress={() => {
-          setSelected(5);
-          onRadioButtonPress("Grocery");
+          setSelected((prev) => (prev === 5 ? 0 : 5));
+          onRadioButtonPress((prev) => (prev === "Grocery" ? "" : "Grocery"));
         }}
       >
         <View style={styles.radioWrap}>
@@ -163,8 +167,8 @@ const RadioButton = ({ onRadioButtonPress }: props) => {
 
       <TouchableOpacity
         onPress={() => {
-          setSelected(6);
-          onRadioButtonPress("Other");
+          setSelected((prev) => (prev === 6 ? 0 : 6));
+          onRadioButtonPress((prev) => (prev === "Other" ? "" : "Other"));
         }}
       >
         <View style={styles.radioWrap}>
@@ -193,8 +197,10 @@ const RadioButton = ({ onRadioButtonPress }: props) => {
 
       <TouchableOpacity
         onPress={() => {
-          setSelected(7);
-          onRadioButtonPress("Education");
+          setSelected((prev) => (prev === 7 ? 0 : 7));
+          onRadioButtonPress((prev) =>
+            prev === "Education" ? "" : "Education"
+          );
         }}
       >
         <View style={styles.radioWrap}>

@@ -1,5 +1,13 @@
 import React from "react";
-import { View, Text, TouchableOpacity, Image, TextInput,Keyboard,TouchableWithoutFeedback } from "react-native";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  TextInput,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles_HomeScreen from "../styles/styles.SignUp";
 import styles from "../styles";
@@ -44,7 +52,7 @@ const SignUp = () => {
 
   return (
     // mega container with all the elements
-    
+
     <View style={styles.container}>
       {/* image inside the container */}
       <View style={styles_HomeScreen.imageContainer}>
@@ -86,71 +94,47 @@ const SignUp = () => {
         </View>
 
         <Card pinstate={toggle} />
-        
       </View>
 
       {/* Button Sectoion*/}
       <View style={styles_HomeScreen.buttonContainer}>
         <TouchableOpacity
-
           // onPress={() => {navigation.navigate("Tut1"); addUser(text,toggle,number); getAllUsers();}}
 
-          onPress={() => { 
-          if (text == "" || (number == "" && toggle)) 
-            { alert("Please fill all the fields");} 
-            
-<<<<<<< Updated upstream
-          userExists(text, (nameExists, error) => {
-            if (error) {
-              console.error(error);
-            } else {
-              if (nameExists)
-              {
-                alert(`User with name ${text} already exists`)
-              } // true or false
-              else 
-              {
-                addUser(text, toggle, number)
-                navigation.navigate("Tut1")
-              }
+          onPress={() => {
+            if (text == "" || (number == "" && toggle)) {
+              alert("Please fill all the fields");
             }
-          });
-=======
-          // userExists(text, (nameExists, error) => {
-          //   if (error) {
-          //     console.error(error);
-          //   } else {
-          //     if (nameExists)
-          //     {
-          //       alert(`User with name ${text} already exists`)
-          //     } // true or false
-          //     else 
-          //     {
-          //       addUser(text, toggle, number)
-          //       navigation.navigate("Tut1")
-          //     }
-          //   }
-          // });
 
+            // userExists(text, (nameExists, error) => {
+            //   if (error) {
+            //     console.error(error);
+            //   } else {
+            //     if (nameExists)
+            //     {
+            //       alert(`User with name ${text} already exists`)
+            //     } // true or false
+            //     else
+            //     {
+            //       addUser(text, toggle, number)
+            //       navigation.navigate("Tut1")
+            //     }
+            //   }
+            // });
 
-          addUser(text, toggle, number)
-          navigation.navigate("Tut1")
-          getAllUsers();
-          const currentTime = new Date().toLocaleString();
-          console.log(typeof(currentTime))
-          console.log(currentTime)
->>>>>>> Stashed changes
-        }}
-
+            addUser(text, toggle, number);
+            navigation.navigate("Tut1");
+            getAllUsers();
+            const currentTime = new Date().toLocaleString();
+            console.log(typeof currentTime);
+            console.log(currentTime);
+          }}
           style={styles.appButtonContainer}
         >
           <Text style={styles.appButtonText}>Continue</Text>
         </TouchableOpacity>
       </View>
     </View>
-
-    
-    
   );
 };
 
@@ -165,9 +149,9 @@ const addUser = (name, pinstate, pin) => {
 };
 
 const userExists = (name, callback) => {
-  db.transaction( tx => {
+  db.transaction((tx) => {
     tx.executeSql(
-      'SELECT * FROM user WHERE name = ?;',
+      "SELECT * FROM user WHERE name = ?;",
       [name],
       (_, { rows: { _array } }) => {
         if (_array.length === 0) {
@@ -179,10 +163,9 @@ const userExists = (name, callback) => {
       (_, error) => {
         callback(null, error);
       }
-    )
+    );
   });
 };
-
 
 const getAllUsers = () => {
   db.transaction((tx) => {
@@ -200,6 +183,5 @@ const getAllUsers = () => {
 };
 
 export default SignUp;
-
 
 // DROP TABLE IF EXISTS user

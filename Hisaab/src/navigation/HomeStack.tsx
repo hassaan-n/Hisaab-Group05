@@ -16,7 +16,7 @@ import Home from "../screens/HomeScreen";
 import AddExpenseTitle from "../screens/AddExpenseTitle";
 import AddExpenseCategory from "../screens/AddExpenseCategory";
 import Analytics from "../screens/analytics";
-import Logbook from "../screens/logbook";
+import Logbook from "../screens/Logbook";
 
 //need to implement in this file
 //first needs to check if intiial sigup is done, if done then load the home screen direcrlt or show pin as per settings

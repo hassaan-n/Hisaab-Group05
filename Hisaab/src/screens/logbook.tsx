@@ -14,14 +14,9 @@ import styles from "../styles";
 import RadioButton from "../components/logradiobutton";
 import db from "../database";
 
-<<<<<<< Updated upstream
-
 const logbook = () => {
-=======
-const Logbook = () => {
->>>>>>> Stashed changes
   const navigation = useNavigation();
-
+  const [selectedRadioButton, setSelectedRadioButton] = useState("");
   // state to hold the log data
   const [logData, setLogData] = useState([]);
 
@@ -32,6 +27,7 @@ const Logbook = () => {
         "SELECT * FROM log;",
         [],
         (_, { rows }) => {
+          console.log(rows);
           setLogData(rows._array);
         },
         (_, error) => {
@@ -40,6 +36,10 @@ const Logbook = () => {
       );
     });
   }, []);
+
+  const filteredLogData = selectedRadioButton
+    ? logData.filter((entry) => entry.category === selectedRadioButton)
+    : logData;
 
   return (
     <ScrollView style={{ flex: 1 }}>
@@ -55,142 +55,14 @@ const Logbook = () => {
             <RadioButton onRadioButtonPress={setSelectedRadioButton} />
           </ScrollView>
         </View>
-<<<<<<< Updated upstream
-         
-        {/* <RadioButton time="Weekly" /> */}
- 
-
-          {/* Input section inside the container which contains seperate items as single containers */}
- 
-
-        {/* Button Sectoion*/}
-        {/* <View style={styles_GoalsScreen.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("Home");
-            }}
-            style={styles.appButtonContainer}
-          >
-            <Text style={styles.appButtonText}>Continue</Text>
-          </TouchableOpacity>
-        </View> */}
-
-        <View style={styles_GoalsScreen.card}>
-        
-        <Text style={styles_GoalsScreen.cardText}>Fusion Burger</Text>
-        <Text style={styles.card_subheading}>Food - Dinner</Text>
-        <Text style={styles.card_timestmap}> 9:00PM 1st March 2023</Text>
-        <Text style={styles_GoalsScreen.price}> RS.400 </Text>
-
-        </View>
-
-        <View style={styles_Logbook.card}>
-          <View style={styles_Logbook.cardLeft}>
-            <Text style={styles_Logbook.cardText}>Pasta</Text>
-            <Text style={styles_Logbook.card_subheading}>Food - Dinner</Text>
-            <Text style={styles_Logbook.card_timestmap}>
-              {" "}
-              8:00PM 1st March 2023
-            </Text>
-          </View>
-          <View style={styles_Logbook.cardRight}>
-            <Text style={styles_Logbook.price}> RS.400 </Text>
-          </View>
-        </View>
-
-        <View style={styles_Logbook.card}>
-          <View style={styles_Logbook.cardLeft}>
-            <Text style={styles_Logbook.cardText}>McDonalds</Text>
-            <Text style={styles_Logbook.card_subheading}>Food - Dinner</Text>
-            <Text style={styles_Logbook.card_timestmap}>
-              {" "}
-              9:00PM 2st March 2023
-            </Text>
-          </View>
-          <View style={styles_Logbook.cardRight}>
-            <Text style={styles_Logbook.price}> RS.100 </Text>
-          </View>
-        </View>
-
-        <View style={styles_Logbook.card}>
-          <View style={styles_Logbook.cardLeft}>
-            <Text style={styles_Logbook.cardText}>Fusion Burger</Text>
-            <Text style={styles_Logbook.card_subheading}>Food - Dinner</Text>
-            <Text style={styles_Logbook.card_timestmap}>
-              {" "}
-              9:30PM 1st March 2023
-            </Text>
-          </View>
-          <View style={styles_Logbook.cardRight}>
-            <Text style={styles_Logbook.price}> RS.300 </Text>
-          </View>
-        </View>
-
-        <View style={styles_Logbook.card}>
-          <View style={styles_Logbook.cardLeft}>
-            <Text style={styles_Logbook.cardText}>Omelette</Text>
-            <Text style={styles_Logbook.card_subheading}>Food - Dinner</Text>
-            <Text style={styles_Logbook.card_timestmap}>
-              {" "}
-              7:00AM 1st March 2023
-            </Text>
-          </View>
-          <View style={styles_Logbook.cardRight}>
-            <Text style={styles_Logbook.price}> RS.200 </Text>
-          </View>
-        </View>
-
-        <View style={styles_Logbook.card}>
-          <View style={styles_Logbook.cardLeft}>
-            <Text style={styles_Logbook.cardText}>Pasta</Text>
-            <Text style={styles_Logbook.card_subheading}>Food - Dinner</Text>
-            <Text style={styles_Logbook.card_timestmap}>
-              {" "}
-              8:00PM 1st March 2023
-            </Text>
-          </View>
-          <View style={styles_Logbook.cardRight}>
-            <Text style={styles_Logbook.price}> RS.400 </Text>
-          </View>
-        </View>
-
-        <View style={styles_Logbook.card}>
-          <View style={styles_Logbook.cardLeft}>
-            <Text style={styles_Logbook.cardText}>Pasta</Text>
-            <Text style={styles_Logbook.card_subheading}>Food - Dinner</Text>
-            <Text style={styles_Logbook.card_timestmap}>
-              {" "}
-              9:00PM 1st March 2023
-            </Text>
-          </View>
-          <View style={styles_Logbook.cardRight}>
-            <Text style={styles_Logbook.price}> RS.400 </Text>
-          </View>
-        </View>
-
-        <View style={styles_Logbook.card}>
-          <View style={styles_Logbook.cardLeft}>
-            <Text style={styles_Logbook.cardText}>Fusion Burger</Text>
-            <Text style={styles_Logbook.card_subheading}>Food - Dinner</Text>
-            <Text style={styles_Logbook.card_timestmap}>
-              {" "}
-              9:00PM 1st March 2023
-            </Text>
-          </View>
-          <View style={styles_Logbook.cardRight}>
-            <Text style={styles_Logbook.price}> RS.400 </Text>
-          </View>
-        </View>
-         
-
-        <View style={styles_GoalsScreen.buttonContainer}>
-=======
 
         {/* map over the log data to display each log entry */}
-        {logData.map((entry) => (
+        {filteredLogData.map((entry) => (
           <View style={styles_Logbook.card} key={entry.id}>
             <View style={styles_Logbook.cardLeft}>
-              <Text style={styles_Logbook.cardText}>{entry.transaction_title}</Text>
+              <Text style={styles_Logbook.cardText}>
+                {entry.transaction_title}
+              </Text>
               <Text style={styles_Logbook.card_subheading}>
                 {entry.category} - {entry.type}
               </Text>
@@ -205,7 +77,6 @@ const Logbook = () => {
         ))}
 
         <View style={styles_Logbook.buttonContainer}>
->>>>>>> Stashed changes
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Home");
@@ -220,18 +91,4 @@ const Logbook = () => {
   );
 };
 
-<<<<<<< Updated upstream
 export default logbook;
-
-
-const addGoal = (title, amount, type) => {
-  db.transaction(tx => {
-    tx.executeSql(
-      'INSERT INTO goal (title, amount, type) VALUES (?, ?, ?);',
-      [title, amount, type],
-    );
-  });
-};
-=======
-export default Logbook;
->>>>>>> Stashed changes

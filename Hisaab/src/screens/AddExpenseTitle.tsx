@@ -25,38 +25,6 @@ const AddExpenseTitle = () => {
   //props for goal input
   const [amount, onChangeAmount] = React.useState("");
 
-  const addLog = (amount, transaction_title, currentTime) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "INSERT INTO log (amount,transaction_title,time_stamp) VALUES (?,?,?);",
-        [amount, transaction_title, currentTime], // pass in parameters as an array
-        (_, { rowsAffected }) => {
-          if (rowsAffected > 0) {
-            console.log("title and amount added successfully");
-          }
-        },
-        (_, error) => {
-          console.log(error);
-        }
-      );
-    });
-  };
-
-  const getLog = () => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "SELECT * FROM log;",
-        [],
-        (_, { rows }) => {
-          console.log(rows);
-        },
-        (_, error) => {
-          console.log(error);
-        }
-      );
-    });
-  };
-
   return (
     // mega container with all the elements
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -90,11 +58,10 @@ const AddExpenseTitle = () => {
             <TouchableOpacity
               style={styles.appButtonContainer}
               onPress={() => {
-                const currentTime = new Date().toLocaleString();
-                addLog(amount, transaction_title, currentTime);
-                getLog();
-
-                navigation.navigate("Choose Category");
+                navigation.navigate("Choose Category", {
+                  title: transaction_title,
+                  amount: amount,
+                });
               }}
             >
               <Text style={styles.appButtonText}>Submit</Text>
