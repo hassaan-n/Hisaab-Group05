@@ -1,10 +1,16 @@
-import { StyleSheet, View, Text, Pressable, FlatList, Button } from 'react-native';
-
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  FlatList,
+  Button,
+} from "react-native";
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: "#FFFFFF",
     //alignItems: 'center',
     padding: 30,
   },
@@ -13,7 +19,6 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 10,
     justifyContent: "center",
-
   },
 
   appButtonContainerAlt: {
@@ -33,7 +38,7 @@ const styles = StyleSheet.create({
   input: {
     height: 50,
     marginTop: 5,
-    borderColor: 'grey',
+    borderColor: "grey",
     borderWidth: 1,
     padding: 10,
     borderRadius: 10,
@@ -57,9 +62,9 @@ const styles = StyleSheet.create({
 
   tutorialPage: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#FFFFFF",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   tutorialButton: {
@@ -70,47 +75,38 @@ const styles = StyleSheet.create({
   },
 
   filter_text: {
-    
     position: "absolute",
     fontSize: 15,
     fontFamily: "Poppins-Bold",
-    paddingTop:30,
-
+    paddingTop: 30,
+    zIndex: 1,
+    paddingRight: 10,
+    backgroundColor: "#FFFFFF",
   },
 
   card_subheading: {
-    
     position: "absolute",
     fontSize: 13,
     fontFamily: "Poppins-Bold",
-    marginLeft:10,
-    paddingTop:33,
-
+    marginLeft: 10,
+    paddingTop: 33,
   },
 
   card_timestmap: {
-    
     position: "absolute",
     fontSize: 10,
     fontFamily: "Poppins ",
-    marginLeft:8,
-    paddingTop:50,
-    
+    marginLeft: 8,
+    paddingTop: 50,
   },
-
-
 
   tutorialImage: {
-    height:'90%' ,
-    resizeMode: 'contain',
+    height: "90%",
+    resizeMode: "contain",
     width: "95%",
     bottom: 50,
-    top: -35
+    top: -35,
   },
-
-  
 });
 
-
 export default styles;
-

@@ -9,7 +9,7 @@ const RadioButton = ({ onRadioButtonPress }: props) => {
   const [selected, setSelected] = React.useState(0);
 
   return (
-    <View style={styles.main}>
+    <View>
       <TouchableOpacity
         onPress={() => {
           setSelected(1);
@@ -53,8 +53,6 @@ const styles = StyleSheet.create({
   radioText: {
     fontSize: 20,
     fontFamily: "Poppins",
-
-
   },
 
   radio: {

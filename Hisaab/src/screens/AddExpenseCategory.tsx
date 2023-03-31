@@ -76,7 +76,7 @@ const AddExpenseCategory = () => {
         <View style={styles_AddExpenseCategory.buttonContainer}>
           <TouchableOpacity
             style={styles.appButtonContainer}
-            onPress={() => navigation.navigate("Category")}
+            onPress={() => navigation.navigate("Add Expense")}
           >
             <Text style={styles.appButtonText}>Submit</Text>
           </TouchableOpacity>

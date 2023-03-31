@@ -1,9 +1,8 @@
 import React from "react";
-import {View, Text, TouchableOpacity, Image, TextInput,} from "react-native";
+import { View, Text, TouchableOpacity, Image, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
 import styles_StartSaving from "../styles/styles.StartSaving";
-
 
 const StartSaving = () => {
   const navigation = useNavigation();
@@ -17,11 +16,12 @@ const StartSaving = () => {
       </View>
 
       <View style={styles_StartSaving.textContainer}>
-        <Text style={styles.heading}>Let’s Start Saving!  </Text>
-        <Text style={styles.text}>The more you log, the smarter the app gets!</Text>
+        <Text style={styles.heading}>Let's Start Saving! </Text>
+        <Text style={styles.text}>
+          The more you log, the smarter the app gets!
+        </Text>
       </View>
 
-    
       {/* Button Sectoion*/}
       <View style={styles_StartSaving.buttonContainer}>
         <TouchableOpacity

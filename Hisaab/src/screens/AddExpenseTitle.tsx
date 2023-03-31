@@ -16,7 +16,8 @@ import styles_AddExpenseTitle from "../styles/styles.AddExpenseTitle";
 import styles from "../styles";
 import RadioButton from "../components/radioButton";
 
-const AddExpenseTitle = () => {
+const AddExpenseTitle = ({ route }: any) => {
+  // const { category } = route.params;
   const navigation = useNavigation();
 
   //props for budget input
@@ -58,7 +59,7 @@ const AddExpenseTitle = () => {
               style={styles.appButtonContainer}
               onPress={() => navigation.navigate("Choose Category")}
             >
-              <Text style={styles.appButtonText}>Submit</Text>
+              <Text style={styles.appButtonText}>Continue</Text>
             </TouchableOpacity>
             <View style={{ marginTop: 10 }}></View>
 
