@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -14,17 +14,34 @@ import styles from "../styles";
 import RadioButton from "../components/logradiobutton";
 import db from "../database"
 
+<<<<<<< Updated upstream
 
 const logbook = () => {
+=======
+const Logbook = () => {
+>>>>>>> Stashed changes
   const navigation = useNavigation();
 
-  //props for budget input
-  const [budget, onChangeBudget] = React.useState("");
-  //props for goal input
-  const [number, onChangeNumber] = React.useState("");
+  // state to hold the log data
+  const [logData, setLogData] = useState([]);
+
+  useEffect(() => {
+    // fetch log data from the database when the component mounts
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM log;",
+        [],
+        (_, { rows }) => {
+          setLogData(rows._array);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  }, []);
 
   return (
-    // mega container with all the elements
     <ScrollView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View style={styles_GoalsScreen.welcomeContainer}>
@@ -36,6 +53,7 @@ const logbook = () => {
           <Text style={styles.filter_text}>Filters :</Text>
           <RadioButton />
         </View>
+<<<<<<< Updated upstream
          
         {/* <RadioButton time="Weekly" /> */}
  
@@ -130,6 +148,28 @@ const logbook = () => {
          
 
         <View style={styles_GoalsScreen.buttonContainer}>
+=======
+
+        {/* map over the log data to display each log entry */}
+        {logData.map((entry) => (
+          <View style={styles_Logbook.card} key={entry.id}>
+            <View style={styles_Logbook.cardLeft}>
+              <Text style={styles_Logbook.cardText}>{entry.transaction_title}</Text>
+              <Text style={styles_Logbook.card_subheading}>
+                {entry.category} - {entry.type}
+              </Text>
+              <Text style={styles_Logbook.card_timestmap}>
+                {entry.time_stamp}
+              </Text>
+            </View>
+            <View style={styles_Logbook.cardRight}>
+              <Text style={styles_Logbook.price}>Rs. {entry.amount}</Text>
+            </View>
+          </View>
+        ))}
+
+        <View style={styles_Logbook.buttonContainer}>
+>>>>>>> Stashed changes
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Goals");
@@ -144,6 +184,7 @@ const logbook = () => {
   );
 };
 
+<<<<<<< Updated upstream
 export default logbook;
 
 
@@ -155,3 +196,6 @@ const addGoal = (title, amount, type) => {
     );
   });
 };
+=======
+export default Logbook;
+>>>>>>> Stashed changes

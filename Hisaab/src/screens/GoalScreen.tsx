@@ -23,6 +23,38 @@ const GoalsScreen = () => {
   //props for goal input
   const [number, onChangeNumber] = React.useState("");
 
+  const addBudget = (current_state) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO budget (current_state) VALUES (?);",
+        [current_state],
+        (_, { rowsAffected }) => {
+          if (rowsAffected > 0) {
+            console.log("Budget added successfully");
+          }
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+  const getbudget = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM budget;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
   return (
     // mega container with all the elements
     <ScrollView style={{ flex: 1 }}>
@@ -30,6 +62,7 @@ const GoalsScreen = () => {
         <View style={styles_GoalsScreen.welcomeContainer}>
           <Text style={styles.text}>Please select the </Text>
           <Text style={styles.heading}>Budget Cycle</Text>
+<<<<<<< Updated upstream
         </View>
         <RadioButton />
         {/* <RadioButton time="Weekly" /> */}
@@ -37,6 +70,13 @@ const GoalsScreen = () => {
         {/* Budget*/}
         <View style={styles_GoalsScreen.welcomeContainer}>
           <Text style={styles.text}>Please enter the</Text>
+=======
+          <RadioButton onRadioButtonPress={setSelectedRadioButton} />
+        </View>
+
+        <View style={styles_GoalsScreen.inputSingleContainer}>
+          <Text style={styles.text}>Please Enter your</Text>
+>>>>>>> Stashed changes
           <Text style={styles.heading}>Budget</Text>
           <View style={styles_GoalsScreen.inputContainer}>
             {/* Profile*/}
@@ -87,10 +127,28 @@ const GoalsScreen = () => {
 
         <View style={styles_GoalsScreen.buttonContainer}>
           <TouchableOpacity
+<<<<<<< Updated upstream
             onPress={() => {
               navigation.navigate("Tut6");
             }}
             style={styles.appButtonContainer}
+=======
+            style={styles.appButtonContainer}
+            onPress={() => {
+              addBudget(budgetAmount);
+              getbudget();
+              navigation.navigate("Let's Start");
+            }}
+          >
+            <Text style={styles.appButtonText}>Submit</Text>
+          </TouchableOpacity>
+
+          <View style={{ marginTop: 10 }}></View>
+
+          <TouchableOpacity
+            style={styles.appButtonContainerAlt}
+            onPress={() => navigation.navigate("Tut6")}
+>>>>>>> Stashed changes
           >
             <Text style={styles.appButtonText}>Cancel</Text>
           </TouchableOpacity>
@@ -100,6 +158,7 @@ const GoalsScreen = () => {
   );
 };
 
+<<<<<<< Updated upstream
 export default GoalsScreen;
 
 
@@ -111,3 +170,6 @@ const addGoal = (title, amount, type) => {
     );
   });
 };
+=======
+export default GoalsScreen;
+>>>>>>> Stashed changes

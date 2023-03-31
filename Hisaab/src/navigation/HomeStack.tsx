@@ -11,8 +11,23 @@ import Tut4 from '../screens/tut4';
 import Tut5 from '../screens/tut5';
 import Tut6 from '../screens/tut6';
 import StartSaving from '../screens/StartSaving';
+<<<<<<< Updated upstream
 import GoalScreen from '../screens/GoalScreen';
 import logbook from '../screens/logbook';
+=======
+import GoalsScreen from '../screens/GoalScreen';
+import Home from '../screens/HomeScreen';
+import AddExpenseTitle from '../screens/AddExpenseTitle';
+import AddExpenseCategory from '../screens/AddExpenseCategory';
+import Analytics from '../screens/analytics';
+import Logbook from '../screens/logbook';
+
+
+//need to implement in this file
+//first needs to check if intiial sigup is done, if done then load the home screen direcrlt or show pin as per settings
+
+
+>>>>>>> Stashed changes
 
 
 const HomeStack = createNativeStackNavigator();
