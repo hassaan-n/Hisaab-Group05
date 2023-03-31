@@ -35,7 +35,7 @@ const Logbook = () => {
         <View>
           <Text style={styles.filter_text}>Filters :</Text>
           <ScrollView horizontal={true}>
-            <RadioButton />
+            <RadioButton onRadioButtonPress={setSelectedRadioButton} />
           </ScrollView>
         </View>
 

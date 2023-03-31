@@ -2,12 +2,21 @@ import React from "react";
 import { View, TouchableOpacity, StyleSheet, Text } from "react-native";
 import textStyles from "../styles";
 
-const RadioButton = () => {
+type props = {
+  onRadioButtonPress: (value: any) => void;
+};
+
+const RadioButton = ({ onRadioButtonPress }: props) => {
   const [selected, setSelected] = React.useState(0);
 
   return (
     <View style={styles.main}>
-      <TouchableOpacity onPress={() => setSelected(1)}>
+      <TouchableOpacity
+        onPress={() => {
+          setSelected(1);
+          onRadioButtonPress("Food");
+        }}
+      >
         <View style={styles.radioWrap}>
           <View
             style={[
@@ -32,7 +41,12 @@ const RadioButton = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => setSelected(2)}>
+      <TouchableOpacity
+        onPress={() => {
+          setSelected(2);
+          onRadioButtonPress("Subscriptions");
+        }}
+      >
         <View style={styles.radioWrap}>
           <View
             style={[
@@ -57,7 +71,12 @@ const RadioButton = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => setSelected(3)}>
+      <TouchableOpacity
+        onPress={() => {
+          setSelected(3);
+          onRadioButtonPress("Laundry");
+        }}
+      >
         <View style={styles.radioWrap}>
           <View
             style={[
@@ -82,7 +101,12 @@ const RadioButton = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => setSelected(4)}>
+      <TouchableOpacity
+        onPress={() => {
+          setSelected(4);
+          onRadioButtonPress("Transport");
+        }}
+      >
         <View style={styles.radioWrap}>
           <View
             style={[
@@ -107,7 +131,12 @@ const RadioButton = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => setSelected(5)}>
+      <TouchableOpacity
+        onPress={() => {
+          setSelected(5);
+          onRadioButtonPress("Grocery");
+        }}
+      >
         <View style={styles.radioWrap}>
           <View
             style={[
@@ -132,7 +161,12 @@ const RadioButton = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => setSelected(6)}>
+      <TouchableOpacity
+        onPress={() => {
+          setSelected(6);
+          onRadioButtonPress("Other");
+        }}
+      >
         <View style={styles.radioWrap}>
           <View
             style={[
@@ -157,7 +191,12 @@ const RadioButton = () => {
         </View>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => setSelected(7)}>
+      <TouchableOpacity
+        onPress={() => {
+          setSelected(7);
+          onRadioButtonPress("Education");
+        }}
+      >
         <View style={styles.radioWrap}>
           <View
             style={[
