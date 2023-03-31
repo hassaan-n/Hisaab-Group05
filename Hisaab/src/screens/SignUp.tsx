@@ -99,6 +99,23 @@ const SignUp = () => {
           if (text == "" || (number == "" && toggle)) 
             { alert("Please fill all the fields");} 
             
+<<<<<<< Updated upstream
+          userExists(text, (nameExists, error) => {
+            if (error) {
+              console.error(error);
+            } else {
+              if (nameExists)
+              {
+                alert(`User with name ${text} already exists`)
+              } // true or false
+              else 
+              {
+                addUser(text, toggle, number)
+                navigation.navigate("Tut1")
+              }
+            }
+          });
+=======
           // userExists(text, (nameExists, error) => {
           //   if (error) {
           //     console.error(error);
@@ -114,12 +131,15 @@ const SignUp = () => {
           //     }
           //   }
           // });
+
+
           addUser(text, toggle, number)
           navigation.navigate("Tut1")
           getAllUsers();
           const currentTime = new Date().toLocaleString();
           console.log(typeof(currentTime))
           console.log(currentTime)
+>>>>>>> Stashed changes
         }}
 
           style={styles.appButtonContainer}
@@ -162,6 +182,7 @@ const userExists = (name, callback) => {
     )
   });
 };
+
 
 const getAllUsers = () => {
   db.transaction((tx) => {

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -14,17 +14,34 @@ import styles from "../styles";
 import RadioButton from "../components/logradiobutton";
 import db from "../database";
 
+<<<<<<< Updated upstream
+
+const logbook = () => {
+=======
 const Logbook = () => {
+>>>>>>> Stashed changes
   const navigation = useNavigation();
 
-  //props for selected category
-  const [selectedRadioButton, setSelectedRadioButton] = React.useState("");
-  // const [budget, onChangeBudget] = React.useState("");
-  // //props for goal input
-  // const [number, onChangeNumber] = React.useState("");
+  // state to hold the log data
+  const [logData, setLogData] = useState([]);
+
+  useEffect(() => {
+    // fetch log data from the database when the component mounts
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM log;",
+        [],
+        (_, { rows }) => {
+          setLogData(rows._array);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  }, []);
 
   return (
-    // mega container with all the elements
     <ScrollView style={{ flex: 1 }}>
       <View style={styles.container}>
         <View>
@@ -38,19 +55,33 @@ const Logbook = () => {
             <RadioButton onRadioButtonPress={setSelectedRadioButton} />
           </ScrollView>
         </View>
+<<<<<<< Updated upstream
+         
+        {/* <RadioButton time="Weekly" /> */}
+ 
 
-        <View style={styles_Logbook.card}>
-          <View style={styles_Logbook.cardLeft}>
-            <Text style={styles_Logbook.cardText}>Fusion Burger</Text>
-            <Text style={styles_Logbook.card_subheading}>Food - Dinner</Text>
-            <Text style={styles_Logbook.card_timestmap}>
-              {" "}
-              9:00PM 1st March 2023
-            </Text>
-          </View>
-          <View style={styles_Logbook.cardRight}>
-            <Text style={styles_Logbook.price}> RS.400 </Text>
-          </View>
+          {/* Input section inside the container which contains seperate items as single containers */}
+ 
+
+        {/* Button Sectoion*/}
+        {/* <View style={styles_GoalsScreen.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate("Home");
+            }}
+            style={styles.appButtonContainer}
+          >
+            <Text style={styles.appButtonText}>Continue</Text>
+          </TouchableOpacity>
+        </View> */}
+
+        <View style={styles_GoalsScreen.card}>
+        
+        <Text style={styles_GoalsScreen.cardText}>Fusion Burger</Text>
+        <Text style={styles.card_subheading}>Food - Dinner</Text>
+        <Text style={styles.card_timestmap}> 9:00PM 1st March 2023</Text>
+        <Text style={styles_GoalsScreen.price}> RS.400 </Text>
+
         </View>
 
         <View style={styles_Logbook.card}>
@@ -150,8 +181,31 @@ const Logbook = () => {
             <Text style={styles_Logbook.price}> RS.400 </Text>
           </View>
         </View>
+         
+
+        <View style={styles_GoalsScreen.buttonContainer}>
+=======
+
+        {/* map over the log data to display each log entry */}
+        {logData.map((entry) => (
+          <View style={styles_Logbook.card} key={entry.id}>
+            <View style={styles_Logbook.cardLeft}>
+              <Text style={styles_Logbook.cardText}>{entry.transaction_title}</Text>
+              <Text style={styles_Logbook.card_subheading}>
+                {entry.category} - {entry.type}
+              </Text>
+              <Text style={styles_Logbook.card_timestmap}>
+                {entry.time_stamp}
+              </Text>
+            </View>
+            <View style={styles_Logbook.cardRight}>
+              <Text style={styles_Logbook.price}>Rs. {entry.amount}</Text>
+            </View>
+          </View>
+        ))}
 
         <View style={styles_Logbook.buttonContainer}>
+>>>>>>> Stashed changes
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Home");
@@ -166,13 +220,18 @@ const Logbook = () => {
   );
 };
 
-export default Logbook;
+<<<<<<< Updated upstream
+export default logbook;
 
-// const addGoal = (title, amount, type) => {
-//   db.transaction(tx => {
-//     tx.executeSql(
-//       'INSERT INTO goal (title, amount, type) VALUES (?, ?, ?);',
-//       [title, amount, type],
-//     );
-//   });
-// };
+
+const addGoal = (title, amount, type) => {
+  db.transaction(tx => {
+    tx.executeSql(
+      'INSERT INTO goal (title, amount, type) VALUES (?, ?, ?);',
+      [title, amount, type],
+    );
+  });
+};
+=======
+export default Logbook;
+>>>>>>> Stashed changes

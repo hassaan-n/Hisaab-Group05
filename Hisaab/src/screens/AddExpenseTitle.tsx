@@ -15,15 +15,47 @@ import { useNavigation } from "@react-navigation/native";
 import styles_AddExpenseTitle from "../styles/styles.AddExpenseTitle";
 import styles from "../styles";
 import RadioButton from "../components/radioButton";
+import db from "../database";
 
-const AddExpenseTitle = ({ route }: any) => {
-  // const { category } = route.params;
+const AddExpenseTitle = () => {
   const navigation = useNavigation();
 
   //props for budget input
-  const [expenseTitle, onChangeTitle] = React.useState("");
+  const [transaction_title, onChangeTitle] = React.useState("");
   //props for goal input
-  const [expenseAmount, onChangeAmount] = React.useState("");
+  const [amount, onChangeAmount] = React.useState("");
+
+  const addLog = (amount, transaction_title, currentTime) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO log (amount,transaction_title,time_stamp) VALUES (?,?,?);",
+        [amount, transaction_title, currentTime], // pass in parameters as an array
+        (_, { rowsAffected }) => {
+          if (rowsAffected > 0) {
+            console.log("title and amount added successfully");
+          }
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+  const getLog = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM log;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
 
   return (
     // mega container with all the elements
@@ -36,7 +68,7 @@ const AddExpenseTitle = ({ route }: any) => {
             style={styles.input}
             onChangeText={onChangeTitle}
             placeholder={"Burger"}
-            value={expenseTitle}
+            value={transaction_title}
           />
         </View>
 
@@ -48,7 +80,7 @@ const AddExpenseTitle = ({ route }: any) => {
             onChangeText={onChangeAmount}
             placeholder={"1000"}
             keyboardType="numeric"
-            value={expenseAmount}
+            value={amount}
             autoFocus={true}
           />
         </View>
@@ -57,9 +89,15 @@ const AddExpenseTitle = ({ route }: any) => {
           <View style={styles_AddExpenseTitle.buttonContainer}>
             <TouchableOpacity
               style={styles.appButtonContainer}
-              onPress={() => navigation.navigate("Choose Category")}
+              onPress={() => {
+                const currentTime = new Date().toLocaleString();
+                addLog(amount, transaction_title, currentTime);
+                getLog();
+
+                navigation.navigate("Choose Category");
+              }}
             >
-              <Text style={styles.appButtonText}>Continue</Text>
+              <Text style={styles.appButtonText}>Submit</Text>
             </TouchableOpacity>
             <View style={{ marginTop: 10 }}></View>
 
