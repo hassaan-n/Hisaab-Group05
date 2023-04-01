@@ -1,6 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
+import db from "../database";
+
 
 const SpendingChart = () => {
     const data = {
@@ -45,4 +47,22 @@ const SpendingChart = () => {
     );
 };
 
+// const getDateData = () => {
+//     db.transaction((tx) => {
+//       tx.executeSql(
+//         "SELECT DATE(time_stamp) AS date, SUM(amount) AS total_amount FROM log WHERE time_stamp BETWEEN date('now', '-7 days') AND date('now') GROUP BY date ORDER BY date ASC;",
+//         [],
+//         (_, { rows }) => {
+//           console.log(rows);
+//         },
+//         (_, error) => {
+//           console.log(error);
+//         }
+//       );
+//     });
+//     return rows;
+//   };
+
 export default SpendingChart;
+
+// SELECT * FROM log WHERE time_stamp LIKE '01/04/2023%';

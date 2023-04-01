@@ -14,7 +14,7 @@ import styles from "../styles";
 import RadioButton from "../components/logradiobutton";
 import db from "../database";
 
-const logbook = () => {
+const Logbook = () => {
   const navigation = useNavigation();
   const [selectedRadioButton, setSelectedRadioButton] = useState("");
   // state to hold the log data
@@ -91,4 +91,4 @@ const logbook = () => {
   );
 };
 
-export default logbook;
+export default Logbook;
