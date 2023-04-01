@@ -15,7 +15,7 @@ db.transaction(
 
 db.transaction(
     tx => {
-    tx.executeSql("CREATE TABLE IF NOT EXISTS transaction (transaction_id INTEGER AUTO_INCREMENT, username TEXT, category_id INTEGER, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT, PRIMARY KEY (transaction_id, username))");
+    tx.executeSql("CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER AUTO_INCREMENT, username TEXT, category_id INTEGER, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT, PRIMARY KEY (transaction_id, username))");
     });
     
 // db.transaction(tx => {

@@ -27,6 +27,40 @@ const GoalsScreen = () => {
 
   const [selectedRadioButton, setSelectedRadioButton] = React.useState(null);
 
+  const addBudget = (current_state,currentTime) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO budget (current_state,time_stamp) VALUES (?,?);",
+        [current_state, currentTime],
+        (_, { rowsAffected }) => {
+          if (rowsAffected > 0) {
+            console.log("Budget added successfully");
+          }
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+
+
+  const getbudget = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM budget;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
   return (
     // mega container with all the elements
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -35,11 +69,7 @@ const GoalsScreen = () => {
           <Text style={styles.text}>Please Select the</Text>
           <Text style={styles.heading}>Budget Cycle</Text>
           <RadioButton onRadioButtonPress={setSelectedRadioButton} />
-
         </View>
-
-
-        {/* <RadioButton time="Weekly" /> */}
 
         <View style={styles_GoalsScreen.inputSingleContainer}>
           <Text style={styles.text}>Please Enter your</Text>
@@ -68,16 +98,19 @@ const GoalsScreen = () => {
 
         <View style={styles_GoalsScreen.buttonContainer}>
           <TouchableOpacity
-            onPress={() => {
-              navigation.navigate("tut6");
-              // console.log(selectedRadioButton);
-              addGoal(selectedRadioButton, budget, number);
-            }}
             style={styles.appButtonContainer}
-            onPress={() => navigation.navigate("Let's Start")}
+            onPress={() => {
+              const currentTime = new Date().toLocaleString();
+              addBudget(budgetAmount,currentTime);
+              getbudget();
+
+              
+              navigation.navigate("Let's Start");
+            }}
           >
             <Text style={styles.appButtonText}>Submit</Text>
           </TouchableOpacity>
+
           <View style={{ marginTop: 10 }}></View>
 
           <TouchableOpacity
@@ -93,14 +126,3 @@ const GoalsScreen = () => {
 };
 
 export default GoalsScreen;
-
-
-const addGoal = (title, amount, type) => {
-  db.transaction((tx) => {
-    tx.executeSql("INSERT INTO goal (title, amount, type) VALUES (?, ?, ?);", [
-      title,
-      amount,
-      type,
-    ]);
-  });
-};
