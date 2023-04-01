@@ -17,6 +17,7 @@ import AddExpenseTitle from '../screens/AddExpenseTitle';
 import AddExpenseCategory from '../screens/AddExpenseCategory';
 import Analytics from '../screens/analytics';
 import Logbook from '../screens/Logbook';
+import Profile from "../screens/Profile";
 
 
 //need to implement in this file
@@ -32,7 +33,7 @@ const HomeStackNavigator = () => {
     <HomeStack.Navigator>
 
 
-      
+      <HomeStack.Screen name="Profile" component={Profile} />
       <HomeStack.Screen name="Sign Up" component={SignUp} />
       <HomeStack.Screen name="Details" component={DetailsScreen} />
       <HomeStack.Screen name="Tut1" component={Tut1} />
