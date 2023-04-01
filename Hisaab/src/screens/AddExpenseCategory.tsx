@@ -113,10 +113,18 @@ const AddExpenseCategory = ({ route }: any) => {
           <TouchableOpacity
             style={styles.appButtonContainer}
             onPress={() => {
-              const currentTime = new Date().toLocaleString();
+              // const currentTime = (new Date().toISOString().slice(0,19).replace('T',' '));
+              // const currentTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Karachi' });
+              // const now = new Date().toLocaleString('en-CA', { timeZone: 'Asia/Karachi' });
+              // const [month, day, year] = now.split('/');
+              // const currentTime = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+              // const currentTime = new Date(now).toISOString();
+              // const currentTime = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Karachi' });
+              // const currentTime = now.split('/').reverse().join('-');
+              const currentTime = new Date().toLocaleString('en-CA', { timeZone: 'Asia/Karachi', hour12: false }).replace(',', '');
               addLog(amount, title, currentTime, selectedOption.name);
               getLog();
-              navigation.navigate("Add Expense");
+              navigation.navigate("Home");
             }}
           >
             <Text style={styles.appButtonText}>Submit</Text>
@@ -167,52 +175,40 @@ const radio_styles = StyleSheet.create({
   },
 });
 
-// const getDateData = () => {
-//     db.transaction((tx) => {
-//       tx.executeSql(
-//         // "SELECT DATE(time_stamp) AS date, SUM(amount) AS total_amount FROM log WHERE time_stamp BETWEEN date('now', '-7 days') AND date('now') GROUP BY date ORDER BY date ASC;",
-//         // "SELECT * from log",
-//         // "SELECT SUM(amount) FROM ( SELECT * FROM log WHERE substr(time_stamp, 1, 10) = '01/04/2023');",
-//         // // "SELECT SUM(amount) FROM (SELECT * FROM log WHERE DATE(time_stamp) BETWEEN date('now', '-7 days') AND date('now'));",
-//         // // "SELECT SUM(amount) AS total_amount FROM log WHERE DATE(time_stamp) BETWEEN date('now', '-7 days') AND date('now');",
-//         // // "SELECT SUM(amount) AS total_amount FROM log WHERE substr(time_stamp, 1, 10) BETWEEN strftime('%d/%m/%Y', 'now', '-7 days') AND strftime('%d/%m/%Y', 'now');",
-//         // "SELECT SUM(amount) AS total_amount FROM log WHERE substr(time_stamp, 1, 10) BETWEEN strftime('%d/%m/%Y', 'now', '-7 days') AND strftime('%d/%m/%Y', 'now');",
-//         // "SELECT DATE_FORMAT(date, '%d/%m/%Y') AS formatted_date, total_amount FROM (SELECT DATE(time_stamp) AS date, SUM(amount) AS total_amount FROM log WHERE time_stamp >= DATE_SUB(NOW(), INTERVAL 1 WEEK) GROUP BY DATE(time_stamp) ORDER BY DATE(time_stamp) ASC LIMIT 7) AS subquery;",
-//         [],
-//         (_, { rows }) => {
-//           console.log(rows);
-//         },
-//         (_, error) => {
-//           console.log(error);
-//         }
-//       );
-//     });
-//     // return rows;
-//   };
+const getDateData = () => {
+  db.transaction((tx) => {
+    tx.executeSql(
+      // "SELECT DATE(time_stamp) as date, SUM(amount) as total_amount FROM log WHERE time_stamp >= datetime('now', '-7 days') GROUP BY DATE(time_stamp)",
+      "SELECT DATE(time_stamp, 'localtime') as date, SUM(amount) as total_amount FROM log WHERE time_stamp >= datetime('now', '-7 days', 'localtime') GROUP BY DATE(time_stamp, 'localtime')",
+      // "DROP TABLE IF EXISTS log;",
+      [],
+      (_, { rows }) => {
+        const dailyTotals = [];
+        for (let i = 0; i < rows.length; i++) {
+          const row = rows.item(i);
+          dailyTotals.push({
+            date: row.date,
+            total_amount: row.total_amount,
+          });
+        }
+        console.log(dailyTotals);
+      },
+      (_, error) => {
+        console.log(error);
+      }
+    );
+  });
+};
 
-// const getDateData = () => {
-//   let dailyTotals = [];
-//   db.transaction((tx) => {
-//     tx.executeSql(
-//       "SELECT DATE(STR_TO_DATE(time_stamp, '%d/%m/%Y, %H:%i:%s')) AS date, SUM(amount) AS total_amount " +
-//       "FROM log " +
-//       "WHERE STR_TO_DATE(time_stamp, '%d/%m/%Y, %H:%i:%s') >= DATE_SUB(NOW(), INTERVAL 1 WEEK) " +
-//       "GROUP BY DATE(STR_TO_DATE(time_stamp, '%d/%m/%Y, %H:%i:%s')) " +
-//       "ORDER BY DATE(STR_TO_DATE(time_stamp, '%d/%m/%Y, %H:%i:%s')) ASC;",
-//       [],
-//       (tx, results) => {
-//         let len = results.rows.length;
-//         for (let i = 0; i < len; i++) {
-//           let row = results.rows.item(i);
-//           dailyTotals.push(row.total_amount);
-//         }
-//       }
-//     );
-//   });  
-// console.log(Date().STR_TO_DATE(new Date().toLocaleString()));
-}
 
 export default AddExpenseCategory;
 
 
 // "SELECT DATE_FORMAT(date, '%d/%m/%Y') AS formatted_date, total_amount FROM (SELECT DATE(time_stamp) AS date, SUM(amount) AS total_amount FROM log WHERE time_stamp >= DATE_SUB(NOW(), INTERVAL 1 WEEK) GROUP BY DATE(time_stamp) ORDER BY DATE(time_stamp) ASC LIMIT 7) AS subquery;"
+
+
+// "SELECT SUM(amount) FROM (SELECT * " +
+      // "FROM log " +
+      // "WHERE substr(time_stamp) != null);",
+
+      // const currentTime = (new Date().toISOString().slice(0,19).replace('T',' '));
