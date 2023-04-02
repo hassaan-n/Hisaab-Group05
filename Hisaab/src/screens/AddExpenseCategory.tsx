@@ -76,18 +76,12 @@ const AddExpenseCategory = () => {
         <View style={styles_AddExpenseCategory.buttonContainer}>
           <TouchableOpacity
             style={styles.appButtonContainer}
-            onPress={() => navigation.navigate("Category")}
+            onPress={() => navigation.navigate("Let's Start")}
           >
             <Text style={styles.appButtonText}>Submit</Text>
           </TouchableOpacity>
           <View style={{ marginTop: 10 }}></View>
-
-          <TouchableOpacity
-            style={styles.appButtonContainerAlt}
-            onPress={() => navigation.navigate("Home")}
-          >
-            <Text style={styles.appButtonText}>Cancel</Text>
-          </TouchableOpacity>
+ 
         </View>
       </KeyboardAvoidingView>
     </View>

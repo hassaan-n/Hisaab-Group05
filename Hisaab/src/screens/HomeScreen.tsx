@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -13,6 +13,8 @@ import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
 import styles_HomeScreen from "../styles/styles.HomeScreen";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
+import db from "../database";
+
 
 import {
   LineChart,
@@ -66,7 +68,7 @@ const HomeScreen = () => {
             marginTop: -5,
           }}
         >
-          Remaining
+          Used
         </Text>
       </View>
     );
@@ -104,6 +106,117 @@ const HomeScreen = () => {
     return content;
   };
 
+  
+  //props for budget input
+  const [transaction_title, onChangeTitle] = React.useState("");
+  //props for goal input
+  const [amount, onChangeAmount] = React.useState("");
+
+  const [budgetData, setBudgetData] = useState([]);
+
+  useEffect(() => {
+    // fetch budget data from the database when the component mounts
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT current_state, MAX(budget_id) FROM budget;",
+        [],
+        (_, { rows }) => {
+          setBudgetData(rows._array);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  }, []);
+
+  const [logData, setLogData] = useState([]);
+
+  useEffect(() => {
+    // fetch log data from the database when the component mounts
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT amount, MAX(transaction_id) FROM log;",
+        [],
+        (_, { rows }) => {
+          setLogData(rows._array);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  }, []);
+
+  const addLog = (amount, transaction_title, currentTime) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO log (amount, transaction_title, time_stamp) VALUES (?, ?, ?);",
+        [amount, transaction_title, currentTime], // pass in parameters as an array
+        (_, { rowsAffected }) => {
+          if (rowsAffected > 0) {
+            console.log("title and amount added successfully");
+          }
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+  const [budgetAmount, onChangeBudget] = React.useState("");
+
+  const addBudget = (current_state,currentTime) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO budget (current_state,time_stamp) VALUES (?,?);",
+        [current_state, currentTime],
+        (_, { rowsAffected }) => {
+          if (rowsAffected > 0) {
+            console.log("Budget added successfully");
+          }
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+  const getLog = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM log;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+  const getbudget = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM budget;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });700
+  };
+
+  
+   const difference = (budgetData[0]?.current_state - logData[0]?.amount) - 6000;
+
   return (
     // mega container with all the elements
     <View style={styles.container}>
@@ -132,7 +245,7 @@ const HomeScreen = () => {
             <View style={styles_HomeScreen.dailyMiddleRow}>
               <View style={styles_HomeScreen.budgetNumberContainer}>
                 <Text style={styles_HomeScreen.budgetNumber}>
-                  {todayRemaining}
+                  {difference | 0}
                 </Text>
                 <Text style={styles_HomeScreen.budgetText}>Remaining</Text>
               </View>
@@ -140,19 +253,21 @@ const HomeScreen = () => {
               <Pressable onPressIn={() => navigation.navigate("Add Expense")}>
                 <View style={styles_HomeScreen.addButton}>
                   <Image source={require("../images/Add.png")} />
-                  <RemainderRing percentage={percentageRemaining} />
+                  <RemainderRing percentage={(1000 - difference)/10 | 0 } />
                 </View>
               </Pressable>
 
               <View style={styles_HomeScreen.budgetNumberContainer}>
-                <Text style={styles_HomeScreen.budgetNumber}>
-                  {tomorrowBudget}
-                </Text>
-                <Text style={styles_HomeScreen.budgetText}>Tomorrow</Text>
-              </View>
+              <Text style={styles_HomeScreen.budgetNumber}>
+                { (1000 + difference) < 1000 ? 
+                  (1000 + difference) | 0 : 1000 }
+              </Text>
+              <Text style={styles_HomeScreen.budgetText}>Tomorrow</Text>
             </View>
 
-            <RemainderIndicator percentage={percentageRemaining} />
+            </View>
+
+            <RemainderIndicator percentage={ (1000 - difference)/10 | 0} />
           </View>
         </View>
 
