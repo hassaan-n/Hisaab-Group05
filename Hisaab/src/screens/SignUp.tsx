@@ -99,21 +99,21 @@ const SignUp = () => {
           if (text == "" || (number == "" && toggle)) 
             { alert("Please fill all the fields");} 
             
-          // userExists(text, (nameExists, error) => {
-          //   if (error) {
-          //     console.error(error);
-          //   } else {
-          //     if (nameExists)
-          //     {
-          //       alert(`User with name ${text} already exists`)
-          //     } // true or false
-          //     else 
-          //     {
-          //       addUser(text, toggle, number)
-          //       navigation.navigate("Tut1")
-          //     }
-          //   }
-          // });
+          userExists(text, (nameExists, error) => {
+            if (error) {
+              console.error(error);
+            } else {
+              if (nameExists)
+              {
+                alert(`User with name ${text} already exists`)
+              } // true or false
+              else 
+              {
+                addUser(text, toggle, number)
+                navigation.navigate("Tut1")
+              }
+            }
+          });
           addUser(text, toggle, number)
           navigation.navigate("Tut1")
           getAllUsers();

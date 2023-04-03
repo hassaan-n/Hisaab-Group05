@@ -132,6 +132,19 @@ const styles = StyleSheet.create({
   
   },
 
+  inputSingleContainer: {
+    width: "100%",
+    alignSelf: "center",
+    height: "auto",
+    
+    flexDirection: "column",
+    justifyContent: "space-between",
+  
+   
+    
+ 
+},
+
   
 });
 

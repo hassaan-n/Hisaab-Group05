@@ -18,6 +18,11 @@ import AddExpenseCategory from '../screens/AddExpenseCategory';
 import Analytics from '../screens/analytics';
 import Logbook from '../screens/Logbook';
 import Profile from "../screens/Profile";
+import ProfileNameSetting from "../screens/ProfileNameSetting";
+import PinSetting from "../screens/PinSetting";
+import NotificationSetting from "../screens/NotificationSetting";
+import BudgetSetting from "../screens/BudgetSetting";
+import GoalSetting from "../screens/GoalSetting";
 
 
 //need to implement in this file
@@ -49,14 +54,15 @@ const HomeStackNavigator = () => {
       <HomeStack.Screen name="Choose Category" component={AddExpenseCategory} />
       <HomeStack.Screen name="Analytics" component={Analytics} />
       <HomeStack.Screen name="Logs" component={Logbook} />
+      <HomeStack.Screen name="Profile Settings" component={ProfileNameSetting} />
+      <HomeStack.Screen name="Pin Settings" component={PinSetting} />
+      <HomeStack.Screen name="Notification Settings" component={NotificationSetting} />
+      <HomeStack.Screen name="Budget Settings" component={BudgetSetting} />
+      <HomeStack.Screen name="Goal Settings" component={GoalSetting} />
+
       
 
-      {/* <HomeStack.Screen name="Goals" component={GoalScreen} />
-      <HomeStack.Screen name="spending" component={spendings} />
-      <HomeStack.Screen name="analytics" component={analytics} /> */}
 
-
-      {/* <HomeStack.Screen name="Login" component={LoginScreen} /> */}
     </HomeStack.Navigator>
   );
 };

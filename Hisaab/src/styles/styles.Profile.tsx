@@ -21,17 +21,39 @@ const styles_Profile = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
-    marginBottom: 15,
 
   },
 
+  profilePictureSection: {
+    height: 144,
+    alignContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+    marginTop: 10,
+    
+    top: 0,
+  },
+
   profilePicture: {
+    position: "absolute",
     resizeMode: "contain",
     width: 144,
     height: 144,
     borderRadius: 144,
     marginBottom: 10,
+    borderWidth: 1,
   },
+
+  profilePictureDefault: {
+    position: "absolute",
+    resizeMode: "contain",
+    width: 144,
+    height: 144,
+    borderRadius: 144,
+    marginBottom: 10,
+    borderWidth: 1,
+  },
+
 
   listCard: {
     flexDirection: "column",
@@ -43,7 +65,7 @@ const styles_Profile = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#E5E5E5",
     padding: 10,
-    marginTop: 30,
+    marginTop: 20,
     
   },
   listItem: {
@@ -51,7 +73,17 @@ const styles_Profile = StyleSheet.create({
     columnGap: 10,
     width: "100%",
     height: "auto",
+  },
+  bottomVer: {
+    position: "absolute",
+    bottom: 12,
+    alignContent: "center",
+    alignItems: "center",
+    width: "100%",
+    alignSelf: "center",
   }
+  
+  
   
   
 
