@@ -63,22 +63,22 @@ const AddExpenseTitle = () => {
     });
   }, []);
 
-  const addLog = (amount, transaction_title, currentTime) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "INSERT INTO log (amount, transaction_title, time_stamp) VALUES (?, ?, ?);",
-        [amount, transaction_title, currentTime], // pass in parameters as an array
-        (_, { rowsAffected }) => {
-          if (rowsAffected > 0) {
-            console.log("title and amount added successfully");
-          }
-        },
-        (_, error) => {
-          console.log(error);
-        }
-      );
-    });
-  };
+  // const addLog = (amount, transaction_title, currentTime) => {
+  //   db.transaction((tx) => {
+  //     tx.executeSql(
+  //       "INSERT INTO log (amount, transaction_title, time_stamp) VALUES (?, ?, ?);",
+  //       [amount, transaction_title, currentTime], // pass in parameters as an array
+  //       (_, { rowsAffected }) => {
+  //         if (rowsAffected > 0) {
+  //           console.log("title and amount added successfully");
+  //         }
+  //       },
+  //       (_, error) => {
+  //         console.log(error);
+  //       }
+  //     );
+  //   });
+  // };
 
   const [budgetAmount, onChangeBudget] = React.useState("");
 
@@ -177,8 +177,8 @@ const AddExpenseTitle = () => {
   
   
                   const currentTime = new Date().toLocaleString();
-                  addLog(amount,transaction_title,currentTime);
-                  getLog();
+                  // addLog(amount,transaction_title,currentTime);
+                  // getLog();
 
                   const currentTime2 = new Date().toLocaleString();
                   addBudget(difference,currentTime2);
