@@ -27,55 +27,6 @@ const AddExpenseTitle = () => {
   //props for goal input
   const [amount, onChangeAmount] = React.useState("");
 
-  return (
-    // mega container with all the elements
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <View style={styles_AddExpenseTitle.inputSingleContainer}>
-          <Text style={styles.text}>Please Enter the</Text>
-          <Text style={styles.heading}>Title</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={onChangeTitle}
-            placeholder={"Burger"}
-            value={transaction_title}
-          />
-        </View>
-
-        <View style={styles_AddExpenseTitle.inputSingleContainer}>
-          <Text style={styles.text}>Please Enter the</Text>
-          <Text style={styles.heading}>Expense</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={onChangeAmount}
-            placeholder={"1000"}
-            keyboardType="numeric"
-            value={amount}
-            autoFocus={true}
-          />
-        </View>
-
-        <KeyboardAvoidingView>
-          <View style={styles_AddExpenseTitle.buttonContainer}>
-            <TouchableOpacity
-              style={styles.appButtonContainer}
-              onPress={() => {
-                navigation.navigate("Choose Category", {
-                  title: transaction_title,
-                  amount: amount,
-                });
-              }}
-            >
-              <Text style={styles.appButtonText}>Submit</Text>
-            </TouchableOpacity>
-            <View style={{ marginTop: 10 }}></View>
-
-            <TouchableOpacity
-              style={styles.appButtonContainerAlt}
-              onPress={() => navigation.navigate("Home")}
-            >
-              <Text style={styles.appButtonText}>Cancel</Text>
-            </TouchableOpacity>
   const [budgetData, setBudgetData] = useState([]);
 
   useEffect(() => {
@@ -231,7 +182,11 @@ const AddExpenseTitle = () => {
 
                   const currentTime2 = new Date().toLocaleString();
                   addBudget(difference,currentTime2);
-                  navigation.navigate("Choose Category");
+                  navigation.navigate("Choose Category", {
+                    title: transaction_title,
+                    amount: amount,
+                  });
+                  
                 }}
               >
                 <Text style={styles.appButtonText}>Submit</Text>

@@ -113,25 +113,24 @@ const AddExpenseCategory = ({ route }: any) => {
           <TouchableOpacity
             style={styles.appButtonContainer}
             onPress={() => {
-              // const currentTime = (new Date().toISOString().slice(0,19).replace('T',' '));
-              // const currentTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Karachi' });
-              // const now = new Date().toLocaleString('en-CA', { timeZone: 'Asia/Karachi' });
-              // const [month, day, year] = now.split('/');
-              // const currentTime = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-              // const currentTime = new Date(now).toISOString();
-              // const currentTime = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Karachi' });
-              // const currentTime = now.split('/').reverse().join('-');
+              
               const currentTime = new Date().toLocaleString('en-CA', { timeZone: 'Asia/Karachi', hour12: false }).replace(',', '').replace("04-02","03-29");
               addLog(amount, title, currentTime, selectedOption.name);
               getLog();
               navigation.navigate("Home");
             }}
-            onPress={() => navigation.navigate("Let's Start")}
           >
             <Text style={styles.appButtonText}>Submit</Text>
           </TouchableOpacity>
           <View style={{ marginTop: 10 }}></View>
- 
+
+          <TouchableOpacity
+            style={styles.appButtonContainerAlt}
+            onPress={() => {navigation.navigate("Home"), console.log(new Date().toLocaleString()), getDateData()}}
+            
+          >
+            <Text style={styles.appButtonText}>Cancel</Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </View>
