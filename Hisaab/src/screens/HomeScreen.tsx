@@ -16,14 +16,6 @@ import { AnimatedCircularProgress } from "react-native-circular-progress";
 import db from "../database";
 
 
-import {
-  LineChart,
-  BarChart,
-  PieChart,
-  ProgressChart,
-  ContributionGraph,
-  StackedBarChart,
-} from "react-native-chart-kit";
 
 import VerticalBarGraph from "@chartiful/react-native-vertical-bar-graph";
 
