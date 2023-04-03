@@ -45,22 +45,22 @@ const GoalsScreen = () => {
     });
   };
 
-  const addBudget = (current_state) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "INSERT INTO budget (current_state) VALUES (?);",
-        [current_state],
-        (_, { rowsAffected }) => {
-          if (rowsAffected > 0) {
-            console.log("Budget added successfully");
-          }
-        },
-        (_, error) => {
-          console.log(error);
-        }
-      );
-    });
-  };
+  // const addBudget = (current_state) => {
+  //   db.transaction((tx) => {
+  //     tx.executeSql(
+  //       "INSERT INTO budget (current_state) VALUES (?);",
+  //       [current_state],
+  //       (_, { rowsAffected }) => {
+  //         if (rowsAffected > 0) {
+  //           console.log("Budget added successfully");
+  //         }
+  //       },
+  //       (_, error) => {
+  //         console.log(error);
+  //       }
+  //     );
+  //   });
+  // };
 
   const getGoal = () => {
     db.transaction((tx) => {
@@ -152,10 +152,10 @@ const GoalsScreen = () => {
             onPress={() => {
               console.log(selectedRadioButton, goalAmount);
               addGoal(selectedRadioButton, goalAmount);
-              addBudget(budgetAmount);
+              // addBudget(budgetAmount);
               getGoal();
               const currentTime = new Date().toLocaleString();
-              // addBudget(budgetAmount,currentTime);
+              addBudget(budgetAmount,currentTime);
               getbudget();
 
               
