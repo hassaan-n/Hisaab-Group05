@@ -126,18 +126,12 @@ const AddExpenseCategory = ({ route }: any) => {
               getLog();
               navigation.navigate("Home");
             }}
+            onPress={() => navigation.navigate("Let's Start")}
           >
             <Text style={styles.appButtonText}>Submit</Text>
           </TouchableOpacity>
           <View style={{ marginTop: 10 }}></View>
-
-          <TouchableOpacity
-            style={styles.appButtonContainerAlt}
-            onPress={() => {navigation.navigate("Home"), console.log(new Date().toLocaleString()), getDateData()}}
-            
-          >
-            <Text style={styles.appButtonText}>Cancel</Text>
-          </TouchableOpacity>
+ 
         </View>
       </KeyboardAvoidingView>
     </View>

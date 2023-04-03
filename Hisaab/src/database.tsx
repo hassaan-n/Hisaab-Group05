@@ -25,7 +25,7 @@ db.transaction(
     
 db.transaction(
     tx => {
-    tx.executeSql("CREATE TABLE IF NOT EXISTS budget (budget_id INTEGER PRIMARY KEY, time_stamp TIMESTAMP, current_state TEXT, FOREIGN KEY ('current_state') REFERENCES budget_notifications('message'))");
+    tx.executeSql("CREATE TABLE IF NOT EXISTS budget (budget_id INTEGER PRIMARY KEY, time_stamp TIMESTAMP, current_state INTEGER, FOREIGN KEY ('current_state') REFERENCES budget_notifications('message'))");
 });
 
 db.transaction((tx) => {
