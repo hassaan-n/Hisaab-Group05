@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import styles_GoalsScreen from "../styles/styles.GoalsScreen";
-import styles from "../styles";
+import styles from '../styles';
 import RadioButton from "../components/radioButton";
 import db from "../database"
 import styles_HomeScreen from "../styles/styles.HomeScreen";
@@ -38,7 +38,13 @@ const Analytics = () => {
             <Text style={styles_HomeScreen.cardHeading}>Spending Report</Text>
           </View>
           <View style={styles_analytics.analytics}>
+            <Text style = {{position: "absolute",left:4 ,top: 100, zIndex: 2, fontSize:13, transform: [{ rotate: '270deg' }]}}>PKR</Text>
             < SpendingChart />
+          </View>
+          <View style={styles_HomeScreen.centerText}>
+            <Text>
+              Days
+            </Text>
           </View>
         </View>
         <View style={styles_HomeScreen.card}>
@@ -71,5 +77,7 @@ const Analytics = () => {
     </ScrollView>
   );
 };
+
+
 
 export default Analytics;

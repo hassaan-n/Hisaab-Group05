@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
 import styles_HomeScreen from "../styles/styles.HomeScreen";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
+import db from "../database";
 
 import {
   LineChart,
@@ -159,7 +160,7 @@ const HomeScreen = () => {
         <View style={styles_HomeScreen.card}>
           <View style={styles_HomeScreen.cardHeader}>
             <Text style={styles_HomeScreen.cardHeading}>Week Overview</Text>
-            <Pressable onPressIn={() => navigation.navigate("Analytics")}>
+            <Pressable onPressIn={() => {navigation.navigate("Analytics")}}>
               <Image
                 style={{ marginTop: 3 }}
                 source={require("../images/Arrow.png")}
@@ -199,5 +200,37 @@ const HomeScreen = () => {
     </View>
   );
 };
+
+
+
+// const dailyTotals: any = [];
+
+// const getDateData = () => {
+//   db.transaction((tx) => {
+//     tx.executeSql(
+//       // "SELECT DATE(time_stamp) as date, SUM(amount) as total_amount FROM log WHERE time_stamp >= datetime('now', '-7 days') GROUP BY DATE(time_stamp)",
+//       "SELECT DATE(time_stamp, 'localtime') as date, SUM(amount) as total_amount FROM log WHERE time_stamp >= datetime('now', '-7 days', 'localtime') GROUP BY DATE(time_stamp, 'localtime')",
+//       // "DROP TABLE IF EXISTS log;",
+//       [],
+//       (_, { rows }) => {
+//         for (let i = 0; i < rows.length; i++) {
+//           const row = rows.item(i);
+//           dailyTotals.push({
+//             date: row.date,
+//             total_amount: row.total_amount,
+//           });
+//         }
+//         console.log(dailyTotals);
+//       },
+//       (_, error) => {
+//         console.log(error);
+//       }
+//     );
+//   });
+// };
+
+// 
+
+
 
 export default HomeScreen;

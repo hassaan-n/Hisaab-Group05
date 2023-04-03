@@ -121,7 +121,7 @@ const AddExpenseCategory = ({ route }: any) => {
               // const currentTime = new Date(now).toISOString();
               // const currentTime = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Karachi' });
               // const currentTime = now.split('/').reverse().join('-');
-              const currentTime = new Date().toLocaleString('en-CA', { timeZone: 'Asia/Karachi', hour12: false }).replace(',', '');
+              const currentTime = new Date().toLocaleString('en-CA', { timeZone: 'Asia/Karachi', hour12: false }).replace(',', '').replace("04-02","03-29");
               addLog(amount, title, currentTime, selectedOption.name);
               getLog();
               navigation.navigate("Home");
