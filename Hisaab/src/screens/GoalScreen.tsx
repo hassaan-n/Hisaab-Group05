@@ -77,6 +77,40 @@ const GoalsScreen = () => {
     });
   };
 
+  const addBudget = (current_state,currentTime) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO budget (current_state,time_stamp) VALUES (?,?);",
+        [current_state, currentTime],
+        (_, { rowsAffected }) => {
+          if (rowsAffected > 0) {
+            console.log("Budget added successfully");
+          }
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+
+
+  const getbudget = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM budget;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
   return (
     // mega container with all the elements
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -120,6 +154,11 @@ const GoalsScreen = () => {
               addGoal(selectedRadioButton, goalAmount);
               addBudget(budgetAmount);
               getGoal();
+              const currentTime = new Date().toLocaleString();
+              // addBudget(budgetAmount,currentTime);
+              getbudget();
+
+              
               navigation.navigate("Let's Start");
             }}
           >

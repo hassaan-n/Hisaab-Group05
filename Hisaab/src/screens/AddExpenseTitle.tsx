@@ -19,7 +19,7 @@ import db from "../database";
 
 const AddExpenseTitle = () => {
   const navigation = useNavigation();
-
+  
   //props for budget input
   const [transaction_title, onChangeTitle] = React.useState("");
   //props for goal input
