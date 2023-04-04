@@ -14,7 +14,7 @@ import styles from "../styles";
 import db from "../database";
 
 import Toggle from "react-native-toggle-input";
-import { err } from "react-native-svg/lib/typescript/xml";
+import { sendNotification } from "../Notifications";
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -101,33 +101,35 @@ const SignUp = () => {
         <TouchableOpacity
           // onPress={() => {navigation.navigate("Tut1"); addUser(text,toggle,number); getAllUsers();}}
 
-          onPress={() => { 
-          if (text == "" || (number == "" && toggle)) 
-            { alert("Please fill all the fields");} 
-            
-          userExists(text, (nameExists, error) => {
-            if (error) {
-              console.error(error);
-            } else {
-              if (nameExists)
-              {
-                alert(`User with name ${text} already exists`)
-              } // true or false
-              else 
-              {
-                addUser(text, toggle, number)
-                navigation.navigate("Tut1")
-              }
+          onPress={() => {
+            if (text == "" || (number == "" && toggle)) {
+              alert("Please fill all the fields");
             }
-          });
-          addUser(text, toggle, number)
-          navigation.navigate("Tut1")
-          getAllUsers();
-          const currentTime = new Date().toLocaleString();
-          console.log(typeof(currentTime))
-          console.log(currentTime)
-        }}
 
+            userExists(text, (nameExists, error) => {
+              if (error) {
+                console.error(error);
+              } else {
+                if (nameExists) {
+                  alert(`User with name ${text} already exists`);
+                } // true or false
+                else {
+                  addUser(text, toggle, number);
+                  navigation.navigate("Tut1");
+                }
+              }
+            });
+            addUser(text, toggle, number);
+            sendNotification(
+              "Welcome to Hisaab!",
+              "You have successfully signed up!"
+            );
+            navigation.navigate("Tut1");
+            getAllUsers();
+            // const currentTime = new Date().toLocaleString();
+            // console.log(typeof currentTime);
+            // console.log(currentTime);
+          }}
           style={styles.appButtonContainer}
         >
           <Text style={styles.appButtonText}>Continue</Text>
