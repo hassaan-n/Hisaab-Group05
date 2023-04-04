@@ -21,7 +21,6 @@ import VerticalBarGraph from "@chartiful/react-native-vertical-bar-graph";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-  const username = "Hassan";
   const profilePicture = require("../images/hisaab.png");
   const tomorrowBudget = 200;
   const todayRemaining = 400;
@@ -29,6 +28,33 @@ const HomeScreen = () => {
   const todayBudget: number = 500;
   const barData = [20, 45, 28, 80, 99, 43, 24];
   const barDataDays = ["M", "T", "W", "T", "F", "S", "S"];
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+    }, 1000); // Refresh every second
+
+    return () => clearInterval(intervalId);
+  }, [ ]);
+
+  
+  const [displayname, setname] = useState([]);
+
+  useEffect(() => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT name, MAX(id) FROM user;",
+        [],
+        (_, { rows }) => {
+          setname(rows._array);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  }, []);
+
+  const username =  displayname[0]?.name;
 
   const RemainderIndicator = ({ percentage }) => {
     let colorState: string = "#55C595";

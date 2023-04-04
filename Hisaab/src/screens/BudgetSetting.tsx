@@ -23,11 +23,47 @@ const BudgetSetting = () => {
   const navigation = useNavigation();
   const [NewBudget, onChangeNumber] = React.useState("");
   
+  const [budgetAmount, onChangeBudget] = React.useState("");
+  
 
-  //get current name of user id 1 from db and return as string
-  const GetCurrentBudget = () => {};
+  const addBudget = (current_state,currentTime) => {
+    db.transaction((tx) => {
 
-  const UpdateBudgetInDB = () => {};
+      tx.executeSql("DROP TABLE IF EXISTS budget;");
+      tx.executeSql("CREATE TABLE IF NOT EXISTS budget (budget_id INTEGER PRIMARY KEY, time_stamp TIMESTAMP, current_state INTEGER, FOREIGN KEY ('current_state') REFERENCES budget_notifications('message'))");
+
+      console.log("table dropped and created");
+
+      tx.executeSql(
+        "INSERT INTO budget (current_state,budget_id,time_stamp) VALUES (?,?,?);",
+        [current_state, 1 ,currentTime],
+        (_, { rowsAffected }) => {
+          if (rowsAffected > 0) {
+            console.log("Budget added successfully");
+          }
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+  const getbudget = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM budget;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
 
  
 
@@ -46,7 +82,6 @@ const BudgetSetting = () => {
           
           <InputField
             title="Enter New Budget"
-            placeholder={GetCurrentBudget()}
             onChangeText={onChangeNumber}
             value={NewBudget}
             inputMode="Numeric"
@@ -56,7 +91,9 @@ const BudgetSetting = () => {
           <View style={{ width: "100%" }}>
             <TouchableOpacity
               onPress={() => {
-                UpdateBudgetInDB();
+                const currentTime = new Date().toLocaleString();
+                addBudget(NewBudget,currentTime);
+                getbudget();
                 navigation.goBack();
               }}
               style={styles.appButtonContainer}

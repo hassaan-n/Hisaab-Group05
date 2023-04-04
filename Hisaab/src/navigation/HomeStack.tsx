@@ -29,7 +29,7 @@ import GoalSetting from "../screens/GoalSetting";
 //first needs to check if intiial sigup is done, if done then load the home screen direcrlt or show pin as per settings
 
 const HomeStack = createNativeStackNavigator();
-const InitSetup = false;
+const InitSetup = true;
 
 const HomeStackNavigator = () => {
   

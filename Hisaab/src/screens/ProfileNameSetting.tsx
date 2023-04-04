@@ -17,32 +17,43 @@ import styles_Profile from "../styles/styles.Profile";
 import InputField from "../components/InputField";
 import styles_SettingsBox from "../styles/styles.SettingsBox";
 import db from "../database";
-import { RotateInDownLeft } from "react-native-reanimated";
+import { RotateInDownLeft, Value } from "react-native-reanimated";
 
 const ProfileNameSetting = () => {
   const navigation = useNavigation();
  
   const [NewName, onChangeText] = React.useState("");
-//get current name of user id 1 from db and return as string
-  const GetCurrentName = () => {
+ 
+  const addName = (name) => {
     db.transaction((tx) => {
-        tx.executeSql(
-            "SELECT name FROM user WHERE id = 0",
-            [],
-            (tx, results) => {
-                var len = results.rows.length;
-                if (len > 0) {
-                    var row = results.rows.item(0);
-                    return row.name;
-                }
-            }
-        );
+      tx.executeSql(
+        "INSERT INTO user (name) VALUES (?);",
+        [name],
+        (_, { rowsAffected }) => {
+          if (rowsAffected > 0) {
+            console.log("added successfully");
+          }
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
     });
-    };
+  };
 
-  const UpdateNameInDB = () => {
-    db.transaction((tx) => { tx.executeSql("UPDATE user SET name = ? WHERE id = 1", [NewName]); });
-   
+  const getuser = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM user;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
   };
 
 
@@ -57,8 +68,7 @@ const ProfileNameSetting = () => {
           <View style={styles_SettingsBox.cardInside}>
             <View style={{ marginBottom: 15 }}></View>
             <InputField
-              title="Name"
-              placeholder={GetCurrentName()}
+              title="New Name"
               onChangeText={onChangeText}
               value={NewName}
               inputMode=""
@@ -67,7 +77,9 @@ const ProfileNameSetting = () => {
 
             <View style={{ width: "100%" }}>
               <TouchableOpacity
-                onPress={() => {UpdateNameInDB(); navigation.goBack()}}
+                onPress={() => {addName(NewName); 
+                  getuser();
+                  navigation.goBack()}}
                 style={styles.appButtonContainer}
               >
                 <Text style={styles.appButtonText}>Continue</Text>
