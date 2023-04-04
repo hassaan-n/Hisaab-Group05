@@ -14,6 +14,7 @@ import styles from "../styles";
 import styles_HomeScreen from "../styles/styles.HomeScreen";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import db from "../database";
+import Bar from "./Bar";
 
 
 
@@ -299,8 +300,15 @@ const HomeScreen = () => {
               />
             </Pressable>
           </View>
+          <View style ={{top:5}}>
+          <Text style = {{position: "absolute",left:-1 ,top: 90, zIndex: 2, fontSize:13, transform: [{ rotate: '270deg' }]}}>PKR</Text>
+          < Bar/>
+          <View style ={styles_HomeScreen.centerText}>
+          <Text>Days</Text>
+          </View>
+          </View>
 
-          <VerticalBarGraph
+          {/* <VerticalBarGraph
             data={barData}
             labels={barDataDays}
             width={290}
@@ -312,7 +320,7 @@ const HomeScreen = () => {
               hasXAxisBackgroundLines: false,
             }}
             style={styles_HomeScreen.graph}
-          />
+          /> */}
         </View>
 
         <View style={styles_HomeScreen.card}>
