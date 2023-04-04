@@ -12,23 +12,20 @@ import {
   Keyboard,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import styles_AddExpenseCategory from "../styles/styles.AddExpenseCategory";
+import styles_SubCategory from "../styles/styles.SubCategory";
 import styles from "../styles";
 import db from "../database";
 
-const AddExpenseCategory = ({ route }: any) => {
+//not adding anything to database
+const SubCategory = () => {
   const navigation = useNavigation();
-  const { title, amount } = route.params;
+  //   const { title, amount } = route.params;
   const [selectedOption, setSelectedOption] = React.useState(null);
 
   const options = [
-    { name: "Food", id: 1 },
-    { name: "Transport", id: 2 },
-    { name: "Laundry", id: 3 },
-    { name: "Grocery", id: 4 },
-    { name: "Subscription", id: 5 },
-    { name: "Education", id: 6 },
-    { name: "Other", id: 7 },
+    { name: "Breakfast", id: 1 },
+    { name: "Lunch", id: 2 },
+    { name: "Dinner", id: 3 },
   ];
 
   const handleOptionSelect = (option: any) => {
@@ -42,7 +39,6 @@ const AddExpenseCategory = ({ route }: any) => {
       //   "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
       // );
 
-      console.log("table dropped and created");
       tx.executeSql(
         "INSERT INTO log (amount,transaction_title,time_stamp, category) VALUES (?,?,?,?);",
         [amount, transaction_title, currentTime, category], // pass in parameters as an array
@@ -82,12 +78,12 @@ const AddExpenseCategory = ({ route }: any) => {
     // mega container with all the elements
 
     <View style={styles.container}>
-      <View style={styles_AddExpenseCategory.title}>
+      <View style={styles_SubCategory.title}>
         <Text style={styles.text}>Please Select a</Text>
         <Text style={styles.heading}>Category</Text>
       </View>
 
-      <View style={styles_AddExpenseCategory.listContainer}>
+      <View style={styles_SubCategory.listContainer}>
         {/* Add stuff here */}
         <ScrollView>
           {options.map((option) => (
@@ -111,7 +107,7 @@ const AddExpenseCategory = ({ route }: any) => {
       </View>
 
       <KeyboardAvoidingView>
-        <View style={styles_AddExpenseCategory.buttonContainer}>
+        <View style={styles_SubCategory.buttonContainer}>
           <TouchableOpacity
             style={styles.appButtonContainer}
             onPress={() => {
@@ -123,15 +119,15 @@ const AddExpenseCategory = ({ route }: any) => {
               // const currentTime = new Date(now).toISOString();
               // const currentTime = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Karachi' });
               // const currentTime = now.split('/').reverse().join('-');
-              const currentTime = new Date()
-                .toLocaleString("en-CA", {
-                  timeZone: "Asia/Karachi",
-                  hour12: false,
-                })
-                .replace(",", "")
-                .replace("04-02", "03-29");
-              addLog(amount, title, currentTime, selectedOption.name);
-              getLog();
+              const currentTime = new Date();
+              //     .toLocaleString("en-CA", {
+              //       timeZone: "Asia/Karachi",
+              //       hour12: false,
+              //     })
+              //     .replace(",", "")
+              //     .replace("04-02", "03-29");
+              //   addLog(amount, title, currentTime, selectedOption.name);
+              //   getLog();
               navigation.navigate("Home");
             }}
           >
@@ -142,9 +138,9 @@ const AddExpenseCategory = ({ route }: any) => {
           <TouchableOpacity
             style={styles.appButtonContainerAlt}
             onPress={() => {
-              navigation.navigate("Home"),
-                console.log(new Date().toLocaleString()),
-                getDateData();
+              navigation.navigate("Home");
+              // console.log(new Date().toLocaleString()),
+              // getDateData();
             }}
           >
             <Text style={styles.appButtonText}>Cancel</Text>
@@ -211,7 +207,7 @@ const getDateData = () => {
   });
 };
 
-export default AddExpenseCategory;
+export default SubCategory;
 
 // "SELECT DATE_FORMAT(date, '%d/%m/%Y') AS formatted_date, total_amount FROM (SELECT DATE(time_stamp) AS date, SUM(amount) AS total_amount FROM log WHERE time_stamp >= DATE_SUB(NOW(), INTERVAL 1 WEEK) GROUP BY DATE(time_stamp) ORDER BY DATE(time_stamp) ASC LIMIT 7) AS subquery;"
 
