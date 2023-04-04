@@ -14,21 +14,30 @@ db.transaction((tx) => {
   );
 });
 
+db.transaction(
+    tx => {
+    tx.executeSql("CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER AUTOINCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT, PRIMARY KEY (transaction_id, username))");
+    });
+    
+// db.transaction(tx => {
+// tx.executeSql("CREATE TABLE IF NOT EXISTS goals (goal_id INTEGER AUTO_INCREMENT PRIMARY KEY, title TEXT, amount INTEGER, type TEXT, starting_time TIMESTAMP)");
+// });
+
 db.transaction((tx) => {
   tx.executeSql(
-    "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER AUTO_INCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT, PRIMARY KEY (transaction_id, username))"
+    "CREATE TABLE IF NOT EXISTS budget (budget_id INTEGER PRIMARY KEY, time_stamp TIMESTAMP, current_state INTEGER, FOREIGN KEY ('current_state') REFERENCES budget_notifications('message'))"
   );
 });
 
 db.transaction((tx) => {
   tx.executeSql(
-    "CREATE TABLE IF NOT EXISTS goals (goal_id INTEGER AUTO_INCREMENT PRIMARY KEY, title TEXT, amount INTEGER, type TEXT, starting_time TIMESTAMP)"
+    "CREATE TABLE IF NOT EXISTS goals (goal_id INTEGER AUTOINCREMENT PRIMARY KEY, title TEXT, amount INTEGER, type TEXT, starting_time TIMESTAMP)"
   );
 });
 
 db.transaction((tx) => {
   tx.executeSql(
-    "CREATE TABLE IF NOT EXISTS categories (category_id INTEGER PRIMARY KEY, food_id INTEGER, transport_id INTEGER, subscriptions INTEGER, laundry INTEGER, grocery INTEGER, education_expenses INTEGER, clothing INTEGER, miscellaneous INTEGER, FOREIGN KEY ('food_id') REFERENCES food('food_id'), FOREIGN KEY ('transport_id') REFERENCES transport('transport_id'), FOREIGN KEY ('subscriptions') REFERENCES subscription('subscriptions'))"
+    "CREATE TABLE IF NOT EXISTS categories (category_id INTEGER PRIMARY KEY, food_id TEXT, transport_id TEXT, subscriptions TEXT, laundry TEXT, grocery TEXT, education_expenses TEXT, clothing TEXT, miscellaneous TEXT, FOREIGN KEY ('food_id') REFERENCES food('food_id'), FOREIGN KEY ('transport_id') REFERENCES transport('transport_id'), FOREIGN KEY ('subscriptions') REFERENCES subscription('subscriptions'))"
   );
 });
 
@@ -40,7 +49,7 @@ db.transaction((tx) => {
 
 db.transaction((tx) => {
   tx.executeSql(
-    "CREATE TABLE IF NOT EXISTS budget_notifications (notification_id INTEGER AUTO_INCREMENT PRIMARY KEY, message TEXT, time TIMESTAMP, is_read BOOLEAN DEFAULT FALSE)"
+    "CREATE TABLE IF NOT EXISTS budget_notifications (notification_id INTEGER AUTOINCREMENT PRIMARY KEY, message TEXT, time TIMESTAMP, is_read BOOLEAN DEFAULT FALSE)"
   );
 });
 

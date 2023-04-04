@@ -27,11 +27,11 @@ const GoalsScreen = () => {
 
   const [selectedRadioButton, setSelectedRadioButton] = React.useState("");
 
-  const addGoal = (type: string, amount: string) => {
+  const addGoal = (type,amount) => {
     const timestamp = new Date().toISOString();
     db.transaction((tx) => {
       tx.executeSql(
-        "INSERT INTO goal (type, amount, time_stamp) VALUES (?, ?, ?);",
+        "INSERT INTO goals (type, amount, starting_time) VALUES (?, ?, ?);",
         [type, amount, timestamp],
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) {
@@ -45,11 +45,43 @@ const GoalsScreen = () => {
     });
   };
 
-  const addBudget = (current_state) => {
+  // const addBudget = (current_state) => {
+  //   db.transaction((tx) => {
+  //     tx.executeSql(
+  //       "INSERT INTO budget (current_state) VALUES (?);",
+  //       [current_state],
+  //       (_, { rowsAffected }) => {
+  //         if (rowsAffected > 0) {
+  //           console.log("Budget added successfully");
+  //         }
+  //       },
+  //       (_, error) => {
+  //         console.log(error);
+  //       }
+  //     );
+  //   });
+  // };
+
+  const getGoal = () => {
     db.transaction((tx) => {
       tx.executeSql(
-        "INSERT INTO budget (current_state) VALUES (?);",
-        [current_state],
+        "SELECT * FROM goals;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+  const addBudget = (current_state,currentTime) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO budget (current_state,time_stamp) VALUES (?,?);",
+        [current_state, currentTime],
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) {
             console.log("Budget added successfully");
@@ -62,10 +94,12 @@ const GoalsScreen = () => {
     });
   };
 
-  const getGoal = () => {
+
+
+  const getbudget = () => {
     db.transaction((tx) => {
       tx.executeSql(
-        "SELECT * FROM goal;",
+        "SELECT * FROM budget;",
         [],
         (_, { rows }) => {
           console.log(rows);
@@ -118,8 +152,11 @@ const GoalsScreen = () => {
             onPress={() => {
               console.log(selectedRadioButton, goalAmount);
               addGoal(selectedRadioButton, goalAmount);
-              addBudget(budgetAmount);
+              // addBudget(budgetAmount);
               getGoal();
+              const currentTime = new Date().toLocaleString();
+              addBudget(budgetAmount,currentTime);
+              getbudget();
               navigation.navigate("Let's Start");
             }}
           >

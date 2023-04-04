@@ -97,4 +97,3 @@ const getDateData = () => {
 export default SpendingChart;
 
 // SELECT * FROM log WHERE time_stamp LIKE '01/04/2023%';
-

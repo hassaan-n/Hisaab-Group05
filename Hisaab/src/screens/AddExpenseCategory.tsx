@@ -39,8 +39,10 @@ const AddExpenseCategory = ({ route }: any) => {
     db.transaction((tx) => {
       // tx.executeSql("DROP TABLE IF EXISTS log;");
       // tx.executeSql(
-      //   "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER AUTO_INCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT, PRIMARY KEY (transaction_id, username))"
+      //   "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
       // );
+
+      console.log("table dropped and created");
       tx.executeSql(
         "INSERT INTO log (amount,transaction_title,time_stamp, category) VALUES (?,?,?,?);",
         [amount, transaction_title, currentTime, category], // pass in parameters as an array
@@ -121,7 +123,13 @@ const AddExpenseCategory = ({ route }: any) => {
               // const currentTime = new Date(now).toISOString();
               // const currentTime = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Karachi' });
               // const currentTime = now.split('/').reverse().join('-');
-              const currentTime = new Date().toLocaleString('en-CA', { timeZone: 'Asia/Karachi', hour12: false }).replace(',', '').replace("04-02","03-29");
+              const currentTime = new Date()
+                .toLocaleString("en-CA", {
+                  timeZone: "Asia/Karachi",
+                  hour12: false,
+                })
+                .replace(",", "")
+                .replace("04-02", "03-29");
               addLog(amount, title, currentTime, selectedOption.name);
               getLog();
               navigation.navigate("Home");
@@ -133,8 +141,11 @@ const AddExpenseCategory = ({ route }: any) => {
 
           <TouchableOpacity
             style={styles.appButtonContainerAlt}
-            onPress={() => {navigation.navigate("Home"), console.log(new Date().toLocaleString()), getDateData()}}
-            
+            onPress={() => {
+              navigation.navigate("Home"),
+                console.log(new Date().toLocaleString()),
+                getDateData();
+            }}
           >
             <Text style={styles.appButtonText}>Cancel</Text>
           </TouchableOpacity>
@@ -200,15 +211,12 @@ const getDateData = () => {
   });
 };
 
-
 export default AddExpenseCategory;
-
 
 // "SELECT DATE_FORMAT(date, '%d/%m/%Y') AS formatted_date, total_amount FROM (SELECT DATE(time_stamp) AS date, SUM(amount) AS total_amount FROM log WHERE time_stamp >= DATE_SUB(NOW(), INTERVAL 1 WEEK) GROUP BY DATE(time_stamp) ORDER BY DATE(time_stamp) ASC LIMIT 7) AS subquery;"
 
-
 // "SELECT SUM(amount) FROM (SELECT * " +
-      // "FROM log " +
-      // "WHERE substr(time_stamp) != null);",
+// "FROM log " +
+// "WHERE substr(time_stamp) != null);",
 
-      // const currentTime = (new Date().toISOString().slice(0,19).replace('T',' '));
+// const currentTime = (new Date().toISOString().slice(0,19).replace('T',' '));
