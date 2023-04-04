@@ -20,6 +20,8 @@ import styles_analytics from "../styles/styles.analytics";
 import SpendingChart from './spending';
 import ProgressBar from "./progressbar";
 import MyChart from "./piechart";
+import Notif from "./Recommendations";
+import PushNotification from 'react-native-push-notification';
 
 
 
@@ -31,6 +33,9 @@ const Analytics = () => {
         <View style={styles_analytics.analytics}>
           <Text style={styles.text}>Review your spending patterns</Text>
           <Text style={styles.heading}>Analytics</Text>
+        </View>
+        <View>
+      <Notif /> 
         </View>
 
         <View style={styles_HomeScreen.card}>
