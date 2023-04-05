@@ -14,7 +14,7 @@ import styles from "../styles";
 import db from "../database";
 
 import Toggle from "react-native-toggle-input";
-import { sendNotification } from "../Notifications";
+//import { sendNotification } from "../Notifications";
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -120,10 +120,10 @@ const SignUp = () => {
               }
             });
             addUser(text, toggle, number);
-            sendNotification(
-              "Welcome to Hisaab!",
-              "You have successfully signed up!"
-            );
+            // sendNotification(
+            //   "Welcome to Hisaab!",
+            //   "You have successfully signed up!"
+            // );
             navigation.navigate("Tut1");
             getAllUsers();
             // const currentTime = new Date().toLocaleString();

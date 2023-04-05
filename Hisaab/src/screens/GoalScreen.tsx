@@ -77,7 +77,7 @@ const GoalsScreen = () => {
     });
   };
 
-  const addBudget = (current_state,currentTime) => {
+  const addBudget = (current_state, currentTime) => {
     db.transaction((tx) => {
       tx.executeSql(
         "INSERT INTO budget (current_state,time_stamp) VALUES (?,?);",
@@ -93,8 +93,6 @@ const GoalsScreen = () => {
       );
     });
   };
-
-
 
   const getbudget = () => {
     db.transaction((tx) => {
@@ -155,11 +153,10 @@ const GoalsScreen = () => {
               // addBudget(budgetAmount);
               getGoal();
               const currentTime = new Date().toLocaleString();
-              addBudget(budgetAmount,currentTime);
+              addBudget(budgetAmount, currentTime);
               getbudget();
 
-              
-              navigation.navigate("Let's Start");
+              navigation.navigate("Notis");
             }}
           >
             <Text style={styles.appButtonText}>Submit</Text>
