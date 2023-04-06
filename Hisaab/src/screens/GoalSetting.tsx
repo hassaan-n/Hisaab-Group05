@@ -24,12 +24,36 @@ const GoalSetting = () => {
   const [NewGoal, onChangeNumber] = React.useState("");
 
 
-  //get current name of user id 1 from db and return as string
-  const GetCurrentGoal = () => {};
+  const Updategoal = (updatedgoal) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "UPDATE goals SET amount = ? WHERE goal_id IS NULL;",
+        [updatedgoal],
+        (_, { rowsAffected }) => {
+          console.log(`Rows affected: ${rowsAffected}`);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+  
 
-  const UpdateGoalInDB = () => {};
-
-
+  const getgoals = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM goals;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
 
   return (
     // mega container with all the elements
@@ -44,11 +68,9 @@ const GoalSetting = () => {
           
 
     
-          
-          
+        
           <InputField
             title="Enter New Goal"
-            placeholder={GetCurrentGoal()}
             onChangeText={onChangeNumber}
             value={NewGoal}
             inputMode="Numeric"
@@ -58,8 +80,8 @@ const GoalSetting = () => {
           <View style={{ width: "100%" }}>
             <TouchableOpacity
               onPress={() => {
-                UpdateGoalInDB();
-                UpdatePinStateInDB();
+                Updategoal(NewGoal);
+                getgoals();
                 navigation.goBack();
               }}
               style={styles.appButtonContainer}

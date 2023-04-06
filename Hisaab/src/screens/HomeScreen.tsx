@@ -14,6 +14,7 @@ import styles from "../styles";
 import styles_HomeScreen from "../styles/styles.HomeScreen";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import db from "../database";
+import Bar from "./Bar";
 
 
 
@@ -21,7 +22,6 @@ import VerticalBarGraph from "@chartiful/react-native-vertical-bar-graph";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-  const username = "Hassan";
   const profilePicture = require("../images/hisaab.png");
   const tomorrowBudget = 200;
   const todayRemaining = 400;
@@ -29,6 +29,33 @@ const HomeScreen = () => {
   const todayBudget: number = 500;
   const barData = [20, 45, 28, 80, 99, 43, 24];
   const barDataDays = ["M", "T", "W", "T", "F", "S", "S"];
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+    }, 1000); // Refresh every second
+
+    return () => clearInterval(intervalId);
+  }, [ ]);
+
+  
+  const [displayname, setname] = useState([]);
+
+  useEffect(() => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT name, MAX(id) FROM user;",
+        [],
+        (_, { rows }) => {
+          setname(rows._array);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  }, []);
+
+  const username =  displayname[0]?.name;
 
   const RemainderIndicator = ({ percentage }) => {
     let colorState: string = "#55C595";
@@ -273,8 +300,15 @@ const HomeScreen = () => {
               />
             </Pressable>
           </View>
+          <View style ={{top:5}}>
+          <Text style = {{position: "absolute",left:-1 ,top: 90, zIndex: 2, fontSize:13, transform: [{ rotate: '270deg' }]}}>PKR</Text>
+          < Bar/>
+          <View style ={styles_HomeScreen.centerText}>
+          <Text>Days</Text>
+          </View>
+          </View>
 
-          <VerticalBarGraph
+          {/* <VerticalBarGraph
             data={barData}
             labels={barDataDays}
             width={290}
@@ -286,7 +320,7 @@ const HomeScreen = () => {
               hasXAxisBackgroundLines: false,
             }}
             style={styles_HomeScreen.graph}
-          />
+          /> */}
         </View>
 
         <View style={styles_HomeScreen.card}>

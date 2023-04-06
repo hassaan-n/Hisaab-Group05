@@ -5,16 +5,9 @@ import styles_piechart from "../styles/styles.piechart"
 import db from "../database";
 import { useState, useEffect } from 'react';
 
+
 const PieChartExample = () => {
-  const [data, setData] = useState({
-    data:[
-    { name: 'Transport', value: 0, color: '#33CC33' },
-    { name: 'Laundry', value: 0, color: '#66CCFF' },
-    { name: 'Subscription', value: 0, color: '#3366CC' },
-    { name: 'Food', value: 0, color: '#99CCFF' },
-    { name: 'Grocery', value: 0, color: '#FFCC33' },
-    { name: 'Other', value: 0, color: '#FF9900' },
-  ]});
+  const [data, setData] = useState([]);
 
   const chartConfig = {
     backgroundGradientFrom: '#FFFFFF',
@@ -31,33 +24,32 @@ const PieChartExample = () => {
   
   useEffect(() => {
     getChartData()
-  .then((categoryData:any) => {
-    const newData = data.data.map((d, i) => {
-      const name = categoryData[i]?.category || d.name;
-      const value = categoryData[i]?.total_amount || d.value;
-      const color = d.color;
-      return { name, value, color };
-    });
-    setData({ data: newData });
-  });
-  },);
+      .then((categoryData:any) => {
+        const colors = ['#74dda4','#598b73','#1f5a78', '#3366CC', '#308ff3', '#AAD4FF'];
+        let idx = 0;
+        const newData = categoryData.map((d) => ({
+          name: d.category,
+          value: d.total_amount,
+          color: colors[idx++],
+        }));
+        setData(newData);
+      });
+  }, []);
 
   const getChartData = () => {
     return new Promise((resolve, reject) => {
-      const categoryData:any = [];
       db.transaction((tx) => {
         tx.executeSql(
-          'SELECT DISTINCT category, SUM(amount) AS total_amount FROM log GROUP BY category', // duplicate values of food in legend
+          'SELECT DISTINCT category, SUM(amount) AS total_amount FROM log GROUP BY category',
           [],
           (_, { rows }) => {
+            const categoryData = [];
             for (let i = 0; i < rows.length; i++) {
               const row = rows.item(i);
-              categoryData.push(
-                {
-                  category: row.category,
-                  total_amount: row.total_amount,
-                }
-              );
+              categoryData.push({
+                category: row.category,
+                total_amount: row.total_amount,
+              });
             }
             resolve(categoryData);
           },
@@ -69,11 +61,12 @@ const PieChartExample = () => {
     });
   };
 
+
   return (
-   <View style={styles_piechart.container}>
-    <View style={{flex: 1}}>
+    <View style={styles_piechart.container}>
+      <View style={{ flex: 1 }}>
         <PieChart
-          data={data.data}
+          data={data}
           width={350}
           height={250}
           chartConfig={chartConfig}
@@ -84,8 +77,8 @@ const PieChartExample = () => {
         />
       </View>
       <View>
-        {data.data.map(({ name, color }) => (
-          <View key={name} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+        {data.map(({ name, color }, index) => (
+          <View key={index} style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
             <View style={{ width: 10, height: 10, borderRadius: 5, backgroundColor: color, marginRight: 5 }} />
             <Text style={styles_piechart.label}>{name}</Text>
           </View>
@@ -96,3 +89,4 @@ const PieChartExample = () => {
 };
 
 export default PieChartExample;
+

@@ -98,15 +98,14 @@ const Profile = () => {
 
 
         <View style={styles_Profile.helloText}>
-          <Text style={styles.text}>Hello</Text>
-          <Text style={styles.heading}>{username}</Text>
+          <Text style={styles.heading}> Profile settings</Text>
         </View>
 
        
       </View>
       <View style={styles_Profile.listCard}>
           <ListItem
-            title="Profile"
+            title="Profile Name"
             image={profileIcon}
             navigateTo="Profile Settings"
           />

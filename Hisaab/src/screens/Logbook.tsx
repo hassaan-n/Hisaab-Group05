@@ -40,6 +40,7 @@ const Logbook = () => {
   const filteredLogData = selectedRadioButton
     ? logData.filter((entry) => entry.category === selectedRadioButton)
     : logData;
+  filteredLogData.sort((a, b) => b.transaction_id - a.transaction_id);
 
   return (
     <ScrollView style={{ flex: 1 }}>
@@ -80,6 +81,7 @@ const Logbook = () => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Home");
+              console.log(new_arr);
             }}
             style={styles.appButtonContainer}
           >
