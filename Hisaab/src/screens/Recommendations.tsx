@@ -27,25 +27,25 @@
 
 // export default ScheduleNotification;
 
-import PushNotification from 'react-native-push-notification';
-import db from '../database';
+// import PushNotification from 'react-native-push-notification';
+// import db from '../database';
 
 
-const Notif = () => {
-  db.transaction((tx) => {
-    tx.executeSql(
-      'SELECT * FROM log WHERE amount < ? ORDER BY RANDOM() LIMIT 2',
-      [1000],
-      (_, { rows }) => {
-        const data = rows;
+// const Notif = () => {
+//   db.transaction((tx) => {
+//     tx.executeSql(
+//       'SELECT * FROM log WHERE amount < ? ORDER BY RANDOM() LIMIT 2',
+//       [1000],
+//       (_, { rows }) => {
+//         const data = rows;
 
-        PushNotification.localNotification({
-          title: 'Your immediate notification',
-          message: JSON.stringify(data),
-        });
-      },
-    );
-  });
-};
+//         PushNotification.localNotification({
+//           title: 'Your immediate notification',
+//           message: JSON.stringify(data),
+//         });
+//       },
+//     );
+//   });
+// };
 
-export default Notif;
+// export default Notif;

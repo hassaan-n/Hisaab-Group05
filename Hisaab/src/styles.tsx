@@ -139,10 +139,15 @@ const styles = StyleSheet.create({
     
     flexDirection: "column",
     justifyContent: "space-between",
-  
-   
-    
- 
+  },
+  backButton: {
+    width: 30,
+    height: 30,
+    resizeMode: "contain",
+    marginLeft: -5,
+    marginTop:20,
+    marginBottom:-20
+    // marginRight: 10,
 },
 
   

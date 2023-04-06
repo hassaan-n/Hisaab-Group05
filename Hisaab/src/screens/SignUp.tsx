@@ -52,10 +52,10 @@ const SignUp = () => {
 
   return (
     // mega container with all the elements
-
-    <View style={styles.container}>
+    // <View style={[styles_HomeScreen.card, { marginTop: 40}]}>
+    <View style={styles.container }>
       {/* image inside the container */}
-      <View style={styles_HomeScreen.imageContainer}>
+      <View style={[styles_HomeScreen.imageContainer, {marginTop: 100}]}>
         <Image source={require("../images/hisaab.png")} />
       </View>
 
