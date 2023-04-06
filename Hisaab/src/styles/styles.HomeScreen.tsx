@@ -126,13 +126,12 @@ const styles_HomeScreen = StyleSheet.create({
   },
 
   chart: {
-    // alignContent: 'center',
-    padding: 10,
+    padding: 8,
     backgroundColor: '#f2f8f2',
     flex: 1,
     alignItems: 'center',
     alignContent: 'center',
-    left: 10
+    left: 1,
   }
 
 });
