@@ -22,12 +22,51 @@ import Toggle from "react-native-toggle-input";
 const BudgetSetting = () => {
   const navigation = useNavigation();
   const [NewBudget, onChangeNumber] = React.useState("");
+
+
+  
+  const addbudget = (amount, currentTime) => {
+    db.transaction((tx) => {
+      tx.executeSql("DROP TABLE IF EXISTS budget;");
+      tx.executeSql(
+        "CREATE TABLE IF NOT EXISTS budget (budget_id INTEGER PRIMARY KEY, time_stamp TIMESTAMP, current_state INTEGER, FOREIGN KEY ('current_state') REFERENCES budget_notifications('message'))"
+      );
+
+      console.log("table dropped and created");
+
+      tx.executeSql(
+        "INSERT INTO budget (current_state,time_stamp) VALUES (?,?);",
+        [amount,currentTime], // pass in parameters as an array
+        (_, { rowsAffected }) => {
+          if (rowsAffected > 0) {
+            console.log("new budget added successfully");
+          }
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+  
+  const getbudget = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM budget;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
   
 
-  //get current name of user id 1 from db and return as string
-  const GetCurrentBudget = () => {};
-
-  const UpdateBudgetInDB = () => {};
+ 
 
  
 
@@ -46,7 +85,6 @@ const BudgetSetting = () => {
           
           <InputField
             title="Enter New Budget"
-            placeholder={GetCurrentBudget()}
             onChangeText={onChangeNumber}
             value={NewBudget}
             inputMode="Numeric"
@@ -56,7 +94,15 @@ const BudgetSetting = () => {
           <View style={{ width: "100%" }}>
             <TouchableOpacity
               onPress={() => {
-                UpdateBudgetInDB();
+                const currentTime = new Date()
+                .toLocaleString("en-CA", {
+                  timeZone: "Asia/Karachi",
+                  hour12: false,
+                })
+                .replace(",", "")
+                .replace("04-02", "03-29");
+                addbudget(NewBudget,currentTime);
+                getbudget();
                 navigation.goBack();
               }}
               style={styles.appButtonContainer}

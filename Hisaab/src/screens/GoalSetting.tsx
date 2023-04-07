@@ -25,10 +25,40 @@ const GoalSetting = () => {
 
 
   //get current name of user id 1 from db and return as string
-  const GetCurrentGoal = () => {};
+   
+  const addGoal = (amount: string) => {
+    const timestamp = new Date().toISOString();
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO goal (amount, time_stamp) VALUES (?, ?);",
+        [amount, timestamp],
+        (_, { rowsAffected }) => {
+          if (rowsAffected > 0) {
+            console.log("Goal added successfully");
+          }
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
 
-  const UpdateGoalInDB = () => {};
-
+  
+  const getGoal = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM goal;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
 
 
   return (
@@ -44,11 +74,9 @@ const GoalSetting = () => {
           
 
     
-          
-          
+
           <InputField
             title="Enter New Goal"
-            placeholder={GetCurrentGoal()}
             onChangeText={onChangeNumber}
             value={NewGoal}
             inputMode="Numeric"
@@ -58,8 +86,8 @@ const GoalSetting = () => {
           <View style={{ width: "100%" }}>
             <TouchableOpacity
               onPress={() => {
-                UpdateGoalInDB();
-                UpdatePinStateInDB();
+                addGoal(NewGoal);
+                getGoal();
                 navigation.goBack();
               }}
               style={styles.appButtonContainer}

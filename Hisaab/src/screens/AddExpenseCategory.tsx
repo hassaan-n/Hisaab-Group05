@@ -213,10 +213,4 @@ const getDateData = () => {
 
 export default AddExpenseCategory;
 
-// "SELECT DATE_FORMAT(date, '%d/%m/%Y') AS formatted_date, total_amount FROM (SELECT DATE(time_stamp) AS date, SUM(amount) AS total_amount FROM log WHERE time_stamp >= DATE_SUB(NOW(), INTERVAL 1 WEEK) GROUP BY DATE(time_stamp) ORDER BY DATE(time_stamp) ASC LIMIT 7) AS subquery;"
-
-// "SELECT SUM(amount) FROM (SELECT * " +
-// "FROM log " +
-// "WHERE substr(time_stamp) != null);",
-
-// const currentTime = (new Date().toISOString().slice(0,19).replace('T',' '));
+ 

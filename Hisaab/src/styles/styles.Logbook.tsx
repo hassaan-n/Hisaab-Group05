@@ -61,7 +61,7 @@ const styles_Logbook = StyleSheet.create({
         borderRadius: 5,
         height: 80,
         padding: 10,
-        backgroundColor: '#F2F8F2',
+        backgroundColor: '#55C595',
         marginVertical: 10,
     },
     cardLeft: {

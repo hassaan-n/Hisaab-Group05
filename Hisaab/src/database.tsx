@@ -26,13 +26,13 @@ db.transaction((tx) => {
 
 db.transaction((tx) => {
   tx.executeSql(
-    "CREATE TABLE IF NOT EXISTS budget (budget_id INTEGER PRIMARY KEY, time_stamp TIMESTAMP, current_state INTEGER, FOREIGN KEY ('current_state') REFERENCES budget_notifications('message'))"
+    "CREATE TABLE IF NOT EXISTS budget (budget_id INTEGER PRIMARY KEY AUTOINCREMENT, time_stamp TIMESTAMP, current_state INTEGER, type TEXT, FOREIGN KEY ('current_state') REFERENCES budget_notifications('message'))"
   );
 });
 
 db.transaction((tx) => {
   tx.executeSql(
-    "CREATE TABLE IF NOT EXISTS goals (goal_id INTEGER AUTO_INCREMENT PRIMARY KEY, title TEXT, amount INTEGER, type TEXT, starting_time TIMESTAMP)"
+    "CREATE TABLE IF NOT EXISTS goals (goal_id INTEGER AUTOINCREMENT PRIMARY KEY, title TEXT, amount INTEGER, type TEXT, starting_time TIMESTAMP)"
   );
 });
 

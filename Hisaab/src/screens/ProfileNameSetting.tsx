@@ -23,28 +23,30 @@ const ProfileNameSetting = () => {
   const navigation = useNavigation();
  
   const [NewName, onChangeText] = React.useState("");
-//get current name of user id 1 from db and return as string
-  const GetCurrentName = () => {
-    db.transaction((tx) => {
-        tx.executeSql(
-            "SELECT name FROM user WHERE id = 0",
-            [],
-            (tx, results) => {
-                var len = results.rows.length;
-                if (len > 0) {
-                    var row = results.rows.item(0);
-                    return row.name;
-                }
-            }
-        );
-    });
-    };
+ 
 
-  const UpdateNameInDB = () => {
-    db.transaction((tx) => { tx.executeSql("UPDATE user SET name = ? WHERE id = 1", [NewName]); });
-   
+  const addUser = (name) => {
+    db.transaction((tx) => {
+      tx.executeSql("INSERT INTO user (name) VALUES (?);", [
+        name,
+      ]);
+    });
   };
 
+  const getAllUsers = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM user;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
 
   return (
     // mega container with all the elements
@@ -58,7 +60,6 @@ const ProfileNameSetting = () => {
             <View style={{ marginBottom: 15 }}></View>
             <InputField
               title="Name"
-              placeholder={GetCurrentName()}
               onChangeText={onChangeText}
               value={NewName}
               inputMode=""
@@ -67,7 +68,9 @@ const ProfileNameSetting = () => {
 
             <View style={{ width: "100%" }}>
               <TouchableOpacity
-                onPress={() => {UpdateNameInDB(); navigation.goBack()}}
+                onPress={() => {addUser(NewName); 
+                  getAllUsers();
+                  navigation.goBack()}}
                 style={styles.appButtonContainer}
               >
                 <Text style={styles.appButtonText}>Continue</Text>
@@ -90,8 +93,6 @@ const ProfileNameSetting = () => {
       
       
       
-      
-    
     </View>
   );
 };

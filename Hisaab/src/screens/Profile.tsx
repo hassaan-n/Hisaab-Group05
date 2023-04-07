@@ -98,8 +98,7 @@ const Profile = () => {
 
 
         <View style={styles_Profile.helloText}>
-          <Text style={styles.text}>Hello</Text>
-          <Text style={styles.heading}>{username}</Text>
+          <Text style={styles.heading}>{ "Profile settings"}</Text>
         </View>
 
        
