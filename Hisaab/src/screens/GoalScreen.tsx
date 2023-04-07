@@ -27,11 +27,11 @@ const GoalsScreen = () => {
 
   const [selectedRadioButton, setSelectedRadioButton] = React.useState("");
 
-  const addGoal = (type: string, amount: string) => {
+  const addGoal = (type, amount) => {
     const timestamp = new Date().toISOString();
     db.transaction((tx) => {
       tx.executeSql(
-        "INSERT INTO goal (type, amount, time_stamp) VALUES (?, ?, ?);",
+        "INSERT INTO goals (type, amount, starting_time) VALUES (?, ?, ?);",
         [type, amount, timestamp],
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) {
@@ -65,7 +65,7 @@ const GoalsScreen = () => {
   const getGoal = () => {
     db.transaction((tx) => {
       tx.executeSql(
-        "SELECT * FROM goal;",
+        "SELECT * FROM goals;",
         [],
         (_, { rows }) => {
           console.log(rows);
