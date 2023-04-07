@@ -13,8 +13,8 @@ import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
 import styles_HomeScreen from "../styles/styles.HomeScreen";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
-import styles_Logbook from "../styles/styles.Logbook";
 import db from "../database";
+import Bar from "./Bar";
 
 
 
@@ -22,7 +22,6 @@ import VerticalBarGraph from "@chartiful/react-native-vertical-bar-graph";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-   
   const profilePicture = require("../images/hisaab.png");
   const tomorrowBudget = 200;
   const todayRemaining = 400;
@@ -30,6 +29,33 @@ const HomeScreen = () => {
   const todayBudget: number = 500;
   const barData = [20, 45, 28, 80, 99, 43, 24];
   const barDataDays = ["M", "T", "W", "T", "F", "S", "S"];
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+    }, 1000); // Refresh every second
+
+    return () => clearInterval(intervalId);
+  }, [ ]);
+
+  
+  const [displayname, setname] = useState([]);
+
+  useEffect(() => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT name, MAX(id) FROM user;",
+        [],
+        (_, { rows }) => {
+          setname(rows._array);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  }, []);
+
+  const username =  displayname[0]?.name;
 
   const RemainderIndicator = ({ percentage }) => {
     let colorState: string = "#55C595";
@@ -111,7 +137,7 @@ const HomeScreen = () => {
     // fetch budget data from the database when the component mounts
     db.transaction((tx) => {
       tx.executeSql(
-        "SELECT current_state,type, MAX(budget_id) FROM budget;",
+        "SELECT current_state, MAX(budget_id) FROM budget;",
         [],
         (_, { rows }) => {
           setBudgetData(rows._array);
@@ -122,56 +148,6 @@ const HomeScreen = () => {
       );
     });
   }, []);
-
-
-  let remaining: number;
-
-  if (budgetData && budgetData.length > 0 && budgetData[0]?.type === "Weekly") {
-    remaining = budgetData[0]?.current_state / 7;
-  } else {
-    remaining = budgetData[0]?.current_state / 30;
-  }
-
-  const [name, setname] = useState([]);
-
-  useEffect(() => {
-    // fetch budget data from the database when the component mounts
-    db.transaction((tx) => {
-      tx.executeSql(
-        "SELECT name, MAX(budget_id) FROM user;",
-        [],
-        (_, { rows }) => {
-          setname(rows._array);
-        },
-        (_, error) => {
-          console.log(error);
-        }
-      );
-    });
-  }, []);
-
-  const username =  name[0]?.name;
-
-
-  
-  const [latest, setlatest] = useState([]);
-
-  useEffect(() => {
-    // fetch budget data from the database when the component mounts
-    db.transaction((tx) => {
-      tx.executeSql(
-        "SELECT *, MAX(transaction_id) FROM log;",
-        [],
-        (_, { rows }) => {
-          setlatest(rows._array);
-        },
-        (_, error) => {
-          console.log(error);
-        }
-      );
-    });
-  }, []);
-
 
   const [logData, setLogData] = useState([]);
 
@@ -258,7 +234,7 @@ const HomeScreen = () => {
   };
 
   
-  const difference = (budgetData[0]?.current_state - logData[0]?.amount) - 6000;
+   const difference = (budgetData[0]?.current_state - logData[0]?.amount) - 6000;
 
   return (
     // mega container with all the elements
@@ -288,23 +264,22 @@ const HomeScreen = () => {
             <View style={styles_HomeScreen.dailyMiddleRow}>
               <View style={styles_HomeScreen.budgetNumberContainer}>
                 <Text style={styles_HomeScreen.budgetNumber}>
-                  { remaining| 0}
+                  {difference | 0}
                 </Text>
                 <Text style={styles_HomeScreen.budgetText}>Remaining</Text>
               </View>
 
-              <Pressable onPressIn={() => {
-                console.log(budgetData[0]);
-                navigation.navigate("Add Expense")}}>
+              <Pressable onPressIn={() => navigation.navigate("Add Expense")}>
                 <View style={styles_HomeScreen.addButton}>
                   <Image source={require("../images/Add.png")} />
-                  <RemainderRing percentage={0} />
+                  <RemainderRing percentage={(1000 - difference)/10 | 0 } />
                 </View>
               </Pressable>
 
               <View style={styles_HomeScreen.budgetNumberContainer}>
               <Text style={styles_HomeScreen.budgetNumber}>
-                {remaining | 0}
+                { (1000 + difference) < 1000 ? 
+                  (1000 + difference) | 0 : 1000 }
               </Text>
               <Text style={styles_HomeScreen.budgetText}>Tomorrow</Text>
             </View>
@@ -325,8 +300,15 @@ const HomeScreen = () => {
               />
             </Pressable>
           </View>
+          <View style ={{top:5}}>
+          <Text style = {{position: "absolute",left:-1 ,top: 90, zIndex: 2, fontSize:13, transform: [{ rotate: '270deg' }]}}>PKR</Text>
+          < Bar/>
+          <View style ={styles_HomeScreen.centerText}>
+          <Text>Days</Text>
+          </View>
+          </View>
 
-          <VerticalBarGraph
+          {/* <VerticalBarGraph
             data={barData}
             labels={barDataDays}
             width={290}
@@ -338,7 +320,7 @@ const HomeScreen = () => {
               hasXAxisBackgroundLines: false,
             }}
             style={styles_HomeScreen.graph}
-          />
+          /> */}
         </View>
 
         <View style={styles_HomeScreen.card}>
@@ -351,25 +333,8 @@ const HomeScreen = () => {
               />
             </Pressable>
           </View>
-          
 
-          <View style={styles_Logbook.card} key={latest[0]?.transaction_id}>
-            <View style={styles_Logbook.cardLeft}>
-              <Text style={styles_Logbook.cardText}>
-                {latest[0]?.transaction_title || "No logs yet"}
-              </Text>
-              <Text style={styles_Logbook.card_subheading}>
-                {latest[0]?.category || "No category yet"} - {latest[0]?.type}
-              </Text>
-              <Text style={styles_Logbook.card_timestmap}>
-                {latest[0]?.time_stamp}
-              </Text>
-            </View>
-            <View style={styles_Logbook.cardRight}>
-            <Text style={styles_Logbook.price}>Rs. {latest[0]?.amount || 0}</Text>
-            </View>
-          </View>
- 
+          <Text style={styles.subHeading}>No recent expenses</Text>
         </View>
       </ScrollView>
     </View>
@@ -377,7 +342,34 @@ const HomeScreen = () => {
 };
 
 
- 
+
+// const dailyTotals: any = [];
+
+// const getDateData = () => {
+//   db.transaction((tx) => {
+//     tx.executeSql(
+//       // "SELECT DATE(time_stamp) as date, SUM(amount) as total_amount FROM log WHERE time_stamp >= datetime('now', '-7 days') GROUP BY DATE(time_stamp)",
+//       "SELECT DATE(time_stamp, 'localtime') as date, SUM(amount) as total_amount FROM log WHERE time_stamp >= datetime('now', '-7 days', 'localtime') GROUP BY DATE(time_stamp, 'localtime')",
+//       // "DROP TABLE IF EXISTS log;",
+//       [],
+//       (_, { rows }) => {
+//         for (let i = 0; i < rows.length; i++) {
+//           const row = rows.item(i);
+//           dailyTotals.push({
+//             date: row.date,
+//             total_amount: row.total_amount,
+//           });
+//         }
+//         console.log(dailyTotals);
+//       },
+//       (_, error) => {
+//         console.log(error);
+//       }
+//     );
+//   });
+// };
+
+// 
 
 
 
