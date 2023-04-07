@@ -5,43 +5,7 @@ import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import HomeStackNavigator from "./HomeStack";
 
-// export const BACKGROUND_FETCH_TASK = "budget-notification-task";
-// async function task() {
-//   console.log("defining task");
-//   TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
-//     let budget = 0;
-//     console.log("carrying out task");
-//     db.transaction((tx) => {
-//       tx.executeSql(
-//         "SELECT current_state FROM budget;",
-//         [],
-//         (_, { rows }) => {
-//           budget = rows._array[rows.length - 1]["current_state"];
-//         },
-//         (_, error) => {
-//           console.log(error);
-//         }
-//       );
-//     });
-//     console.log("budget", budget);
-
-//     // Create a local notification
-//     const notificationContent = {
-//       title: "Current Budget",
-//       body: `Your budget is ${budget}`,
-//       data: { budget },
-//     };
-//     await scheduleNotificationAsync({
-//       content: notificationContent,
-//       trigger: {
-//         seconds: 5, //triggerTime   // enter time here in seconds calculate the difference between current time and user input time
-//       },
-//     });
-//     console.log("triggerTime");
-
-//     return BackgroundFetch.setMinimumIntervalAsync(10); // enter time should be in seconds I think it should be 24 hours as this event must be scheduled once every 24 hours
-//   });
-// }
+export const BACKGROUND_FETCH_TASK = "budget-notification-task";
 
 //define the task
 
@@ -81,7 +45,7 @@ const RootNavigator = () => {
         alert("Failed to get push token for push notification!");
         return;
       }
-      token = (await Notifications.getExpoPushTokenAsync()).data;
+      // token = (await Notifications.getExpoPushTokenAsync()).data;
       console.log(token);
     } else {
       alert("Must use physical device for Push Notifications");

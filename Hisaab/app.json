@@ -21,10 +21,16 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "useNextNotificationsApi": true
+      "permissions": ["android.permission.RECORD_AUDIO"],
+      "package": "com.lazersocks.Hisaab"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7fe07b73-3ec9-44ee-ac0c-23b10b96b0cb"
+      }
     }
   }
 }

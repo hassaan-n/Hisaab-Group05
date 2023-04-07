@@ -123,6 +123,7 @@ const AddExpenseCategory = ({ route }: any) => {
               // const currentTime = new Date(now).toISOString();
               // const currentTime = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Karachi' });
               // const currentTime = now.split('/').reverse().join('-');
+
               const currentTime = new Date()
                 .toLocaleString("en-CA", {
                   timeZone: "Asia/Karachi",
@@ -132,7 +133,15 @@ const AddExpenseCategory = ({ route }: any) => {
                 .replace("04-02", "03-29");
               addLog(amount, title, currentTime, selectedOption.name);
               getLog();
-              navigation.navigate("Home");
+              if (selectedOption.name !== "Food") {
+                navigation.navigate("Home");
+              } else {
+                navigation.navigate("Sub Category", {
+                  title: title,
+                  amount: amount,
+                  category: selectedOption.name,
+                });
+              }
             }}
           >
             <Text style={styles.appButtonText}>Submit</Text>

@@ -14,8 +14,7 @@ import styles from "../styles";
 import styles_HomeScreen from "../styles/styles.HomeScreen";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import db from "../database";
-
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import VerticalBarGraph from "@chartiful/react-native-vertical-bar-graph";
 
@@ -29,6 +28,23 @@ const HomeScreen = () => {
   const todayBudget: number = 500;
   const barData = [20, 45, 28, 80, 99, 43, 24];
   const barDataDays = ["M", "T", "W", "T", "F", "S", "S"];
+
+  const [image, setImage] = useState<any>(null);
+
+  useEffect(() => {
+    // Retrieve the image URI from AsyncStorage when the component mounts
+    const getImage = async () => {
+      try {
+        const storedImage = await AsyncStorage.getItem("@profileImage");
+        if (storedImage !== null) {
+          setImage(storedImage);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getImage();
+  }, []);
 
   const RemainderIndicator = ({ percentage }) => {
     let colorState: string = "#55C595";
@@ -98,7 +114,6 @@ const HomeScreen = () => {
     return content;
   };
 
-  
   //props for budget input
   const [transaction_title, onChangeTitle] = React.useState("");
   //props for goal input
@@ -159,7 +174,7 @@ const HomeScreen = () => {
 
   const [budgetAmount, onChangeBudget] = React.useState("");
 
-  const addBudget = (current_state,currentTime) => {
+  const addBudget = (current_state, currentTime) => {
     db.transaction((tx) => {
       tx.executeSql(
         "INSERT INTO budget (current_state,time_stamp) VALUES (?,?);",
@@ -203,11 +218,11 @@ const HomeScreen = () => {
           console.log(error);
         }
       );
-    });700
+    });
+    700;
   };
 
-  
-   const difference = (budgetData[0]?.current_state - logData[0]?.amount) - 6000;
+  const difference = budgetData[0]?.current_state - logData[0]?.amount - 6000;
 
   return (
     // mega container with all the elements
@@ -220,10 +235,21 @@ const HomeScreen = () => {
 
         <Pressable onPressIn={() => navigation.navigate("Profile")}>
           <View style={{ marginTop: 10 }}></View>
-          <Image
+          {image ? (
+            <Image
+              style={styles_HomeScreen.profilePicture}
+              source={{ uri: image }}
+            />
+          ) : (
+            <Image
+              style={styles_HomeScreen.profilePicture}
+              source={profilePicture}
+            />
+          )}
+          {/* <Image
             style={styles_HomeScreen.profilePicture}
             source={profilePicture}
-          />
+          /> */}
         </Pressable>
       </View>
 
@@ -245,28 +271,30 @@ const HomeScreen = () => {
               <Pressable onPressIn={() => navigation.navigate("Add Expense")}>
                 <View style={styles_HomeScreen.addButton}>
                   <Image source={require("../images/Add.png")} />
-                  <RemainderRing percentage={(1000 - difference)/10 | 0 } />
+                  <RemainderRing percentage={((1000 - difference) / 10) | 0} />
                 </View>
               </Pressable>
 
               <View style={styles_HomeScreen.budgetNumberContainer}>
-              <Text style={styles_HomeScreen.budgetNumber}>
-                { (1000 + difference) < 1000 ? 
-                  (1000 + difference) | 0 : 1000 }
-              </Text>
-              <Text style={styles_HomeScreen.budgetText}>Tomorrow</Text>
+                <Text style={styles_HomeScreen.budgetNumber}>
+                  {1000 + difference < 1000 ? (1000 + difference) | 0 : 1000}
+                </Text>
+                <Text style={styles_HomeScreen.budgetText}>Tomorrow</Text>
+              </View>
             </View>
 
-            </View>
-
-            <RemainderIndicator percentage={ (1000 - difference)/10 | 0} />
+            <RemainderIndicator percentage={((1000 - difference) / 10) | 0} />
           </View>
         </View>
 
         <View style={styles_HomeScreen.card}>
           <View style={styles_HomeScreen.cardHeader}>
             <Text style={styles_HomeScreen.cardHeading}>Week Overview</Text>
-            <Pressable onPressIn={() => {navigation.navigate("Analytics")}}>
+            <Pressable
+              onPressIn={() => {
+                navigation.navigate("Analytics");
+              }}
+            >
               <Image
                 style={{ marginTop: 3 }}
                 source={require("../images/Arrow.png")}
@@ -307,8 +335,6 @@ const HomeScreen = () => {
   );
 };
 
-
-
 // const dailyTotals: any = [];
 
 // const getDateData = () => {
@@ -335,8 +361,6 @@ const HomeScreen = () => {
 //   });
 // };
 
-// 
-
-
+//
 
 export default HomeScreen;

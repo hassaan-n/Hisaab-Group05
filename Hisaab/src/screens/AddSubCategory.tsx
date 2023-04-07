@@ -17,9 +17,9 @@ import styles from "../styles";
 import db from "../database";
 
 //not adding anything to database
-const SubCategory = () => {
+const SubCategory = ({ route }: any) => {
   const navigation = useNavigation();
-  //   const { title, amount } = route.params;
+  const { title, amount, category } = route.params;
   const [selectedOption, setSelectedOption] = React.useState(null);
 
   const options = [
@@ -119,15 +119,15 @@ const SubCategory = () => {
               // const currentTime = new Date(now).toISOString();
               // const currentTime = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Karachi' });
               // const currentTime = now.split('/').reverse().join('-');
-              const currentTime = new Date();
-              //     .toLocaleString("en-CA", {
-              //       timeZone: "Asia/Karachi",
-              //       hour12: false,
-              //     })
-              //     .replace(",", "")
-              //     .replace("04-02", "03-29");
-              //   addLog(amount, title, currentTime, selectedOption.name);
-              //   getLog();
+              const currentTime = new Date()
+                .toLocaleString("en-CA", {
+                  timeZone: "Asia/Karachi",
+                  hour12: false,
+                })
+                .replace(",", "")
+                .replace("04-02", "03-29");
+              addLog(amount, title, currentTime, selectedOption.name);
+              getLog();
               navigation.navigate("Home");
             }}
           >
