@@ -111,10 +111,29 @@ const HomeScreen = () => {
     // fetch budget data from the database when the component mounts
     db.transaction((tx) => {
       tx.executeSql(
-        "SELECT current_state,type, MAX(budget_id) FROM budget;",
+        "SELECT current_state,type FROM budget WHERE budget_id = 1;",
         [],
         (_, { rows }) => {
           setBudgetData(rows._array);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  }, []);
+
+
+  const [latestbudgetData, setlatestBudgetData] = useState([]);
+
+  useEffect(() => {
+    
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT current_state, MAX(budget_id) FROM budget;",
+        [],
+        (_, { rows }) => {
+          setlatestBudgetData(rows._array);
         },
         (_, error) => {
           console.log(error);
@@ -130,6 +149,16 @@ const HomeScreen = () => {
     remaining = budgetData[0]?.current_state / 7;
   } else {
     remaining = budgetData[0]?.current_state / 30;
+  }
+
+
+  let spent = 0;
+  spent = budgetData[0]?.current_state  - latestbudgetData[0]?.current_state 
+
+
+  let tommorow = 0;
+  if ((remaining - spent) <= 0) {
+    tommorow = remaining + (remaining - spent)
   }
 
   const [name, setname] = useState([]);
@@ -258,7 +287,7 @@ const HomeScreen = () => {
   };
 
   
-  const difference = (budgetData[0]?.current_state - logData[0]?.amount) - 6000;
+  const difference = (remaining- logData[0]?.amount);
 
   return (
     // mega container with all the elements
@@ -288,13 +317,14 @@ const HomeScreen = () => {
             <View style={styles_HomeScreen.dailyMiddleRow}>
               <View style={styles_HomeScreen.budgetNumberContainer}>
                 <Text style={styles_HomeScreen.budgetNumber}>
-                  { remaining| 0}
+                  {remaining - spent | 0}
                 </Text>
                 <Text style={styles_HomeScreen.budgetText}>Remaining</Text>
               </View>
 
               <Pressable onPressIn={() => {
-                console.log(budgetData[0]);
+                getbudget();
+                console.log(spent);
                 navigation.navigate("Add Expense")}}>
                 <View style={styles_HomeScreen.addButton}>
                   <Image source={require("../images/Add.png")} />
@@ -304,7 +334,7 @@ const HomeScreen = () => {
 
               <View style={styles_HomeScreen.budgetNumberContainer}>
               <Text style={styles_HomeScreen.budgetNumber}>
-                {remaining | 0}
+                {tommorow | 0}
               </Text>
               <Text style={styles_HomeScreen.budgetText}>Tomorrow</Text>
             </View>
