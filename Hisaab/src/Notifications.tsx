@@ -1,125 +1,77 @@
-import { Notification, scheduleNotificationAsync } from "expo-notifications";
+import {
+  Notification,
+  scheduleNotificationAsync,
+  cancelAllScheduledNotificationsAsync,
+  setNotificationHandler,
+  DailyTriggerInput,
+} from "expo-notifications";
 import { useState, useEffect } from "react";
-import * as BackgroundFetch from "expo-background-fetch";
-import * as TaskManager from "expo-task-manager";
 import db from "./database";
-import { storeItem, getKey } from "./AsyncStorage";
-import { View, Button, TouchableOpacity, Text } from "react-native";
+import { storeItem, getKey } from "./MyAsyncStorage";
+import { View, Button, TouchableOpacity, Text, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import BACKGROUND_FETCH_TASK from "./task";
-// import { BACKGROUND_FETCH_TASK } from "./navigation/index";
-//name the task
-// const BACKGROUND_FETCH_TASK = "budget-notification-task";
+import sendNotification from "./LogNotiScheduler";
 
-// //define the task
-// TaskManager.defineTask(
-//   BACKGROUND_FETCH_TASK,
-//   async ({ data: { triggerTime } }: any) => {
-//     let budget = 0;
-//     db.transaction((tx) => {
-//       tx.executeSql(
-//         "SELECT current_state FROM budget;",
-//         [],
-//         (_, { rows }) => {
-//           budget = rows._array[rows.length - 1]["current_state"];
-//         },
-//         (_, error) => {
-//           console.log(error);
-//         }
-//       );
-//     });
-
-//     // Create a local notification
-//     const notificationContent = {
-//       title: "Current Budget",
-//       body: `Your budget is ${budget}`,
-//       data: { budget },
-//     };
-//     await scheduleNotificationAsync({
-//       content: notificationContent,
-//       trigger: {
-//         seconds: 5, //triggerTime   // enter time here in seconds calculate the difference between current time and user input time
-//       },
-//     });
-//     console.log("triggerTime");
-
-//     return BackgroundFetch.setMinimumIntervalAsync(10); // enter time should be in seconds I think it should be 24 hours as this event must be scheduled once every 24 hours
-//   }
-// );
-async function registerBackgroundFetchAsync() {
-  console.log("registering background fetch");
-  return BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-    minimumInterval: 2, // 15 minutes
-    stopOnTerminate: false, // android only,
-    startOnBoot: true, // android only
-  });
-}
-
-// 3. (Optional) Unregister tasks by specifying the task name
-// This will cancel any future background fetch calls that match the given name
-// Note: This does NOT need to be in the global scope and CAN be used in your React components!
-async function unregisterBackgroundFetchAsync() {
-  return BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
-}
-
-// async function registerBackgroundFetchAsync() {
-//   console.log("registering background fetch");
-//   return BackgroundFetch.registerTaskAsync(BACKGROUND_FETCH_TASK, {
-//     stopOnTerminate: false, // android only,
-//     startOnBoot: true, // android only
-//   });
-// }
-
-// async function unregisterBackgroundFetchAsync() {
-//   return BackgroundFetch.unregisterTaskAsync(BACKGROUND_FETCH_TASK);
-// }
-
-export const SetBudgetNotification = () => {
-  //   const  [budgetNotification, setBudgetNotification ] = useState(false);
-  //     try{
-  //         await getKey("budgetNotification").then((value) => {
-  //             setBudgetNotification(value);
-  //         });
-  //     }catch(e){
-  //         storeItem("budgetNotification", true);
-  //         setBudgetNotification(true);
-  //     }
-  // };
+const NotificationScheduler = () => {
   const navigation = useNavigation();
-  const [isRegistered, setIsRegistered] = useState(false);
-  const [status, setStatus] = useState<any>(null);
+  const [title, setTitle] = useState("");
+  const [body, setBody] = useState("");
+  const [hour, setHour] = useState("");
+  const [minute, setMinute] = useState("");
 
-  useEffect(() => {
-    checkStatusAsync();
-  }, []);
+  const handleScheduleNotification = () => {
+    const notificationTitle = title || "Notification Title";
+    const notificationBody = body || "Notification Body";
+    const notificationHour = parseInt(hour) || 0;
+    const notificationMinute = parseInt(minute) || 0;
 
-  const checkStatusAsync = async () => {
-    const status = await BackgroundFetch.getStatusAsync();
-    const isRegistered = await TaskManager.isTaskRegisteredAsync(
-      BACKGROUND_FETCH_TASK
-    );
-    setStatus(status);
-    setIsRegistered(isRegistered);
-  };
-  const toggleFetchTask = async () => {
-    if (isRegistered) {
-      await unregisterBackgroundFetchAsync();
+    if (
+      notificationHour >= 0 &&
+      notificationHour <= 23 &&
+      notificationMinute >= 0 &&
+      notificationMinute <= 59
+    ) {
+      const trigger: DailyTriggerInput = {
+        hour: notificationHour,
+        minute: notificationMinute,
+        repeats: true,
+      };
+      sendNotification(notificationTitle, notificationBody, trigger);
+      alert(
+        `Notification scheduled for ${notificationHour}:${notificationMinute}`
+      );
     } else {
-      await registerBackgroundFetchAsync();
-      console.log("registered");
+      alert("Invalid time input!");
     }
-
-    checkStatusAsync();
   };
+
   return (
     <View style={{ flex: 1, justifyContent: "center", marginTop: 50 }}>
-      {isRegistered ? (
-        <Button title="Stop Background Task" onPress={toggleFetchTask} />
-      ) : (
-        <Button title="Start Background Task" onPress={toggleFetchTask} />
-      )}
+      <Text>Title:</Text>
+      <TextInput onChangeText={setTitle} value={title} />
 
-      <View>
+      <Text>Body:</Text>
+      <TextInput onChangeText={setBody} value={body} />
+
+      <Text>Notification Time:</Text>
+      <TextInput
+        onChangeText={setHour}
+        value={hour}
+        keyboardType="numeric"
+        placeholder="Hour (0-23)"
+      />
+      <TextInput
+        onChangeText={setMinute}
+        value={minute}
+        keyboardType="numeric"
+        placeholder="Minute (0-59)"
+      />
+
+      <Button
+        title="Schedule Notification"
+        onPress={handleScheduleNotification}
+      />
+      <View style={{ flex: 1, justifyContent: "center" }}>
         <TouchableOpacity
           // onPress={() => {navigation.navigate("Tut1"); addUser(text,toggle,number); getAllUsers();}}
 
@@ -137,17 +89,6 @@ export const SetBudgetNotification = () => {
   );
 };
 
-export default SetBudgetNotification;
-// export const sendNotification = async (title: string, body: string) => {
-//   scheduleNotificationAsync({
-//     content: {
-//       title: title,
-//       body: body,
-//     },
-//     trigger: {
-//       seconds: 5,
+export default NotificationScheduler;
 
-//     },
-//   });
-//   console.log("Notification sent");
-// };
+//export default SetBudgetNotification;

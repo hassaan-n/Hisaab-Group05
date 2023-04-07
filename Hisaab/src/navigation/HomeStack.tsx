@@ -23,7 +23,7 @@ import PinSetting from "../screens/PinSetting";
 import NotificationSetting from "../screens/NotificationSetting";
 import BudgetSetting from "../screens/BudgetSetting";
 import GoalSetting from "../screens/GoalSetting";
-import Notifications from "../Notifications";
+import AddSubcategory from "../screens/AddSubcategory"
 
 //need to implement in this file
 //first needs to check if intiial sigup is done, if done then load the home screen direcrlt or show pin as per settings
@@ -43,18 +43,18 @@ const HomeStackNavigator = () => {
   //     headerLeft: () => null, // Disable back button
   //   },
   // };
-  const stackOptions = {
-    headerShown: false,
-  };
+  // const stackOptions = {
+  //   headerShown: false,
+  // };
 
-  const homeScreenOptions = {
-    headerLeft: null, // Disable the ability to go back from the Home screen
-  };
+  // const homeScreenOptions = {
+  //   headerLeft: null, // Disable the ability to go back from the Home screen
+  // };
   //if initial setup is set to true then add the signup screen to the stack
 
   if (InitSetup) {
     content = (
-      <HomeStack.Navigator screenOptions= {stackOptions}>
+      <HomeStack.Navigator>
         <HomeStack.Screen name="Sign Up" component={SignUp} />
         <HomeStack.Screen name="Details" component={DetailsScreen} />
         <HomeStack.Screen name="Tut1" component={Tut1} />
@@ -64,11 +64,8 @@ const HomeStackNavigator = () => {
         <HomeStack.Screen name="Tut5" component={Tut5} />
         <HomeStack.Screen name="Tut6" component={Tut6} />
         <HomeStack.Screen name="Goals" component={GoalsScreen} />
-
-        <HomeStack.Screen name="Notis" component={Notifications} />
-
         <HomeStack.Screen name="Let's Start" component={StartSaving} />
-        <HomeStack.Screen name="Home" component={Home} options={{gestureEnabled:false}}/>
+        <HomeStack.Screen name="Home" component={Home} options={{gestureEnabled:false, headerBackVisible: false}}/>
         {/* <HomeStack.Screen
           name="Home"
           component={Home}
@@ -93,12 +90,14 @@ const HomeStackNavigator = () => {
         />
         <HomeStack.Screen name="Budget Settings" component={BudgetSetting} />
         <HomeStack.Screen name="Goal Settings" component={GoalSetting} />
+        <HomeStack.Screen name="Sub Category" component={AddSubcategory} />
+
       </HomeStack.Navigator>
     );
   } else {
     content = (
       <HomeStack.Navigator>
-        <HomeStack.Screen name="Home" component={Home} />
+        <HomeStack.Screen name="Home" component={Home} options={{gestureEnabled:false, headerBackVisible: false}}/>
         <HomeStack.Screen name="Add Expense" component={AddExpenseTitle} />
         <HomeStack.Screen
           name="Choose Category"
