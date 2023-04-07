@@ -63,7 +63,6 @@ const Bar = () => {
           barPercentage: 0.7,
         }}
         withInnerLines={false}
-        bezier
       />
     </View>
   );

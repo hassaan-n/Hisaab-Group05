@@ -15,6 +15,7 @@ import styles_HomeScreen from "../styles/styles.HomeScreen";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import db from "../database";
 import Bar from "./Bar";
+import { BackHandler } from 'react-native';
 
 
 
@@ -37,6 +38,23 @@ const HomeScreen = () => {
     return () => clearInterval(intervalId);
   }, [ ]);
 
+  useEffect(() => {
+    const backAction = () => {
+      if (navigation.isFocused()) {
+        // If user is on the home screen, prevent the back action
+        return true;
+      }
+      // Otherwise, allow the back action
+      return false;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [navigation]);
   
   const [displayname, setname] = useState([]);
 
