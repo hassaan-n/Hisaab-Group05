@@ -40,14 +40,14 @@ const HomeScreen = () => {
           setImage(storedImage);
         }
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     };
     getImage();
   }, []);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {}, 1000); // Refresh every second
+    const intervalId = setInterval(() => {}, 10000); // Refresh every second
 
     return () => clearInterval(intervalId);
   }, []);
@@ -63,7 +63,7 @@ const HomeScreen = () => {
           setname(rows._array);
         },
         (_, error) => {
-          console.log(error);
+          //console.log(error);
         }
       );
     });
@@ -156,7 +156,7 @@ const HomeScreen = () => {
           setBudgetData(rows._array);
         },
         (_, error) => {
-          console.log(error);
+          //console.log(error);
         }
       );
     });
@@ -174,7 +174,7 @@ const HomeScreen = () => {
           setLogData(rows._array);
         },
         (_, error) => {
-          console.log(error);
+          // console.log(error);
         }
       );
     });
@@ -191,7 +191,7 @@ const HomeScreen = () => {
           }
         },
         (_, error) => {
-          console.log(error);
+          //  console.log(error);
         }
       );
     });
@@ -210,7 +210,7 @@ const HomeScreen = () => {
           }
         },
         (_, error) => {
-          console.log(error);
+          // console.log(error);
         }
       );
     });
@@ -225,7 +225,7 @@ const HomeScreen = () => {
           console.log(rows);
         },
         (_, error) => {
-          console.log(error);
+          // console.log(error);
         }
       );
     });
@@ -240,7 +240,7 @@ const HomeScreen = () => {
           console.log(rows);
         },
         (_, error) => {
-          console.log(error);
+          // console.log(error);
         }
       );
     });

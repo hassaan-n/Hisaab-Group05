@@ -20,28 +20,31 @@ import db from "../database";
 const SubCategory = ({ route }: any) => {
   const navigation = useNavigation();
   const { title, amount, category } = route.params;
+  console.log(title, amount, category);
   const [selectedOption, setSelectedOption] = React.useState(null);
 
   const options = [
     { name: "Breakfast", id: 1 },
     { name: "Lunch", id: 2 },
     { name: "Dinner", id: 3 },
+    { name: "Snacks", id: 4 },
   ];
 
   const handleOptionSelect = (option: any) => {
     setSelectedOption(option);
   };
 
-  const addLog = (amount, transaction_title, currentTime, category) => {
+  const addLog = (
+    amount,
+    transaction_title,
+    currentTime,
+    category,
+    sub_category
+  ) => {
     db.transaction((tx) => {
-      // tx.executeSql("DROP TABLE IF EXISTS log;");
-      // tx.executeSql(
-      //   "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
-      // );
-
       tx.executeSql(
-        "INSERT INTO log (amount,transaction_title,time_stamp, category) VALUES (?,?,?,?);",
-        [amount, transaction_title, currentTime, category], // pass in parameters as an array
+        "INSERT INTO log (amount,transaction_title,time_stamp, category, sub_category) VALUES (?,?,?,?,?);",
+        [amount, transaction_title, currentTime, category, sub_category], // pass in parameters as an array
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) {
             console.log("title and amount added successfully");
@@ -66,6 +69,21 @@ const SubCategory = ({ route }: any) => {
           console.log(error);
         }
       );
+    });
+  };
+
+  const delLog = () => {
+    db.transaction((tx) => {
+      tx.executeSql("DROP TABLE log;");
+      console.log("table dropped");
+    });
+  };
+  const create_new_table = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, sub_category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
+      );
+      console.log("table created");
     });
   };
 
@@ -126,7 +144,16 @@ const SubCategory = ({ route }: any) => {
                 })
                 .replace(",", "")
                 .replace("04-02", "03-29");
-              addLog(amount, title, currentTime, selectedOption.name);
+              //delLog();
+              //create_new_table();
+              // console.log(
+              //   amount,
+              //   title,
+              //   currentTime,
+              //   category,
+              //   selectedOption.name
+              // );
+              addLog(amount, title, currentTime, category, selectedOption.name);
               getLog();
               navigation.navigate("Home");
             }}
