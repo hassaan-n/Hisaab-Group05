@@ -163,7 +163,7 @@ const AddExpenseCategory = ({ route }: any) => {
 
 
 
-              if (selectedOption.name !== "Food") {
+              if (selectedOption.name !== "Food" || selectedOption.name !== "Transport") {
                 navigation.navigate("Splash");
               } else {
                 navigation.navigate("Sub Category", {
