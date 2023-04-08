@@ -23,6 +23,25 @@ const SubCategory = ({ route }: any) => {
   console.log(title, amount, category);
   const [selectedOption, setSelectedOption] = React.useState(null);
 
+
+  // const options = () => {
+  //   if (category === "Food") {
+  //     return [
+  //       { name: "Breakfast", id: 1 },
+  //       { name: "Lunch", id: 2 },
+  //       { name: "Dinner", id: 3 },
+  //       { name: "Snacks", id: 4 },
+  //     ];
+  //   } else if (category === "Transport") {
+  //     return [
+  //       { name: "Fuel", id: 1 },
+  //       { name: "Taxi", id: 2 },
+  //     ];
+  //   }
+  // };
+  
+
+
   const options = [
     { name: "Breakfast", id: 1 },
     { name: "Lunch", id: 2 },
