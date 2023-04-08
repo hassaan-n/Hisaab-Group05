@@ -57,7 +57,7 @@ const SignUp = () => {
     // <View style={[styles_HomeScreen.card, { marginTop: 40}]}>
     <View style={styles.container }>
       {/* image inside the container */}
-      <View style={[styles_HomeScreen.imageContainer, {marginTop: 100}]}>
+      <View style={[styles_HomeScreen.imageContainer]}>
         <Image source={require("../images/hisaab.png")} />
       </View>
 
@@ -95,7 +95,18 @@ const SignUp = () => {
           />
         </View>
 
-        <Card pinstate={toggle} />
+        <View style={styles_HomeScreen.inputSingleContainer}>
+          <Text style={styles.subHeading}>Pin</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeNumber}
+            value={number}
+            placeholder="Enter password"
+            keyboardType="numeric"
+          />
+        </View>
+
+        {/* <Card pinstate={toggle} /> */}
       </View>
 
       {/* Button Sectoion*/}

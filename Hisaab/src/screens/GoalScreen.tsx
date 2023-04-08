@@ -27,11 +27,11 @@ const GoalsScreen = () => {
 
   const [selectedRadioButton, setSelectedRadioButton] = React.useState("");
 
-  const addGoal = (type, amount) => {
+  const addGoal = (type: string, amount: string) => {
     const timestamp = new Date().toISOString();
     db.transaction((tx) => {
       tx.executeSql(
-        "INSERT INTO goals (type, amount, starting_time) VALUES (?, ?, ?);",
+        "INSERT INTO goal (type, amount, time_stamp) VALUES (?, ?, ?);",
         [type, amount, timestamp],
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) {
@@ -45,27 +45,11 @@ const GoalsScreen = () => {
     });
   };
 
-  // const addBudget = (current_state) => {
-  //   db.transaction((tx) => {
-  //     tx.executeSql(
-  //       "INSERT INTO budget (current_state) VALUES (?);",
-  //       [current_state],
-  //       (_, { rowsAffected }) => {
-  //         if (rowsAffected > 0) {
-  //           console.log("Budget added successfully");
-  //         }
-  //       },
-  //       (_, error) => {
-  //         console.log(error);
-  //       }
-  //     );
-  //   });
-  // };
-
+  
   const getGoal = () => {
     db.transaction((tx) => {
       tx.executeSql(
-        "SELECT * FROM goals;",
+        "SELECT * FROM goal;",
         [],
         (_, { rows }) => {
           console.log(rows);
@@ -77,14 +61,32 @@ const GoalsScreen = () => {
     });
   };
 
-  const addBudget = (current_state,currentTime) => {
+  
+  const droplog = () => {
     db.transaction((tx) => {
+      tx.executeSql("DROP TABLE IF EXISTS log;");
       tx.executeSql(
-        "INSERT INTO budget (current_state,time_stamp) VALUES (?,?);",
-        [current_state, currentTime],
+        "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
+      );
+      console.log("table dropped and created");
+    });
+  };
+
+  const addBudget = (amount, currentTime,selectedRadioButton) => {
+    db.transaction((tx) => {
+      tx.executeSql("DROP TABLE IF EXISTS budget;");
+      tx.executeSql(
+        "CREATE TABLE IF NOT EXISTS budget (budget_id INTEGER PRIMARY KEY AUTOINCREMENT, time_stamp TIMESTAMP, current_state INTEGER, type TEXT, FOREIGN KEY ('current_state') REFERENCES budget_notifications('message'))"
+      );
+
+      console.log("table dropped and created");
+
+      tx.executeSql(
+        "INSERT INTO budget (current_state,time_stamp,type) VALUES (?,?,?);",
+        [amount,currentTime,selectedRadioButton], // pass in parameters as an array
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) {
-            console.log("Budget added successfully");
+            console.log("new budget added successfully");
           }
         },
         (_, error) => {
@@ -94,7 +96,7 @@ const GoalsScreen = () => {
     });
   };
 
-
+  
 
   const getbudget = () => {
     db.transaction((tx) => {
@@ -163,7 +165,7 @@ const GoalsScreen = () => {
                 .replace("04-02", "03-29");
               addBudget(budgetAmount, currentTime,selectedRadioButton);
               // getbudget();
-              
+              droplog();
               navigation.navigate("Notis");
             }}
           >

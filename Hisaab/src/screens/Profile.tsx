@@ -11,6 +11,7 @@ import {
   Modal,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { HeaderBackButton } from 'react-navigation';
 
 //import app name and version from package.json
 import { name, version } from "../../package.json";
@@ -69,6 +70,12 @@ const Profile = () => {
       storeImage(result.uri);
     }
   };
+  const navigationOptions = ({navigation}) => {
+    return{
+      headerLeft:(<HeaderBackButton onPress={()=>{navigation.navigate('A')}}/>)
+   }
+  }
+  
 
   const profileIcon = require("../images/Profile.png");
   const pinIcon = require("../images/Pin.png");
