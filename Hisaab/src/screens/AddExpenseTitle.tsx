@@ -164,10 +164,11 @@ const AddExpenseTitle = ({ route }: any) => {
                   // getLog();
 
                   const currentTime2 = new Date().toLocaleString();
-                  addBudget(difference,currentTime2);
+                  // addBudget(difference,currentTime2);
                   navigation.navigate("Choose Category", {
                     title: transaction_title,
                     amount: amount,
+                    difference: difference,
                   });
                   
                 }}
