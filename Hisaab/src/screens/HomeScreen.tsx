@@ -13,7 +13,6 @@ import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
 import styles_HomeScreen from "../styles/styles.HomeScreen";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
-import styles_Logbook from "../styles/styles.Logbook";
 import db from "../database";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Bar from "./Bar";
@@ -457,7 +456,7 @@ const HomeScreen = () => {
                 navigation.navigate("Add Expense")}}>
                 <View style={styles_HomeScreen.addButton}>
                   <Image source={require("../images/Add.png")} />
-                  <RemainderRing percentage={0} />
+                  <RemainderRing percentage={(1000 - difference)/10 | 0 } />
                 </View>
               </Pressable>
 
@@ -532,25 +531,8 @@ const HomeScreen = () => {
               />
             </Pressable>
           </View>
-          
 
-          <View style={styles_Logbook.card} key={latest[0]?.transaction_id}>
-            <View style={styles_Logbook.cardLeft}>
-              <Text style={styles_Logbook.cardText}>
-                {latest[0]?.transaction_title || "No logs yet"}
-              </Text>
-              <Text style={styles_Logbook.card_subheading}>
-                {latest[0]?.category || "No category yet"} - {latest[0]?.type}
-              </Text>
-              <Text style={styles_Logbook.card_timestmap}>
-                {latest[0]?.time_stamp}
-              </Text>
-            </View>
-            <View style={styles_Logbook.cardRight}>
-            <Text style={styles_Logbook.price}>Rs. {latest[0]?.amount || 0}</Text>
-            </View>
-          </View>
- 
+          <Text style={styles.subHeading}>No recent expenses</Text>
         </View>
       </ScrollView>
     </View>
@@ -558,7 +540,34 @@ const HomeScreen = () => {
 };
 
 
- 
+
+// const dailyTotals: any = [];
+
+// const getDateData = () => {
+//   db.transaction((tx) => {
+//     tx.executeSql(
+//       // "SELECT DATE(time_stamp) as date, SUM(amount) as total_amount FROM log WHERE time_stamp >= datetime('now', '-7 days') GROUP BY DATE(time_stamp)",
+//       "SELECT DATE(time_stamp, 'localtime') as date, SUM(amount) as total_amount FROM log WHERE time_stamp >= datetime('now', '-7 days', 'localtime') GROUP BY DATE(time_stamp, 'localtime')",
+//       // "DROP TABLE IF EXISTS log;",
+//       [],
+//       (_, { rows }) => {
+//         for (let i = 0; i < rows.length; i++) {
+//           const row = rows.item(i);
+//           dailyTotals.push({
+//             date: row.date,
+//             total_amount: row.total_amount,
+//           });
+//         }
+//         console.log(dailyTotals);
+//       },
+//       (_, error) => {
+//         console.log(error);
+//       }
+//     );
+//   });
+// };
+
+// 
 
 
 

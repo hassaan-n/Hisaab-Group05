@@ -22,8 +22,6 @@ import Toggle from "react-native-toggle-input";
 const BudgetSetting = () => {
   const navigation = useNavigation();
   const [NewBudget, onChangeNumber] = React.useState("");
-
-
   
   const addbudget = (amount, currentTime) => {
     db.transaction((tx) => {
@@ -36,10 +34,10 @@ const BudgetSetting = () => {
 
       tx.executeSql(
         "INSERT INTO budget (current_state,budget_id,time_stamp) VALUES (?,?,?);",
-        [current_state, 1, currentTime],
+        [current_state, 1 ,currentTime],
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) {
-            console.log("new budget added successfully");
+            console.log("Budget added successfully");
           }
         },
         (_, error) => {

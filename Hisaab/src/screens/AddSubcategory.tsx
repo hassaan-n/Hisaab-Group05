@@ -12,43 +12,47 @@ import {
   Keyboard,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import styles_AddExpenseCategory from "../styles/styles.AddExpenseCategory";
+import styles_SubCategory from "../styles/styles.SubCategory";
 import styles from "../styles";
 import db from "../database";
-
 import { sendBreakfastNotification } from "../RecomendNotiScheduler";
 import { sendLunchNotification } from "../RecomendNotiScheduler";
 import { sendDinnerNotification } from "../RecomendNotiScheduler";
 
-const AddExpenseCategory = ({ route }: any) => {
+
+//not adding anything to database
+const SubCategory = ({ route }: any) => {
   const navigation = useNavigation();
-  const { title, amount } = route.params;
+  const { title, amount, category } = route.params;
   const [selectedOption, setSelectedOption] = React.useState(null);
 
   const options = [
-    { name: "Food", id: 1 },
-    { name: "Transport", id: 2 },
-    { name: "Laundry", id: 3 },
-    { name: "Grocery", id: 4 },
-    { name: "Subscription", id: 5 },
-    { name: "Other", id: 7 },
+    { name: "Breakfast", id: 1 },
+    { name: "Lunch", id: 2 },
+    { name: "Dinner", id: 3 },
+    { name: "Snacks", id: 4 },
   ];
 
   const handleOptionSelect = (option: any) => {
     setSelectedOption(option);
   };
 
-  const addLog = (amount, transaction_title, currentTime, category) => {
+  const addLog = (
+    amount,
+    transaction_title,
+    currentTime,
+    category,
+    SubCategory
+  ) => {
     db.transaction((tx) => {
       // tx.executeSql("DROP TABLE IF EXISTS log;");
       // tx.executeSql(
       //   "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
       // );
 
-      //console.log("table dropped and created");
       tx.executeSql(
-        "INSERT INTO log (amount,transaction_title,time_stamp, category) VALUES (?,?,?,?);",
-        [amount, transaction_title, currentTime, category], // pass in parameters as an array
+        "INSERT INTO log (amount,transaction_title,time_stamp, category,sub_category) VALUES (?,?,?,?,?);",
+        [amount, transaction_title, currentTime, category, SubCategory], // pass in parameters as an array
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) {
             console.log("title and amount added successfully");
@@ -85,12 +89,12 @@ const AddExpenseCategory = ({ route }: any) => {
     // mega container with all the elements
 
     <View style={styles.container}>
-      <View style={styles_AddExpenseCategory.title}>
+      <View style={styles_SubCategory.title}>
         <Text style={styles.text}>Please Select a</Text>
         <Text style={styles.heading}>Category</Text>
       </View>
 
-      <View style={styles_AddExpenseCategory.listContainer}>
+      <View style={styles_SubCategory.listContainer}>
         {/* Add stuff here */}
         <ScrollView>
           {options.map((option) => (
@@ -114,7 +118,7 @@ const AddExpenseCategory = ({ route }: any) => {
       </View>
 
       <KeyboardAvoidingView>
-        <View style={styles_AddExpenseCategory.buttonContainer}>
+        <View style={styles_SubCategory.buttonContainer}>
           <TouchableOpacity
             style={styles.appButtonContainer}
             onPress={() => {
@@ -126,18 +130,18 @@ const AddExpenseCategory = ({ route }: any) => {
               // const currentTime = new Date(now).toISOString();
               // const currentTime = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Karachi' });
               // const currentTime = now.split('/').reverse().join('-');
-              if(selectedOption.name != "Food")
-              {
-                const currentTime = new Date()
+              const currentTime = new Date()
                 .toLocaleString("en-CA", {
                   timeZone: "Asia/Karachi",
                   hour12: false,
                 })
                 .replace(",", "")
                 .replace("04-02", "03-29");
-                addLog(amount, title, currentTime, selectedOption.name);
-                getLog();
-              }
+                // delLog();
+                // create_new_table();
+              addLog(amount, title, currentTime, category, selectedOption.name);
+              getLog();
+
               getBreakfastLogs(1000)
               .then((titles) => {
                 const message = titles.join(', ');
@@ -168,17 +172,7 @@ const AddExpenseCategory = ({ route }: any) => {
                 console.error(error);
               });
 
-
-
-              if (selectedOption.name !== "Food") {
-                navigation.navigate("Home");
-              } else {
-                navigation.navigate("Sub Category", {
-                  title: title,
-                  amount: amount,
-                  category: selectedOption.name,
-                });
-              }
+              navigation.navigate("Home");
             }}
           >
             <Text style={styles.appButtonText}>Submit</Text>
@@ -188,11 +182,9 @@ const AddExpenseCategory = ({ route }: any) => {
           <TouchableOpacity
             style={styles.appButtonContainerAlt}
             onPress={() => {
-              navigation.navigate("Home"),
-                console.log(new Date().toLocaleString()),
-                getDateData();
-              ///query breakfast lunch dinner
-              //amswer
+              navigation.navigate("Home");
+              // console.log(new Date().toLocaleString()),
+              // getDateData();
             }}
           >
             <Text style={styles.appButtonText}>Cancel</Text>
@@ -320,7 +312,7 @@ const getDinnerLogs = (threshold: number): Promise<string[]> => {
   });
 };
 
-export default AddExpenseCategory;
+export default SubCategory;
 
 // "SELECT DATE_FORMAT(date, '%d/%m/%Y') AS formatted_date, total_amount FROM (SELECT DATE(time_stamp) AS date, SUM(amount) AS total_amount FROM log WHERE time_stamp >= DATE_SUB(NOW(), INTERVAL 1 WEEK) GROUP BY DATE(time_stamp) ORDER BY DATE(time_stamp) ASC LIMIT 7) AS subquery;"
 

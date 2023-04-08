@@ -45,7 +45,23 @@ const GoalsScreen = () => {
     });
   };
 
-  
+  // const addBudget = (current_state) => {
+  //   db.transaction((tx) => {
+  //     tx.executeSql(
+  //       "INSERT INTO budget (current_state) VALUES (?);",
+  //       [current_state],
+  //       (_, { rowsAffected }) => {
+  //         if (rowsAffected > 0) {
+  //           console.log("Budget added successfully");
+  //         }
+  //       },
+  //       (_, error) => {
+  //         console.log(error);
+  //       }
+  //     );
+  //   });
+  // };
+
   const getGoal = () => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -61,32 +77,14 @@ const GoalsScreen = () => {
     });
   };
 
-  
-  const droplog = () => {
+  const addBudget = (current_state,currentTime) => {
     db.transaction((tx) => {
-      tx.executeSql("DROP TABLE IF EXISTS log;");
       tx.executeSql(
-        "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
-      );
-      console.log("table dropped and created");
-    });
-  };
-
-  const addBudget = (amount, currentTime,selectedRadioButton) => {
-    db.transaction((tx) => {
-      tx.executeSql("DROP TABLE IF EXISTS budget;");
-      tx.executeSql(
-        "CREATE TABLE IF NOT EXISTS budget (budget_id INTEGER PRIMARY KEY AUTOINCREMENT, time_stamp TIMESTAMP, current_state INTEGER, type TEXT, FOREIGN KEY ('current_state') REFERENCES budget_notifications('message'))"
-      );
-
-      console.log("table dropped and created");
-
-      tx.executeSql(
-        "INSERT INTO budget (current_state,time_stamp,type) VALUES (?,?,?);",
-        [amount,currentTime,selectedRadioButton], // pass in parameters as an array
+        "INSERT INTO budget (current_state,time_stamp) VALUES (?,?);",
+        [current_state, currentTime],
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) {
-            console.log("new budget added successfully");
+            console.log("Budget added successfully");
           }
         },
         (_, error) => {
@@ -96,7 +94,7 @@ const GoalsScreen = () => {
     });
   };
 
-  
+
 
   const getbudget = () => {
     db.transaction((tx) => {

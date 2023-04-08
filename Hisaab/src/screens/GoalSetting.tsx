@@ -36,6 +36,13 @@ const GoalSetting = () => {
           if (rowsAffected > 0) {
             console.log("Goal added successfully");
           }
+  const Updategoal = (updatedgoal) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "UPDATE goals SET amount = ? WHERE goal_id IS NULL;",
+        [updatedgoal],
+        (_, { rowsAffected }) => {
+          console.log(`Rows affected: ${rowsAffected}`);
         },
         (_, error) => {
           console.log(error);

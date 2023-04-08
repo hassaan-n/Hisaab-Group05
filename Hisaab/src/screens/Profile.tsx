@@ -121,7 +121,7 @@ const Profile = () => {
         </View>
 
         <View style={styles_Profile.helloText}>
-          <Text style={styles.heading}>{ "Profile settings"}</Text>
+          <Text style={styles.heading}> Profile settings</Text>
         </View>
       </View>
       <View style={styles_Profile.listCard}>
