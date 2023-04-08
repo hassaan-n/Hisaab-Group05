@@ -23,6 +23,7 @@ import db from "../database";
 const AddExpenseSummary = ({ route }: any) => {
   const navigation = useNavigation();
   const { title, amount, category, sub_category, difference } = route.params;
+  console.log(title, amount, category, sub_category,);
   let Title = title;
   let Expense = amount;
   let Category = category;
