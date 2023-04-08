@@ -16,10 +16,15 @@ db.transaction((tx) => {
 
 db.transaction((tx) => {
   tx.executeSql(
-    "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
+    "CREATE TABLE IF NOT EXISTS savings (savings_id INTEGER PRIMARY KEY AUTOINCREMENT, time_stamp TIMESTAMP, amount INTEGER)"
   );
 });
 
+db.transaction((tx) => {
+  tx.executeSql(
+    "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
+  );
+});
 // db.transaction(tx => {
 // tx.executeSql("CREATE TABLE IF NOT EXISTS goals (goal_id INTEGER AUTO_INCREMENT PRIMARY KEY, title TEXT, amount INTEGER, type TEXT, starting_time TIMESTAMP)");
 // });

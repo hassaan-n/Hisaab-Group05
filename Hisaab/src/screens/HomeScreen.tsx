@@ -107,6 +107,25 @@ const HomeScreen = () => {
 
   const [budgetData, setBudgetData] = useState([]);
 
+
+  const addsaving = (amount, currentTime) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO savings (amount,time_stamp) VALUES (?, ?);",
+        [amount, currentTime], 
+        (_, { rowsAffected }) => {
+          if (rowsAffected > 0) {
+            console.log("savings added successfully");
+          }
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+
   useEffect(() => {
     // fetch budget data from the database when the component mounts
     db.transaction((tx) => {
@@ -151,9 +170,6 @@ const HomeScreen = () => {
     remaining = budgetData[0]?.current_state / 30;
   }
 
-  
-
-
   let spent = 0;
   spent = budgetData[0]?.current_state  - latestbudgetData[0]?.current_state 
 
@@ -181,7 +197,7 @@ const HomeScreen = () => {
 
   let tester = 0;
   let tester2 = 0;
-  let threshold = "23:00:00";
+  let threshold = "3:00:00";
   let thresh = 0;
 
    
@@ -189,13 +205,12 @@ const HomeScreen = () => {
   thresh = parseInt(threshold.slice(0, 2));
 
 
-  if (tester >= thresh) {
+  if (tester <= thresh) {
+    addsaving((today-0),currentTime);
     tester2 = 69;
     today = tommorow;
-    tommorow = remaining
+    tommorow = remaining;
   }
-
-
   
   const [name, setname] = useState([]);
 
@@ -307,6 +322,22 @@ const HomeScreen = () => {
     });
   };
 
+  const getsavings= () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM savings;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+
   const getbudget = () => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -359,7 +390,7 @@ const HomeScreen = () => {
               </View>
 
               <Pressable onPressIn={() => {
-              console.log(tester2)
+               getsavings();
               const currentTime = new Date()
               .toLocaleString("en-CA", {
                 timeZone: "Asia/Karachi",

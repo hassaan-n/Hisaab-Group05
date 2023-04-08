@@ -152,7 +152,7 @@ const GoalsScreen = () => {
           <TouchableOpacity
             style={styles.appButtonContainer}
             onPress={() => {
-              console.log(selectedRadioButton);
+              // console.log(selectedRadioButton);
               addGoal(selectedRadioButton, goalAmount);
               // addBudget(budgetAmount);
               getGoal();
@@ -164,7 +164,7 @@ const GoalsScreen = () => {
                 .replace(",", "")
                 .replace("04-02", "03-29");
               addBudget(budgetAmount, currentTime,selectedRadioButton);
-              getbudget();
+              // getbudget();
               droplog();
               navigation.navigate("Notis");
             }}
