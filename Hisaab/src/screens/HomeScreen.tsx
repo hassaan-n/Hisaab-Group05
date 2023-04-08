@@ -151,16 +151,52 @@ const HomeScreen = () => {
     remaining = budgetData[0]?.current_state / 30;
   }
 
+  
+
 
   let spent = 0;
   spent = budgetData[0]?.current_state  - latestbudgetData[0]?.current_state 
 
+  let today = 0;
+
+  today = remaining - spent
 
   let tommorow = 0;
   if ((remaining - spent) <= 0) {
-    tommorow = remaining + (remaining - spent)
+    tommorow =  remaining + today
+  }
+  else{
+    tommorow = remaining
   }
 
+
+  const currentTime = new Date()
+  .toLocaleString("en-CA", {
+    timeZone: "Asia/Karachi",
+    hour12: false,
+  })
+  .replace(",", "")
+  .replace("04-02", "03-29");
+
+
+  let tester = 0;
+  let tester2 = 0;
+  let threshold = "23:00:00";
+  let thresh = 0;
+
+   
+  tester = parseInt(currentTime.slice(11, 13));
+  thresh = parseInt(threshold.slice(0, 2));
+
+
+  if (tester >= thresh) {
+    tester2 = 69;
+    today = tommorow;
+    tommorow = remaining
+  }
+
+
+  
   const [name, setname] = useState([]);
 
   useEffect(() => {
@@ -317,14 +353,23 @@ const HomeScreen = () => {
             <View style={styles_HomeScreen.dailyMiddleRow}>
               <View style={styles_HomeScreen.budgetNumberContainer}>
                 <Text style={styles_HomeScreen.budgetNumber}>
-                  {remaining - spent | 0}
+                  { today | 0}
                 </Text>
                 <Text style={styles_HomeScreen.budgetText}>Remaining</Text>
               </View>
 
               <Pressable onPressIn={() => {
+              console.log(tester2)
+              const currentTime = new Date()
+              .toLocaleString("en-CA", {
+                timeZone: "Asia/Karachi",
+                hour12: false,
+              })
+              .replace(",", "")
+              .replace("04-02", "03-29");
+              console.log(currentTime.slice(11,19))
                 getbudget();
-                console.log(spent);
+                
                 navigation.navigate("Add Expense")}}>
                 <View style={styles_HomeScreen.addButton}>
                   <Image source={require("../images/Add.png")} />
@@ -334,14 +379,14 @@ const HomeScreen = () => {
 
               <View style={styles_HomeScreen.budgetNumberContainer}>
               <Text style={styles_HomeScreen.budgetNumber}>
-                {tommorow | 0}
+                {tommorow |  0 }
               </Text>
               <Text style={styles_HomeScreen.budgetText}>Tomorrow</Text>
             </View>
 
             </View>
 
-            <RemainderIndicator percentage={ (1000 - difference)/10 | 0} />
+            <RemainderIndicator percentage={ (spent/remaining) * 100 } />
           </View>
         </View>
 
