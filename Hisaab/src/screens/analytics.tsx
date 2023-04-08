@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -20,10 +20,58 @@ import styles_analytics from "../styles/styles.analytics";
 import SpendingChart from './spending';
 import ProgressBar from "./progressbar";
 import MyChart from "./piechart";
-
+ 
 
 
 const Analytics = () => {
+
+  const [totalGoal, setTotalGoal] = useState(0);
+
+  const getGoal = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT amount FROM goal ORDER BY id DESC LIMIT 1;",
+        [],
+        (_, { rows }) => {
+          if (rows._array.length > 0) {
+            setTotalGoal(rows._array[0].amount);
+          }
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+
+  const [sum, setsum] = useState(0);
+
+  const getsum = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT SUM(amount) as totalAmount FROM savings;",
+        [],
+        (_, { rows }) => {
+          if (rows._array.length > 0) {
+            setsum(rows._array[0].totalAmount);
+          }
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+  useEffect(() => {
+    getsum();
+  }, []);
+
+  useEffect(() => {
+    getGoal();
+  }, []);
+
   return (
     // mega container with all the elements
     <ScrollView style={{ flex: 1 }}>
@@ -53,12 +101,10 @@ const Analytics = () => {
             <Text style={styles_HomeScreen.cardHeading}>Progress to Goal</Text>
           </View>
           <View style={styles_HomeScreen.progressBar}>
-            < ProgressBar value={77} goal={1000} />
+            < ProgressBar value={sum} goal={totalGoal} />
           </View>
           <View style={styles_HomeScreen.centerText}>
-            <Text>
-              5 Days till end of week
-            </Text>
+            
           </View>
         </View>
 
@@ -77,7 +123,5 @@ const Analytics = () => {
     </ScrollView>
   );
 };
-
-
 
 export default Analytics;

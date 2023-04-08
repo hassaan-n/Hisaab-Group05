@@ -23,6 +23,7 @@ import PinSetting from "../screens/PinSetting";
 import NotificationSetting from "../screens/NotificationSetting";
 import BudgetSetting from "../screens/BudgetSetting";
 import GoalSetting from "../screens/GoalSetting";
+import Notifications from "../Notifications";
 
 //need to implement in this file
 //first needs to check if intiial sigup is done, if done then load the home screen direcrlt or show pin as per settings
@@ -47,6 +48,9 @@ const HomeStackNavigator = () => {
         <HomeStack.Screen name="Tut5" component={Tut5} />
         <HomeStack.Screen name="Tut6" component={Tut6} />
         <HomeStack.Screen name="Goals" component={GoalsScreen} />
+
+        <HomeStack.Screen name="Notis" component={Notifications} />
+
         <HomeStack.Screen name="Let's Start" component={StartSaving} />
         <HomeStack.Screen name="Home" component={Home} />
         <HomeStack.Screen name="Add Expense" component={AddExpenseTitle} />

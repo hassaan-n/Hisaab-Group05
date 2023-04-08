@@ -24,24 +24,16 @@ const ProfileNameSetting = () => {
  
   const [NewName, onChangeText] = React.useState("");
  
-  const addName = (name) => {
+
+  const addUser = (name) => {
     db.transaction((tx) => {
-      tx.executeSql(
-        "INSERT INTO user (name) VALUES (?);",
-        [name],
-        (_, { rowsAffected }) => {
-          if (rowsAffected > 0) {
-            console.log("added successfully");
-          }
-        },
-        (_, error) => {
-          console.log(error);
-        }
-      );
+      tx.executeSql("INSERT INTO user (name) VALUES (?);", [
+        name,
+      ]);
     });
   };
 
-  const getuser = () => {
+  const getAllUsers = () => {
     db.transaction((tx) => {
       tx.executeSql(
         "SELECT * FROM user;",
@@ -56,7 +48,6 @@ const ProfileNameSetting = () => {
     });
   };
 
-
   return (
     // mega container with all the elements
     <View style={styles.container}>
@@ -68,7 +59,7 @@ const ProfileNameSetting = () => {
           <View style={styles_SettingsBox.cardInside}>
             <View style={{ marginBottom: 15 }}></View>
             <InputField
-              title="New Name"
+              title="Name"
               onChangeText={onChangeText}
               value={NewName}
               inputMode=""
@@ -77,8 +68,8 @@ const ProfileNameSetting = () => {
 
             <View style={{ width: "100%" }}>
               <TouchableOpacity
-                onPress={() => {addName(NewName); 
-                  getuser();
+                onPress={() => {addUser(NewName); 
+                  getAllUsers();
                   navigation.goBack()}}
                 style={styles.appButtonContainer}
               >
@@ -102,8 +93,6 @@ const ProfileNameSetting = () => {
       
       
       
-      
-    
     </View>
   );
 };

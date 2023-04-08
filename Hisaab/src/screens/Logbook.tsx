@@ -81,7 +81,7 @@ const Logbook = () => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Home");
-              console.log(new_arr);
+              
             }}
             style={styles.appButtonContainer}
           >

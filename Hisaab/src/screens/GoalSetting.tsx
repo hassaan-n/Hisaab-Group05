@@ -24,13 +24,18 @@ const GoalSetting = () => {
   const [NewGoal, onChangeNumber] = React.useState("");
 
 
-  const Updategoal = (updatedgoal) => {
+  //get current name of user id 1 from db and return as string
+   
+  const addGoal = (amount: string) => {
+    const timestamp = new Date().toISOString();
     db.transaction((tx) => {
       tx.executeSql(
-        "UPDATE goals SET amount = ? WHERE goal_id IS NULL;",
-        [updatedgoal],
+        "INSERT INTO goal (amount, time_stamp) VALUES (?, ?);",
+        [amount, timestamp],
         (_, { rowsAffected }) => {
-          console.log(`Rows affected: ${rowsAffected}`);
+          if (rowsAffected > 0) {
+            console.log("Goal added successfully");
+          }
         },
         (_, error) => {
           console.log(error);
@@ -38,12 +43,12 @@ const GoalSetting = () => {
       );
     });
   };
-  
 
-  const getgoals = () => {
+  
+  const getGoal = () => {
     db.transaction((tx) => {
       tx.executeSql(
-        "SELECT * FROM goals;",
+        "SELECT * FROM goal;",
         [],
         (_, { rows }) => {
           console.log(rows);
@@ -68,7 +73,6 @@ const GoalSetting = () => {
           
 
     
-        
           <InputField
             title="Enter New Goal"
             onChangeText={onChangeNumber}
@@ -80,8 +84,8 @@ const GoalSetting = () => {
           <View style={{ width: "100%" }}>
             <TouchableOpacity
               onPress={() => {
-                Updategoal(NewGoal);
-                getgoals();
+                addGoal(NewGoal);
+                getGoal();
                 navigation.goBack();
               }}
               style={styles.appButtonContainer}

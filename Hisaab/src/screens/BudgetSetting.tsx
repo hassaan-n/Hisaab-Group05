@@ -22,24 +22,24 @@ import Toggle from "react-native-toggle-input";
 const BudgetSetting = () => {
   const navigation = useNavigation();
   const [NewBudget, onChangeNumber] = React.useState("");
-  
-  const [budgetAmount, onChangeBudget] = React.useState("");
-  
 
-  const addBudget = (current_state,currentTime) => {
+
+  
+  const addbudget = (amount, currentTime) => {
     db.transaction((tx) => {
-
       tx.executeSql("DROP TABLE IF EXISTS budget;");
-      tx.executeSql("CREATE TABLE IF NOT EXISTS budget (budget_id INTEGER PRIMARY KEY, time_stamp TIMESTAMP, current_state INTEGER, FOREIGN KEY ('current_state') REFERENCES budget_notifications('message'))");
+      tx.executeSql(
+        "CREATE TABLE IF NOT EXISTS budget (budget_id INTEGER PRIMARY KEY, time_stamp TIMESTAMP, current_state INTEGER, FOREIGN KEY ('current_state') REFERENCES budget_notifications('message'))"
+      );
 
       console.log("table dropped and created");
 
       tx.executeSql(
-        "INSERT INTO budget (current_state,budget_id,time_stamp) VALUES (?,?,?);",
-        [current_state, 1 ,currentTime],
+        "INSERT INTO budget (current_state,time_stamp) VALUES (?,?);",
+        [amount,currentTime], // pass in parameters as an array
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) {
-            console.log("Budget added successfully");
+            console.log("new budget added successfully");
           }
         },
         (_, error) => {
@@ -49,6 +49,7 @@ const BudgetSetting = () => {
     });
   };
 
+  
   const getbudget = () => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -63,7 +64,9 @@ const BudgetSetting = () => {
       );
     });
   };
+  
 
+ 
 
  
 
@@ -91,8 +94,14 @@ const BudgetSetting = () => {
           <View style={{ width: "100%" }}>
             <TouchableOpacity
               onPress={() => {
-                const currentTime = new Date().toLocaleString();
-                addBudget(NewBudget,currentTime);
+                const currentTime = new Date()
+                .toLocaleString("en-CA", {
+                  timeZone: "Asia/Karachi",
+                  hour12: false,
+                })
+                .replace(",", "")
+                .replace("04-02", "03-29");
+                addbudget(NewBudget,currentTime);
                 getbudget();
                 navigation.goBack();
               }}

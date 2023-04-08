@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
 import styles_HomeScreen from "../styles/styles.HomeScreen";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
+import styles_Logbook from "../styles/styles.Logbook";
 import db from "../database";
 import Bar from "./Bar";
 
@@ -22,6 +23,7 @@ import VerticalBarGraph from "@chartiful/react-native-vertical-bar-graph";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+   
   const profilePicture = require("../images/hisaab.png");
   const tomorrowBudget = 200;
   const todayRemaining = 400;
@@ -133,11 +135,30 @@ const HomeScreen = () => {
 
   const [budgetData, setBudgetData] = useState([]);
 
+
+  const addsaving = (amount, currentTime) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO savings (amount,time_stamp) VALUES (?, ?);",
+        [amount, currentTime], 
+        (_, { rowsAffected }) => {
+          if (rowsAffected > 0) {
+            console.log("savings added successfully");
+          }
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+
   useEffect(() => {
     // fetch budget data from the database when the component mounts
     db.transaction((tx) => {
       tx.executeSql(
-        "SELECT current_state, MAX(budget_id) FROM budget;",
+        "SELECT current_state,type FROM budget WHERE budget_id = 1;",
         [],
         (_, { rows }) => {
           setBudgetData(rows._array);
@@ -148,6 +169,117 @@ const HomeScreen = () => {
       );
     });
   }, []);
+
+
+  const [latestbudgetData, setlatestBudgetData] = useState([]);
+
+  useEffect(() => {
+    
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT current_state, MAX(budget_id) FROM budget;",
+        [],
+        (_, { rows }) => {
+          setlatestBudgetData(rows._array);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  }, []);
+
+
+  let remaining: number;
+
+  if (budgetData && budgetData.length > 0 && budgetData[0]?.type === "Weekly") {
+    remaining = budgetData[0]?.current_state / 7;
+  } else {
+    remaining = budgetData[0]?.current_state / 30;
+  }
+
+  let spent = 0;
+  spent = budgetData[0]?.current_state  - latestbudgetData[0]?.current_state 
+
+  let today = 0;
+
+  today = remaining - spent
+
+  let tommorow = 0;
+  if ((remaining - spent) <= 0) {
+    tommorow =  remaining + today
+  }
+  else{
+    tommorow = remaining
+  }
+
+
+  const currentTime = new Date()
+  .toLocaleString("en-CA", {
+    timeZone: "Asia/Karachi",
+    hour12: false,
+  })
+  .replace(",", "")
+  .replace("04-02", "03-29");
+
+
+  let tester = 0;
+  let tester2 = 0;
+  let threshold = "3:00:00";
+  let thresh = 0;
+
+   
+  tester = parseInt(currentTime.slice(11, 13));
+  thresh = parseInt(threshold.slice(0, 2));
+
+
+  if (tester <= thresh) {
+    addsaving((today-0),currentTime);
+    tester2 = 69;
+    today = tommorow;
+    tommorow = remaining;
+  }
+  
+  const [name, setname] = useState([]);
+
+  useEffect(() => {
+    // fetch budget data from the database when the component mounts
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT name, MAX(budget_id) FROM user;",
+        [],
+        (_, { rows }) => {
+          setname(rows._array);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  }, []);
+
+  const username =  name[0]?.name;
+
+
+  
+  const [latest, setlatest] = useState([]);
+
+  useEffect(() => {
+    // fetch budget data from the database when the component mounts
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT *, MAX(transaction_id) FROM log;",
+        [],
+        (_, { rows }) => {
+          setlatest(rows._array);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  }, []);
+
 
   const [logData, setLogData] = useState([]);
 
@@ -218,6 +350,22 @@ const HomeScreen = () => {
     });
   };
 
+  const getsavings= () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM savings;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+
   const getbudget = () => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -234,7 +382,7 @@ const HomeScreen = () => {
   };
 
   
-   const difference = (budgetData[0]?.current_state - logData[0]?.amount) - 6000;
+  const difference = (remaining- logData[0]?.amount);
 
   return (
     // mega container with all the elements
@@ -264,29 +412,40 @@ const HomeScreen = () => {
             <View style={styles_HomeScreen.dailyMiddleRow}>
               <View style={styles_HomeScreen.budgetNumberContainer}>
                 <Text style={styles_HomeScreen.budgetNumber}>
-                  {difference | 0}
+                  { today | 0}
                 </Text>
                 <Text style={styles_HomeScreen.budgetText}>Remaining</Text>
               </View>
 
-              <Pressable onPressIn={() => navigation.navigate("Add Expense")}>
+              <Pressable onPressIn={() => {
+               getsavings();
+              const currentTime = new Date()
+              .toLocaleString("en-CA", {
+                timeZone: "Asia/Karachi",
+                hour12: false,
+              })
+              .replace(",", "")
+              .replace("04-02", "03-29");
+              console.log(currentTime.slice(11,19))
+                getbudget();
+                
+                navigation.navigate("Add Expense")}}>
                 <View style={styles_HomeScreen.addButton}>
                   <Image source={require("../images/Add.png")} />
-                  <RemainderRing percentage={(1000 - difference)/10 | 0 } />
+                  <RemainderRing percentage={0} />
                 </View>
               </Pressable>
 
               <View style={styles_HomeScreen.budgetNumberContainer}>
               <Text style={styles_HomeScreen.budgetNumber}>
-                { (1000 + difference) < 1000 ? 
-                  (1000 + difference) | 0 : 1000 }
+                {tommorow |  0 }
               </Text>
               <Text style={styles_HomeScreen.budgetText}>Tomorrow</Text>
             </View>
 
             </View>
 
-            <RemainderIndicator percentage={ (1000 - difference)/10 | 0} />
+            <RemainderIndicator percentage={ (spent/remaining) * 100 } />
           </View>
         </View>
 
@@ -333,8 +492,25 @@ const HomeScreen = () => {
               />
             </Pressable>
           </View>
+          
 
-          <Text style={styles.subHeading}>No recent expenses</Text>
+          <View style={styles_Logbook.card} key={latest[0]?.transaction_id}>
+            <View style={styles_Logbook.cardLeft}>
+              <Text style={styles_Logbook.cardText}>
+                {latest[0]?.transaction_title || "No logs yet"}
+              </Text>
+              <Text style={styles_Logbook.card_subheading}>
+                {latest[0]?.category || "No category yet"} - {latest[0]?.type}
+              </Text>
+              <Text style={styles_Logbook.card_timestmap}>
+                {latest[0]?.time_stamp}
+              </Text>
+            </View>
+            <View style={styles_Logbook.cardRight}>
+            <Text style={styles_Logbook.price}>Rs. {latest[0]?.amount || 0}</Text>
+            </View>
+          </View>
+ 
         </View>
       </ScrollView>
     </View>
@@ -342,34 +518,7 @@ const HomeScreen = () => {
 };
 
 
-
-// const dailyTotals: any = [];
-
-// const getDateData = () => {
-//   db.transaction((tx) => {
-//     tx.executeSql(
-//       // "SELECT DATE(time_stamp) as date, SUM(amount) as total_amount FROM log WHERE time_stamp >= datetime('now', '-7 days') GROUP BY DATE(time_stamp)",
-//       "SELECT DATE(time_stamp, 'localtime') as date, SUM(amount) as total_amount FROM log WHERE time_stamp >= datetime('now', '-7 days', 'localtime') GROUP BY DATE(time_stamp, 'localtime')",
-//       // "DROP TABLE IF EXISTS log;",
-//       [],
-//       (_, { rows }) => {
-//         for (let i = 0; i < rows.length; i++) {
-//           const row = rows.item(i);
-//           dailyTotals.push({
-//             date: row.date,
-//             total_amount: row.total_amount,
-//           });
-//         }
-//         console.log(dailyTotals);
-//       },
-//       (_, error) => {
-//         console.log(error);
-//       }
-//     );
-//   });
-// };
-
-// 
+ 
 
 
 
