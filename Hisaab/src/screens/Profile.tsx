@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Alert,
   View,
@@ -10,6 +10,7 @@ import {
   ScrollView,
   Modal,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 //import app name and version from package.json
 import { name, version } from "../../package.json";
@@ -29,8 +30,31 @@ const Profile = () => {
 
   const [text, onChangeText] = React.useState("");
 
-  const [image, setImage] = useState(null);
-  
+  const [image, setImage] = useState<any>(null);
+
+  useEffect(() => {
+    // Retrieve the image URI from AsyncStorage when the component mounts
+    const getImage = async () => {
+      try {
+        const storedImage = await AsyncStorage.getItem("@profileImage");
+        if (storedImage !== null) {
+          setImage(storedImage);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getImage();
+  }, []);
+
+  const storeImage = async (imageUri: any) => {
+    try {
+      // Store the image URI in AsyncStorage
+      await AsyncStorage.setItem("@profileImage", imageUri);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -40,10 +64,10 @@ const Profile = () => {
       aspect: [1, 1],
       quality: 1,
     });
-    setImage(result.uri);
-
-   
-
+    if (!result.canceled) {
+      setImage(result.uri);
+      storeImage(result.uri);
+    }
   };
 
   const profileIcon = require("../images/Profile.png");
@@ -77,55 +101,52 @@ const Profile = () => {
     // const result = await launchImageLibrary(options?);
     <View style={styles.container}>
       <View style={styles_Profile.welcomeContainer}>
-
         <View style={styles_Profile.profilePictureSection}>
+          <Image
+            source={profilePicture}
+            style={styles_Profile.profilePictureDefault}
+          />
 
-        <Image  source={profilePicture} style={styles_Profile.profilePictureDefault} />
-        
-        <Pressable style={styles_Profile.profilePicture} onPressIn={pickImage}>
-          {image && (
-            <Image
-              source={{ uri: image }}
-              style={styles_Profile.profilePicture}
-            />
-          )}
-        </Pressable>
-
-
+          <Pressable
+            style={styles_Profile.profilePicture}
+            onPressIn={pickImage}
+          >
+            {image && (
+              <Image
+                source={{ uri: image }}
+                style={styles_Profile.profilePicture}
+              />
+            )}
+          </Pressable>
         </View>
-
-
-
 
         <View style={styles_Profile.helloText}>
           <Text style={styles.heading}>{ "Profile settings"}</Text>
         </View>
-
-       
       </View>
       <View style={styles_Profile.listCard}>
-          <ListItem
-            title="Profile Name"
-            image={profileIcon}
-            navigateTo="Profile Settings"
-          />
-          <Divider />
-          <ListItem title="Pin" image={pinIcon} navigateTo="Pin Settings" />
-          <Divider />
-          <ListItem
-            title="Notification"
-            image={notificationIcon}
-            navigateTo="Notification Settings"
-          />
-          <Divider />
-          <ListItem
-            title="Budget"
-            image={budgetIcon}
-            navigateTo="Budget Settings"
-          />
-          <Divider />
-          <ListItem title="Goal" image={goalIcon} navigateTo="Goal Settings" />
-        </View>
+        <ListItem
+          title="Profile Name"
+          image={profileIcon}
+          navigateTo="Profile Settings"
+        />
+        <Divider />
+        <ListItem title="Pin" image={pinIcon} navigateTo="Pin Settings" />
+        <Divider />
+        <ListItem
+          title="Notification"
+          image={notificationIcon}
+          navigateTo="Notification Settings"
+        />
+        <Divider />
+        <ListItem
+          title="Budget"
+          image={budgetIcon}
+          navigateTo="Budget Settings"
+        />
+        <Divider />
+        <ListItem title="Goal" image={goalIcon} navigateTo="Goal Settings" />
+      </View>
       <View style={styles_Profile.bottomVer}>
         <Text style={styles.subHeading}>{name}</Text>
         <Text style={styles.text}>V {version}</Text>

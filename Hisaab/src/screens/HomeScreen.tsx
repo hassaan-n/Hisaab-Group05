@@ -15,10 +15,9 @@ import styles_HomeScreen from "../styles/styles.HomeScreen";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import styles_Logbook from "../styles/styles.Logbook";
 import db from "../database";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Bar from "./Bar";
 import { BackHandler } from 'react-native';
-
-
 
 import VerticalBarGraph from "@chartiful/react-native-vertical-bar-graph";
 
@@ -33,12 +32,28 @@ const HomeScreen = () => {
   const barData = [20, 45, 28, 80, 99, 43, 24];
   const barDataDays = ["M", "T", "W", "T", "F", "S", "S"];
 
+  const [image, setImage] = useState<any>(null);
+
   useEffect(() => {
-    const intervalId = setInterval(() => {
-    }, 1000); // Refresh every second
+    // Retrieve the image URI from AsyncStorage when the component mounts
+    const getImage = async () => {
+      try {
+        const storedImage = await AsyncStorage.getItem("@profileImage");
+        if (storedImage !== null) {
+          setImage(storedImage);
+        }
+      } catch (error) {
+        // console.log(error);
+      }
+    };
+    getImage();
+  }, []);
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {}, 10000); // Refresh every second
 
     return () => clearInterval(intervalId);
-  }, [ ]);
+  }, []);
 
   useEffect(() => {
     const backAction = () => {
@@ -69,13 +84,13 @@ const HomeScreen = () => {
           setname(rows._array);
         },
         (_, error) => {
-          console.log(error);
+          //console.log(error);
         }
       );
     });
   }, []);
 
-  const username =  displayname[0]?.name;
+  const username = displayname[0]?.name;
 
   const RemainderIndicator = ({ percentage }) => {
     let colorState: string = "#55C595";
@@ -145,7 +160,6 @@ const HomeScreen = () => {
     return content;
   };
 
-  
   //props for budget input
   const [transaction_title, onChangeTitle] = React.useState("");
   //props for goal input
@@ -182,7 +196,7 @@ const HomeScreen = () => {
           setBudgetData(rows._array);
         },
         (_, error) => {
-          console.log(error);
+          //console.log(error);
         }
       );
     });
@@ -292,7 +306,7 @@ const HomeScreen = () => {
           setLogData(rows._array);
         },
         (_, error) => {
-          console.log(error);
+          // console.log(error);
         }
       );
     });
@@ -309,7 +323,7 @@ const HomeScreen = () => {
           }
         },
         (_, error) => {
-          console.log(error);
+          //  console.log(error);
         }
       );
     });
@@ -317,7 +331,7 @@ const HomeScreen = () => {
 
   const [budgetAmount, onChangeBudget] = React.useState("");
 
-  const addBudget = (current_state,currentTime) => {
+  const addBudget = (current_state, currentTime) => {
     db.transaction((tx) => {
       tx.executeSql(
         "INSERT INTO budget (current_state,time_stamp) VALUES (?,?);",
@@ -328,7 +342,7 @@ const HomeScreen = () => {
           }
         },
         (_, error) => {
-          console.log(error);
+          // console.log(error);
         }
       );
     });
@@ -343,7 +357,7 @@ const HomeScreen = () => {
           console.log(rows);
         },
         (_, error) => {
-          console.log(error);
+          // console.log(error);
         }
       );
     });
@@ -374,10 +388,11 @@ const HomeScreen = () => {
           console.log(rows);
         },
         (_, error) => {
-          console.log(error);
+          // console.log(error);
         }
       );
-    });700
+    });
+    700;
   };
 
   
@@ -394,10 +409,21 @@ const HomeScreen = () => {
 
         <Pressable onPressIn={() => navigation.navigate("Profile")}>
           <View style={{ marginTop: 10 }}></View>
-          <Image
+          {image ? (
+            <Image
+              style={styles_HomeScreen.profilePicture}
+              source={{ uri: image }}
+            />
+          ) : (
+            <Image
+              style={styles_HomeScreen.profilePicture}
+              source={profilePicture}
+            />
+          )}
+          {/* <Image
             style={styles_HomeScreen.profilePicture}
             source={profilePicture}
-          />
+          /> */}
         </Pressable>
       </View>
 
@@ -451,19 +477,34 @@ const HomeScreen = () => {
         <View style={styles_HomeScreen.card}>
           <View style={styles_HomeScreen.cardHeader}>
             <Text style={styles_HomeScreen.cardHeading}>Week Overview</Text>
-            <Pressable onPressIn={() => {navigation.navigate("Analytics")}}>
+            <Pressable
+              onPressIn={() => {
+                navigation.navigate("Analytics");
+              }}
+            >
               <Image
                 style={{ marginTop: 3 }}
                 source={require("../images/Arrow.png")}
               />
             </Pressable>
           </View>
-          <View style ={{top:5}}>
-          <Text style = {{position: "absolute",left:-1 ,top: 90, zIndex: 2, fontSize:13, transform: [{ rotate: '270deg' }]}}>PKR</Text>
-          < Bar/>
-          <View style ={styles_HomeScreen.centerText}>
-          <Text>Days</Text>
-          </View>
+          <View style={{ top: 5 }}>
+            <Text
+              style={{
+                position: "absolute",
+                left: -1,
+                top: 90,
+                zIndex: 2,
+                fontSize: 13,
+                transform: [{ rotate: "270deg" }],
+              }}
+            >
+              PKR
+            </Text>
+            <Bar />
+            <View style={styles_HomeScreen.centerText}>
+              <Text>Days</Text>
+            </View>
           </View>
 
           {/* <VerticalBarGraph

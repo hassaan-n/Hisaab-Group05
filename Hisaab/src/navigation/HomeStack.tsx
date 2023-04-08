@@ -24,7 +24,7 @@ import NotificationSetting from "../screens/NotificationSetting";
 import BudgetSetting from "../screens/BudgetSetting";
 import GoalSetting from "../screens/GoalSetting";
 import Notifications from "../Notifications";
-
+import SubCategory from "../screens/AddSubCategory";
 //need to implement in this file
 //first needs to check if intiial sigup is done, if done then load the home screen direcrlt or show pin as per settings
 
@@ -66,14 +66,14 @@ const HomeStackNavigator = () => {
         <HomeStack.Screen name="Goals" component={GoalsScreen} />
 
         <HomeStack.Screen name="Notis" component={Notifications} />
+        <HomeStack.Screen name="Sub Category" component={SubCategory} />
 
         <HomeStack.Screen name="Let's Start" component={StartSaving} />
-        <HomeStack.Screen name="Home" component={Home} options={{gestureEnabled:false}}/>
-        {/* <HomeStack.Screen
+        <HomeStack.Screen
           name="Home"
           component={Home}
-          options={homeScreenOptions}
-        /> */}
+          options={{ gestureEnabled: false, headerBackVisible: false }}
+        />
         <HomeStack.Screen name="Add Expense" component={AddExpenseTitle} />
         <HomeStack.Screen
           name="Choose Category"

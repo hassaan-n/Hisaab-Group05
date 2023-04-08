@@ -12,6 +12,8 @@ import { useNavigation } from "@react-navigation/native";
 import styles_HomeScreen from "../styles/styles.SignUp";
 import styles from "../styles";
 import db from "../database";
+import { getKey, storeItem } from "../MyAsyncStorage";
+//import { sendNotification } from "../Notifications";
 
 import Toggle from "react-native-toggle-input";
 //import { sendNotification } from "../Notifications";
@@ -104,6 +106,7 @@ const SignUp = () => {
           onPress={() => {
             if (text == "" || (number == "" && toggle)) {
               alert("Please fill all the fields");
+              return;
             }
 
             userExists(text, (nameExists, error) => {
@@ -119,13 +122,13 @@ const SignUp = () => {
                 }
               }
             });
-            addUser(text, toggle, number);
+            //addUser(text, toggle, number);
             // sendNotification(
             //   "Welcome to Hisaab!",
             //   "You have successfully signed up!"
             // );
             navigation.navigate("Tut1");
-            getAllUsers();
+            // getAllUsers();
             // const currentTime = new Date().toLocaleString();
             // console.log(typeof currentTime);
             // console.log(currentTime);

@@ -27,7 +27,7 @@ const GoalsScreen = () => {
 
   const [selectedRadioButton, setSelectedRadioButton] = React.useState("");
 
-  const addGoal = (type,amount) => {
+  const addGoal = (type, amount) => {
     const timestamp = new Date().toISOString();
     db.transaction((tx) => {
       tx.executeSql(

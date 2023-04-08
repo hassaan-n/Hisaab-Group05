@@ -35,8 +35,8 @@ const BudgetSetting = () => {
       console.log("table dropped and created");
 
       tx.executeSql(
-        "INSERT INTO budget (current_state,time_stamp) VALUES (?,?);",
-        [amount,currentTime], // pass in parameters as an array
+        "INSERT INTO budget (current_state,budget_id,time_stamp) VALUES (?,?,?);",
+        [current_state, 1, currentTime],
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) {
             console.log("new budget added successfully");
@@ -66,10 +66,6 @@ const BudgetSetting = () => {
   };
   
 
- 
-
- 
-
   return (
     // mega container with all the elements
     <View style={styles.container}>
@@ -80,9 +76,7 @@ const BudgetSetting = () => {
 
         <View style={styles_SettingsBox.cardInside}>
           <View style={{ marginBottom: 15 }}></View>
-          
-          
-          
+
           <InputField
             title="Enter New Budget"
             onChangeText={onChangeNumber}
@@ -94,14 +88,8 @@ const BudgetSetting = () => {
           <View style={{ width: "100%" }}>
             <TouchableOpacity
               onPress={() => {
-                const currentTime = new Date()
-                .toLocaleString("en-CA", {
-                  timeZone: "Asia/Karachi",
-                  hour12: false,
-                })
-                .replace(",", "")
-                .replace("04-02", "03-29");
-                addbudget(NewBudget,currentTime);
+                const currentTime = new Date().toLocaleString();
+                addBudget(NewBudget, currentTime);
                 getbudget();
                 navigation.goBack();
               }}
@@ -113,16 +101,13 @@ const BudgetSetting = () => {
 
           <View style={{ marginBottom: 10 }}></View>
 
-          
-
           <View style={{ width: "100%" }}>
             <TouchableOpacity
               onPress={() => navigation.goBack()}
-              style={styles.appButtonContainerAlt}>
-              
+              style={styles.appButtonContainerAlt}
+            >
               <Text style={styles.appButtonText}>Cancel</Text>
             </TouchableOpacity>
-          
           </View>
         </View>
       </View>

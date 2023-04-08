@@ -14,7 +14,7 @@ const RadioButton = ({ onRadioButtonPress }: props) => {
       <TouchableOpacity
         onPress={() => {
           setSelected((prev) => (prev === 1 ? 0 : 1));
-          onRadioButtonPress((prev) => (prev === "Food" ? "" : "Food"));
+          onRadioButtonPress((prev: string) => (prev === "Food" ? "" : "Food"));
         }}
       >
         <View style={styles.radioWrap}>
@@ -189,38 +189,6 @@ const RadioButton = ({ onRadioButtonPress }: props) => {
                 ]}
               >
                 Other
-              </Text>
-            </Text>
-          </View>
-        </View>
-      </TouchableOpacity>
-
-      <TouchableOpacity
-        onPress={() => {
-          setSelected((prev) => (prev === 7 ? 0 : 7));
-          onRadioButtonPress((prev) =>
-            prev === "Education" ? "" : "Education"
-          );
-        }}
-      >
-        <View style={styles.radioWrap}>
-          <View
-            style={[
-              styles.radio,
-              selected === 7 && {
-                backgroundColor: "#55C595",
-                borderColor: "white",
-              },
-            ]}
-          >
-            <Text style={styles.radioText}>
-              <Text
-                style={[
-                  styles.subHeading,
-                  selected === 7 && { color: "white" },
-                ]}
-              >
-                Education
               </Text>
             </Text>
           </View>

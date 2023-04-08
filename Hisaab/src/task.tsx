@@ -1,11 +1,9 @@
 import * as TaskManager from "expo-task-manager";
 import db from "./database";
-import {
-  Notification,
-  scheduleNotificationAsync,
-  setNotificationHandler,
-} from "expo-notifications";
+import * as Notifications from "expo-notifications";
 import * as BackgroundFetch from "expo-background-fetch";
+import * as Device from "expo-device";
+import { Platform } from "react-native";
 
 const BACKGROUND_FETCH_TASK = "budget-notification-task";
 
@@ -39,21 +37,23 @@ TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
     body: `Your budget is ${budget} Rs`,
     data: { budget },
   };
-  setNotificationHandler({
+  Notifications.setNotificationHandler({
     handleNotification: async () => ({
       shouldShowAlert: true,
       shouldPlaySound: false,
       shouldSetBadge: false,
     }),
   });
-  await scheduleNotificationAsync({
+  await Notifications.scheduleNotificationAsync({
     content: notificationContent,
-    trigger: {
-      seconds: 5, //triggerTime   // enter time here in seconds calculate the difference between current time and user input time
-    },
+    trigger: null, //{
+    //seconds: 10, //triggerTime   // enter time here in seconds calculate the difference between current time and user input time
+    //repeats: true, // set the repeat frequency to be in minute
+    // set the repeat frequency to be in minute
+    //},
   });
   console.log("noti schduled");
   //repeating notifications after every 1 minute
-  return BackgroundFetch.setMinimumIntervalAsync(60); //.setMinimumIntervalAsync(5); // enter time should be in seconds I think it should be 24 hours as this event must be scheduled once every 24 hours
+  return BackgroundFetch.setMinimumIntervalAsync(20); //.setMinimumIntervalAsync(5); // enter time should be in seconds I think it should be 24 hours as this event must be scheduled once every 24 hours
 });
 export default BACKGROUND_FETCH_TASK;

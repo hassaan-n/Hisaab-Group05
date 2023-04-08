@@ -27,7 +27,6 @@ const AddExpenseCategory = ({ route }: any) => {
     { name: "Laundry", id: 3 },
     { name: "Grocery", id: 4 },
     { name: "Subscription", id: 5 },
-    { name: "Education", id: 6 },
     { name: "Other", id: 7 },
   ];
 
@@ -42,7 +41,7 @@ const AddExpenseCategory = ({ route }: any) => {
       //   "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
       // );
 
-      console.log("table dropped and created");
+      //console.log("table dropped and created");
       tx.executeSql(
         "INSERT INTO log (amount,transaction_title,time_stamp, category) VALUES (?,?,?,?);",
         [amount, transaction_title, currentTime, category], // pass in parameters as an array
@@ -115,17 +114,33 @@ const AddExpenseCategory = ({ route }: any) => {
           <TouchableOpacity
             style={styles.appButtonContainer}
             onPress={() => {
-              
-              const currentTime = new Date()
-                .toLocaleString("en-CA", {
-                  timeZone: "Asia/Karachi",
-                  hour12: false,
-                })
-                .replace(",", "")
-                .replace("04-02", "03-29");
-              addLog(amount, title, currentTime, selectedOption.name);
-              getLog();
-              navigation.navigate("Home");
+              // const currentTime = (new Date().toISOString().slice(0,19).replace('T',' '));
+              // const currentTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Karachi' });
+              // const now = new Date().toLocaleString('en-CA', { timeZone: 'Asia/Karachi' });
+              // const [month, day, year] = now.split('/');
+              // const currentTime = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+              // const currentTime = new Date(now).toISOString();
+              // const currentTime = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Karachi' });
+              // const currentTime = now.split('/').reverse().join('-');
+
+              if (selectedOption.name !== "Food") {
+                const currentTime = new Date()
+                  .toLocaleString("en-CA", {
+                    timeZone: "Asia/Karachi",
+                    hour12: false,
+                  })
+                  .replace(",", "")
+                  .replace("04-02", "03-29");
+                addLog(amount, title, currentTime, selectedOption.name);
+                getLog();
+                navigation.navigate("Home");
+              } else {
+                navigation.navigate("Sub Category", {
+                  title: title,
+                  amount: amount,
+                  category: selectedOption.name,
+                });
+              }
             }}
           >
             <Text style={styles.appButtonText}>Submit</Text>
@@ -138,6 +153,8 @@ const AddExpenseCategory = ({ route }: any) => {
               navigation.navigate("Home"),
                 console.log(new Date().toLocaleString()),
                 getDateData();
+              ///query breakfast lunch dinner
+              //amswer
             }}
           >
             <Text style={styles.appButtonText}>Cancel</Text>
