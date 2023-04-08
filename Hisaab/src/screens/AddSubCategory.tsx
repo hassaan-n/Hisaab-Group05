@@ -133,7 +133,7 @@ const SubCategory = ({ route }: any) => {
                 .replace(",", "")
                 .replace("04-02", "03-29");
               
-              addLog(amount, title, currentTime, category, selectedOption.name);
+              // addLog(amount, title, currentTime, category, selectedOption.name);
               getLog();
               navigation.navigate("Summary", {
                 title: title,
@@ -152,8 +152,7 @@ const SubCategory = ({ route }: any) => {
             style={styles.appButtonContainerAlt}
             onPress={() => {
               navigation.navigate("Home");
-              // console.log(new Date().toLocaleString()),
-              // getDateData();
+               
             }}
           >
             <Text style={styles.appButtonText}>Cancel</Text>
