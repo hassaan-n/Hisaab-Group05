@@ -240,25 +240,6 @@ const HomeScreen = () => {
     tommorow = remaining;
   }
   
-  const [name, setname] = useState([]);
-
-  useEffect(() => {
-    // fetch budget data from the database when the component mounts
-    db.transaction((tx) => {
-      tx.executeSql(
-        "SELECT name, MAX(budget_id) FROM user;",
-        [],
-        (_, { rows }) => {
-          setname(rows._array);
-        },
-        (_, error) => {
-          console.log(error);
-        }
-      );
-    });
-  }, []);
-
-  const username =  name[0]?.name;
 
 
   
