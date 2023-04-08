@@ -45,7 +45,7 @@ const styles_Logbook = StyleSheet.create({
     
         // position: "absolute",
         fontSize: 10,
-        fontFamily: "Poppins ",
+        fontFamily: "Poppins",
         // marginLeft:8,
         // paddingTop:50,
         

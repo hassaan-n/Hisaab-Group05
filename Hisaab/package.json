@@ -49,13 +49,7 @@
     "react-native-text-input-interactive": "^0.1.4",
     "react-native-toggle-input": "^1.0.12",
     "toggle-switch-react-native": "^3.3.0",
-<<<<<<< HEAD
-    "victory-native": "^36.6.8",
-    "expo-image-picker": "~14.1.1",
-    "expo-updates": "~0.16.4"
-=======
     "victory-native": "^36.6.8"
->>>>>>> jr
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
