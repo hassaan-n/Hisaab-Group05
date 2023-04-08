@@ -66,9 +66,9 @@ const GoalsScreen = () => {
     db.transaction((tx) => {
       tx.executeSql("DROP TABLE IF EXISTS log;");
       tx.executeSql(
-        "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
+        "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER AUTOINCREMENT, username TEXT, category TEXT, sub_category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT, PRIMARY KEY (transaction_id, username))"
       );
-      console.log("table dropped and created");
+      console.log("log table dropped and created");
     });
   };
 
