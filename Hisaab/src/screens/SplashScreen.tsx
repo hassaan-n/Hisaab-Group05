@@ -50,6 +50,14 @@ const SplashScreen = () => {
           <Text style={styles.appButtonText}>Home</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Summary")}
+          style={styles.appButtonContainer}
+        >
+          <Text style={styles.appButtonText}>Splashscreen</Text>
+        </TouchableOpacity>
+
+
       
     
     </View>
