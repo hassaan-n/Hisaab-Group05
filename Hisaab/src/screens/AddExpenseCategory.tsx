@@ -16,9 +16,13 @@ import styles_AddExpenseCategory from "../styles/styles.AddExpenseCategory";
 import styles from "../styles";
 import db from "../database";
 
+import { sendBreakfastNotification } from "../RecomendNotiScheduler";
+import { sendLunchNotification } from "../RecomendNotiScheduler";
+import { sendDinnerNotification } from "../RecomendNotiScheduler";
+
 const AddExpenseCategory = ({ route }: any) => {
   const navigation = useNavigation();
-  const { title, amount,category } = route.params;
+  const { title, amount,time } = route.params;
   const [selectedOption, setSelectedOption] = React.useState(null);
 
   const options = [
@@ -27,7 +31,6 @@ const AddExpenseCategory = ({ route }: any) => {
     { name: "Laundry", id: 3 },
     { name: "Grocery", id: 4 },
     { name: "Subscription", id: 5 },
-    { name: "Education", id: 6 },
     { name: "Other", id: 7 },
   ];
 
@@ -42,7 +45,7 @@ const AddExpenseCategory = ({ route }: any) => {
       //   "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
       // );
 
-      console.log("table dropped and created");
+      //console.log("table dropped and created");
       tx.executeSql(
         "INSERT INTO log (amount,transaction_title,time_stamp, category) VALUES (?,?,?,?);",
         [amount, transaction_title, currentTime, category], // pass in parameters as an array
@@ -115,18 +118,67 @@ const AddExpenseCategory = ({ route }: any) => {
           <TouchableOpacity
             style={styles.appButtonContainer}
             onPress={() => {
-
-              const currentTime = new Date()
+              // const currentTime = (new Date().toISOString().slice(0,19).replace('T',' '));
+              // const currentTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Karachi' });
+              // const now = new Date().toLocaleString('en-CA', { timeZone: 'Asia/Karachi' });
+              // const [month, day, year] = now.split('/');
+              // const currentTime = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+              // const currentTime = new Date(now).toISOString();
+              // const currentTime = new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Karachi' });
+              // const currentTime = now.split('/').reverse().join('-');
+              if(selectedOption.name != "Food")
+              {
+                const currentTime = new Date()
                 .toLocaleString("en-CA", {
                   timeZone: "Asia/Karachi",
                   hour12: false,
                 })
                 .replace(",", "")
                 .replace("04-02", "03-29");
-              addLog(amount, title, currentTime, selectedOption.name);
-              getLog();
-              navigation.navigate("Choose Sub Category",{amount: amount, title: title, currentTime: currentTime,
-                category: selectedOption.name});
+                addLog(amount, title, currentTime, selectedOption.name);
+                getLog();
+              }
+              getBreakfastLogs(1000)
+              .then((titles) => {
+                const message = titles.join(', ');
+                sendBreakfastNotification("Breakfast Recommendations", message);
+                console.log(message); 
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+
+              getLunchLogs(1000)
+              .then((titles) => {
+                const message = titles.join(', ');
+                sendLunchNotification("Lunch Recommendations", message);
+                console.log(message); 
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+
+              getDinnerLogs(1000)
+              .then((titles) => {
+                const message = titles.join(', ');
+                sendDinnerNotification("Dinner Recommendations", message);
+                console.log(message); 
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+
+
+
+              if (selectedOption.name !== "Food") {
+                navigation.navigate("Splash");
+              } else {
+                navigation.navigate("Sub Category", {
+                  title: title,
+                  amount: amount,
+                  category: selectedOption.name,
+                });
+              }
             }}
           >
             <Text style={styles.appButtonText}>Submit</Text>
@@ -139,6 +191,8 @@ const AddExpenseCategory = ({ route }: any) => {
               navigation.navigate("Home"),
                 console.log(new Date().toLocaleString()),
                 getDateData();
+              ///query breakfast lunch dinner
+              //amswer
             }}
           >
             <Text style={styles.appButtonText}>Cancel</Text>
@@ -202,6 +256,67 @@ const getDateData = () => {
         console.log(error);
       }
     );
+  });
+};
+
+const getBreakfastLogs = (threshold: number): Promise<string[]> => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT transaction_title FROM log WHERE category = ? AND sub_category = ? AND amount < ? ORDER BY RANDOM() LIMIT 2',
+        ['Food', 'Breakfast', threshold],
+        (_, { rows }) => {
+          const data = rows._array;
+          const titles = data.map((row) => row.transaction_title);
+
+          resolve(titles);
+        },
+        (_, error) => {
+          reject(error);
+        },
+      );
+    });
+  });
+};
+
+
+const getLunchLogs = (threshold: number): Promise<string[]> => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT transaction_title FROM log WHERE category = ? AND sub_category = ? AND amount < ? ORDER BY RANDOM() LIMIT 2',
+        ['Food', 'Lunch', threshold],
+        (_, { rows }) => {
+          const data = rows._array;
+          const titles = data.map((row) => row.transaction_title);
+
+          resolve(titles);
+        },
+        (_, error) => {
+          reject(error);
+        },
+      );
+    });
+  });
+};
+
+const getDinnerLogs = (threshold: number): Promise<string[]> => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT transaction_title FROM log WHERE category = ? AND sub_category = ? AND amount < ? ORDER BY RANDOM() LIMIT 2',
+        ['Food', 'Dinner', threshold],
+        (_, { rows }) => {
+          const data = rows._array;
+          const titles = data.map((row) => row.transaction_title);
+
+          resolve(titles);
+        },
+        (_, error) => {
+          reject(error);
+        },
+      );
+    });
   });
 };
 

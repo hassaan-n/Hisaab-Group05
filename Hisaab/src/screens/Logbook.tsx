@@ -18,7 +18,7 @@ const Logbook = () => {
   const navigation = useNavigation();
   const [selectedRadioButton, setSelectedRadioButton] = useState("");
   // state to hold the log data
-  const [logData, setLogData] = useState([]);
+  const [logData, setLogData] = useState<any>([]);
 
   useEffect(() => {
     // fetch log data from the database when the component mounts
@@ -58,8 +58,8 @@ const Logbook = () => {
         </View>
 
         {/* map over the log data to display each log entry */}
-        {filteredLogData.map((entry) => (
-          <View style={styles_Logbook.card} key={entry.id}>
+        {filteredLogData.map((entry, index) => (
+          <View style={styles_Logbook.card} key={index}>
             <View style={styles_Logbook.cardLeft}>
               <Text style={styles_Logbook.cardText}>
                 {entry.transaction_title}
@@ -81,7 +81,7 @@ const Logbook = () => {
           <TouchableOpacity
             onPress={() => {
               navigation.navigate("Home");
-              console.log(new_arr);
+              
             }}
             style={styles.appButtonContainer}
           >

@@ -19,7 +19,7 @@ import styles_Logbook from "../styles/styles.Logbook";
 import RadioButton from "../components/radioButton";
 import db from "../database";
 
-const AddExpenseTitle = () => {
+const AddExpenseTitle = ({ route }: any) => {
   const navigation = useNavigation();
 
   //props for budget input
@@ -63,23 +63,7 @@ const AddExpenseTitle = () => {
     });
   }, []);
 
-  // const addLog = (amount, transaction_title, currentTime) => {
-  //   db.transaction((tx) => {
-  //     tx.executeSql(
-  //       "INSERT INTO log (amount, transaction_title, time_stamp) VALUES (?, ?, ?);",
-  //       [amount, transaction_title, currentTime], // pass in parameters as an array
-  //       (_, { rowsAffected }) => {
-  //         if (rowsAffected > 0) {
-  //           console.log("title and amount added successfully");
-  //         }
-  //       },
-  //       (_, error) => {
-  //         console.log(error);
-  //       }
-  //     );
-  //   });
-  // };
-
+   
   const [budgetAmount, onChangeBudget] = React.useState("");
 
   const addBudget = (current_state,currentTime) => {
@@ -174,7 +158,6 @@ const AddExpenseTitle = () => {
                 style={styles.appButtonContainer}
   
                 onPress={() => {
-  
   
                   const currentTime = new Date().toLocaleString();
                   // addLog(amount,transaction_title,currentTime);

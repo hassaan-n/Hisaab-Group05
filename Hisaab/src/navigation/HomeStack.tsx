@@ -23,7 +23,9 @@ import PinSetting from "../screens/PinSetting";
 import NotificationSetting from "../screens/NotificationSetting";
 import BudgetSetting from "../screens/BudgetSetting";
 import GoalSetting from "../screens/GoalSetting";
-
+import Notifications from "../Notifications";
+import SubCategory from "../screens/AddSubCategory";
+import SplashScreen from "../screens/SplashScreen";
 //need to implement in this file
 //first needs to check if intiial sigup is done, if done then load the home screen direcrlt or show pin as per settings
 
@@ -31,13 +33,12 @@ const HomeStack = createNativeStackNavigator();
 const InitSetup = true;
 
 const HomeStackNavigator = () => {
+
+
   let content = null;
-
-  //if initial setup is set to true then add the signup screen to the stack
-
-  if (InitSetup) {
-    content = (
-      <HomeStack.Navigator>
+  content = (
+    <HomeStack.Navigator>
+        <HomeStack.Screen name="Splash" component={SplashScreen} />
         <HomeStack.Screen name="Sign Up" component={SignUp} />
         <HomeStack.Screen name="Details" component={DetailsScreen} />
         <HomeStack.Screen name="Tut1" component={Tut1} />
@@ -47,8 +48,14 @@ const HomeStackNavigator = () => {
         <HomeStack.Screen name="Tut5" component={Tut5} />
         <HomeStack.Screen name="Tut6" component={Tut6} />
         <HomeStack.Screen name="Goals" component={GoalsScreen} />
+        <HomeStack.Screen name="Notis" component={Notifications} />
+        <HomeStack.Screen name="Sub Category" component={SubCategory} />
         <HomeStack.Screen name="Let's Start" component={StartSaving} />
-        <HomeStack.Screen name="Home" component={Home} />
+        <HomeStack.Screen
+          name="Home"
+          component={Home}
+          options={{ gestureEnabled: false, headerBackVisible: false }}
+        />
         <HomeStack.Screen name="Add Expense" component={AddExpenseTitle} />
         <HomeStack.Screen
           name="Choose Category"
@@ -69,35 +76,13 @@ const HomeStackNavigator = () => {
         <HomeStack.Screen name="Budget Settings" component={BudgetSetting} />
         <HomeStack.Screen name="Goal Settings" component={GoalSetting} />
       </HomeStack.Navigator>
-    );
-  } else {
-    content = (
-      <HomeStack.Navigator>
-        <HomeStack.Screen name="Home" component={Home} />
-        <HomeStack.Screen name="Add Expense" component={AddExpenseTitle} />
-        <HomeStack.Screen
-          name="Choose Category"
-          component={AddExpenseCategory}
-        />
-        <HomeStack.Screen name="Analytics" component={Analytics} />
-        <HomeStack.Screen name="Logs" component={Logbook} />
-        <HomeStack.Screen name="Profile" component={Profile} />
-        <HomeStack.Screen
-          name="Profile Settings"
-          component={ProfileNameSetting}
-        />
-        <HomeStack.Screen name="Pin Settings" component={PinSetting} />
-        <HomeStack.Screen
-          name="Notification Settings"
-          component={NotificationSetting}
-        />
-        <HomeStack.Screen name="Budget Settings" component={BudgetSetting} />
-        <HomeStack.Screen name="Goal Settings" component={GoalSetting} />
-      </HomeStack.Navigator>
-    );
-  }
 
+
+  )
   return content;
+        
+
+
 };
 
 export default HomeStackNavigator;

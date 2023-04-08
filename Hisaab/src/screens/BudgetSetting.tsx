@@ -23,14 +23,12 @@ const BudgetSetting = () => {
   const navigation = useNavigation();
   const [NewBudget, onChangeNumber] = React.useState("");
   
-  const [budgetAmount, onChangeBudget] = React.useState("");
-  
-
-  const addBudget = (current_state,currentTime) => {
+  const addbudget = (amount, currentTime) => {
     db.transaction((tx) => {
-
       tx.executeSql("DROP TABLE IF EXISTS budget;");
-      tx.executeSql("CREATE TABLE IF NOT EXISTS budget (budget_id INTEGER PRIMARY KEY, time_stamp TIMESTAMP, current_state INTEGER, FOREIGN KEY ('current_state') REFERENCES budget_notifications('message'))");
+      tx.executeSql(
+        "CREATE TABLE IF NOT EXISTS budget (budget_id INTEGER PRIMARY KEY, time_stamp TIMESTAMP, current_state INTEGER, FOREIGN KEY ('current_state') REFERENCES budget_notifications('message'))"
+      );
 
       console.log("table dropped and created");
 
@@ -49,6 +47,7 @@ const BudgetSetting = () => {
     });
   };
 
+  
   const getbudget = () => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -63,9 +62,7 @@ const BudgetSetting = () => {
       );
     });
   };
-
-
- 
+  
 
   return (
     // mega container with all the elements
@@ -77,9 +74,7 @@ const BudgetSetting = () => {
 
         <View style={styles_SettingsBox.cardInside}>
           <View style={{ marginBottom: 15 }}></View>
-          
-          
-          
+
           <InputField
             title="Enter New Budget"
             onChangeText={onChangeNumber}
@@ -92,7 +87,7 @@ const BudgetSetting = () => {
             <TouchableOpacity
               onPress={() => {
                 const currentTime = new Date().toLocaleString();
-                addBudget(NewBudget,currentTime);
+                addBudget(NewBudget, currentTime);
                 getbudget();
                 navigation.goBack();
               }}
@@ -104,16 +99,13 @@ const BudgetSetting = () => {
 
           <View style={{ marginBottom: 10 }}></View>
 
-          
-
           <View style={{ width: "100%" }}>
             <TouchableOpacity
               onPress={() => navigation.goBack()}
-              style={styles.appButtonContainerAlt}>
-              
+              style={styles.appButtonContainerAlt}
+            >
               <Text style={styles.appButtonText}>Cancel</Text>
             </TouchableOpacity>
-          
           </View>
         </View>
       </View>

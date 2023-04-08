@@ -12,9 +12,11 @@ import { useNavigation } from "@react-navigation/native";
 import styles_HomeScreen from "../styles/styles.SignUp";
 import styles from "../styles";
 import db from "../database";
+import { getKey, storeItem } from "../MyAsyncStorage";
+//import { sendNotification } from "../Notifications";
 
 import Toggle from "react-native-toggle-input";
-import { err } from "react-native-svg/lib/typescript/xml";
+//import { sendNotification } from "../Notifications";
 
 const SignUp = () => {
   const navigation = useNavigation();
@@ -52,10 +54,10 @@ const SignUp = () => {
 
   return (
     // mega container with all the elements
-
-    <View style={styles.container}>
+    // <View style={[styles_HomeScreen.card, { marginTop: 40}]}>
+    <View style={styles.container }>
       {/* image inside the container */}
-      <View style={styles_HomeScreen.imageContainer}>
+      <View style={[styles_HomeScreen.imageContainer]}>
         <Image source={require("../images/hisaab.png")} />
       </View>
 
@@ -93,7 +95,18 @@ const SignUp = () => {
           />
         </View>
 
-        <Card pinstate={toggle} />
+        <View style={styles_HomeScreen.inputSingleContainer}>
+          <Text style={styles.subHeading}>Pin</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeNumber}
+            value={number}
+            placeholder="Enter password"
+            keyboardType="numeric"
+          />
+        </View>
+
+        {/* <Card pinstate={toggle} /> */}
       </View>
 
       {/* Button Sectoion*/}
@@ -101,33 +114,36 @@ const SignUp = () => {
         <TouchableOpacity
           // onPress={() => {navigation.navigate("Tut1"); addUser(text,toggle,number); getAllUsers();}}
 
-          onPress={() => { 
-          if (text == "" || (number == "" && toggle)) 
-            { alert("Please fill all the fields");} 
-            
-          userExists(text, (nameExists, error) => {
-            if (error) {
-              console.error(error);
-            } else {
-              if (nameExists)
-              {
-                alert(`User with name ${text} already exists`)
-              } // true or false
-              else 
-              {
-                addUser(text, toggle, number)
-                navigation.navigate("Tut1")
-              }
+          onPress={() => {
+            if (text == "" || (number == "" && toggle)) {
+              alert("Please fill all the fields");
+              return;
             }
-          });
-          addUser(text, toggle, number)
-          navigation.navigate("Tut1")
-          getAllUsers();
-          const currentTime = new Date().toLocaleString();
-          console.log(typeof(currentTime))
-          console.log(currentTime)
-        }}
 
+            userExists(text, (nameExists, error) => {
+              if (error) {
+                console.error(error);
+              } else {
+                if (nameExists) {
+                  alert(`User with name ${text} already exists`);
+                } // true or false
+                else {
+                  addUser(text, toggle, number);
+                  navigation.navigate("Tut1");
+                }
+              }
+            });
+            //addUser(text, toggle, number);
+            // sendNotification(
+            //   "Welcome to Hisaab!",
+            //   "You have successfully signed up!"
+            // );
+            navigation.navigate("Tut1");
+            // getAllUsers();
+            // const currentTime = new Date().toLocaleString();
+            // console.log(typeof currentTime);
+            // console.log(currentTime);
+          }}
           style={styles.appButtonContainer}
         >
           <Text style={styles.appButtonText}>Continue</Text>
