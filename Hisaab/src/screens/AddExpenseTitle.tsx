@@ -19,7 +19,7 @@ import styles_Logbook from "../styles/styles.Logbook";
 import RadioButton from "../components/radioButton";
 import db from "../database";
 
-const AddExpenseTitle = () => {
+const AddExpenseTitle = ({ route }: any) => {
   const navigation = useNavigation();
 
   //props for budget input
@@ -158,7 +158,6 @@ const AddExpenseTitle = () => {
                 style={styles.appButtonContainer}
   
                 onPress={() => {
-  
   
                   const currentTime = new Date().toLocaleString();
                   // addLog(amount,transaction_title,currentTime);

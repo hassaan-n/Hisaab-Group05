@@ -70,11 +70,7 @@ const Profile = () => {
       storeImage(result.uri);
     }
   };
-  const navigationOptions = ({navigation}) => {
-    return{
-      headerLeft:(<HeaderBackButton onPress={()=>{navigation.navigate('A')}}/>)
-   }
-  }
+
   
 
   const profileIcon = require("../images/Profile.png");

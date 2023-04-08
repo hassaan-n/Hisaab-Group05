@@ -22,7 +22,7 @@ import { sendDinnerNotification } from "../RecomendNotiScheduler";
 
 const AddExpenseCategory = ({ route }: any) => {
   const navigation = useNavigation();
-  const { title, amount } = route.params;
+  const { title, amount,time } = route.params;
   const [selectedOption, setSelectedOption] = React.useState(null);
 
   const options = [
