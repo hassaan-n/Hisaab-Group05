@@ -27,7 +27,7 @@ const AddExpenseSummary = ({ route }: any) => {
   let Expense = amount;
   let Category = category;
   let Sub_category = sub_category;
-  let reultant_state =  difference - amount;
+  let reultant_state =  difference;
 
   const functionToUpdateDB = () => {};
 
