@@ -22,11 +22,12 @@ import db from "../database";
 
 const AddExpenseSummary = ({ route }: any) => {
   const navigation = useNavigation();
-  //   let { title, amount, category, sub_category, resultant_state } = route.params;
-  let Title = 0;
-  let Expense = 10;
-  let Category = "Shopping";
-  let Sub_category = "Null";
+  const { title, amount, category, sub_category, difference } = route.params;
+  let Title = title;
+  let Expense = amount;
+  let Category = category;
+  let Sub_category = sub_category;
+  let reultant_state =  difference - amount;
 
   const functionToUpdateDB = () => {};
 
@@ -59,6 +60,11 @@ const AddExpenseSummary = ({ route }: any) => {
           <Text style={styles.textBold}>Title:</Text>
           <Text style={styles.text}>{Sub_category}</Text>
           <View style={{ height: 5 }}></View>
+
+          <Text style={styles.textBold}>remaining:</Text>
+          <Text style={styles.text}>{reultant_state}</Text>
+          <View style={{ height: 5 }}></View>
+
         </View>
       </View>
 
