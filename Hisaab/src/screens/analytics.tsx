@@ -15,8 +15,6 @@ import RadioButton from "../components/radioButton";
 import db from "../database"
 import styles_HomeScreen from "../styles/styles.HomeScreen";
 import styles_analytics from "../styles/styles.analytics";
-
-
 import SpendingChart from './spending';
 import ProgressBar from "./progressbar";
 import MyChart from "./piechart";
@@ -76,9 +74,13 @@ const Analytics = () => {
     // mega container with all the elements
     <ScrollView style={{ flex: 1 }}>
       <View style={styles.container}>
-        <View style={styles_analytics.analytics}>
-          <Text style={styles.text}>Review your spending patterns</Text>
-          <Text style={styles.heading}>Analytics</Text>
+        {/* <View style={styles_analytics.analytics}> */}
+        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+            <Image source={require("../images/back.png")} style={styles.backButton} />
+          </TouchableOpacity>
+        <View style={[styles_HomeScreen.card, { marginTop: 40}]}>
+          <Text style={[styles.text, {left:5}]}>Review your spending patterns</Text>
+          <Text style={[styles.heading, {left: 5}]}>Analytics</Text>
         </View>
 
         <View style={styles_HomeScreen.card}>

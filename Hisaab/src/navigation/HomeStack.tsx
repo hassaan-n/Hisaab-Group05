@@ -34,11 +34,27 @@ const InitSetup = true;
 const HomeStackNavigator = () => {
   let content = null;
 
+  // const stackOptions = {
+  //   headerShown: false, // Set to false to remove black bar at the top
+  // };
+  // const stackOptions = {
+  //   headerShown: false, // Set to false to remove black bar at the top
+  //   screenOptions: {
+  //     headerLeft: () => null, // Disable back button
+  //   },
+  // };
+  const stackOptions = {
+    headerShown: false,
+  };
+
+  const homeScreenOptions = {
+    headerLeft: null, // Disable the ability to go back from the Home screen
+  };
   //if initial setup is set to true then add the signup screen to the stack
 
   if (InitSetup) {
     content = (
-      <HomeStack.Navigator>
+      <HomeStack.Navigator screenOptions= {stackOptions}>
         <HomeStack.Screen name="Sign Up" component={SignUp} />
         <HomeStack.Screen name="Details" component={DetailsScreen} />
         <HomeStack.Screen name="Tut1" component={Tut1} />
@@ -52,7 +68,12 @@ const HomeStackNavigator = () => {
         <HomeStack.Screen name="Notis" component={Notifications} />
 
         <HomeStack.Screen name="Let's Start" component={StartSaving} />
-        <HomeStack.Screen name="Home" component={Home} />
+        <HomeStack.Screen name="Home" component={Home} options={{gestureEnabled:false}}/>
+        {/* <HomeStack.Screen
+          name="Home"
+          component={Home}
+          options={homeScreenOptions}
+        /> */}
         <HomeStack.Screen name="Add Expense" component={AddExpenseTitle} />
         <HomeStack.Screen
           name="Choose Category"
