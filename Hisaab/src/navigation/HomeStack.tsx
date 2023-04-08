@@ -26,11 +26,12 @@ import GoalSetting from "../screens/GoalSetting";
 import Notifications from "../Notifications";
 import SubCategory from "../screens/AddSubCategory";
 import SplashScreen from "../screens/SplashScreen";
+import AddExpenseSummary from "../screens/AddExpenseSummary";
 //need to implement in this file
 //first needs to check if intiial sigup is done, if done then load the home screen direcrlt or show pin as per settings
 
 const HomeStack = createNativeStackNavigator();
-const InitSetup = true;
+
 
 const HomeStackNavigator = () => {
 
@@ -75,6 +76,7 @@ const HomeStackNavigator = () => {
         />
         <HomeStack.Screen name="Budget Settings" component={BudgetSetting} />
         <HomeStack.Screen name="Goal Settings" component={GoalSetting} />
+        <HomeStack.Screen name="Summary" component={AddExpenseSummary} />
       </HomeStack.Navigator>
 
 

@@ -60,6 +60,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: "Poppins",
   },
+  textBold: {
+    fontSize: 16,
+    fontFamily: "Poppins-Bold",
+  },
+
 
   tutorialPage: {
     flex: 1,
