@@ -163,7 +163,7 @@ const GoalsScreen = () => {
                 .replace("04-02", "03-29");
               addBudget(budgetAmount, currentTime,selectedRadioButton);
               // getbudget();
-              droplog();
+              
               navigation.navigate("Notis");
             }}
           >

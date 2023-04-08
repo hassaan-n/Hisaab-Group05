@@ -155,7 +155,7 @@ const SubCategory = ({ route }: any) => {
               // );
               addLog(amount, title, currentTime, category, selectedOption.name);
               getLog();
-              navigation.navigate("Home");
+              navigation.navigate("Splash");
             }}
           >
             <Text style={styles.appButtonText}>Submit</Text>

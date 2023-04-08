@@ -541,34 +541,5 @@ const HomeScreen = () => {
 
 
 
-// const dailyTotals: any = [];
-
-// const getDateData = () => {
-//   db.transaction((tx) => {
-//     tx.executeSql(
-//       // "SELECT DATE(time_stamp) as date, SUM(amount) as total_amount FROM log WHERE time_stamp >= datetime('now', '-7 days') GROUP BY DATE(time_stamp)",
-//       "SELECT DATE(time_stamp, 'localtime') as date, SUM(amount) as total_amount FROM log WHERE time_stamp >= datetime('now', '-7 days', 'localtime') GROUP BY DATE(time_stamp, 'localtime')",
-//       // "DROP TABLE IF EXISTS log;",
-//       [],
-//       (_, { rows }) => {
-//         for (let i = 0; i < rows.length; i++) {
-//           const row = rows.item(i);
-//           dailyTotals.push({
-//             date: row.date,
-//             total_amount: row.total_amount,
-//           });
-//         }
-//         console.log(dailyTotals);
-//       },
-//       (_, error) => {
-//         console.log(error);
-//       }
-//     );
-//   });
-// };
-
-// 
-
-
 
 export default HomeScreen;
