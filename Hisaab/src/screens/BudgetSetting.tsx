@@ -23,7 +23,7 @@ const BudgetSetting = () => {
   const navigation = useNavigation();
   const [NewBudget, onChangeNumber] = React.useState("");
   
-  const addbudget = (amount, currentTime) => {
+  const addBudget = (amount,currentTime) => {
     db.transaction((tx) => {
       tx.executeSql("DROP TABLE IF EXISTS budget;");
       tx.executeSql(
@@ -34,7 +34,7 @@ const BudgetSetting = () => {
 
       tx.executeSql(
         "INSERT INTO budget (current_state,budget_id,time_stamp) VALUES (?,?,?);",
-        [current_state, 1 ,currentTime],
+        [amount, 1 ,currentTime],
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) {
             console.log("Budget added successfully");
