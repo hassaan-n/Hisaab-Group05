@@ -12,7 +12,8 @@ const styles_Profile = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    marginTop: 15,
+    marginTop: 5,
+    marginBottom: 5,
   },
 
   welcomeContainer: {
@@ -21,6 +22,7 @@ const styles_Profile = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
+    marginTop: 40,
 
   },
 
@@ -65,7 +67,7 @@ const styles_Profile = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#E5E5E5",
     padding: 10,
-    marginTop: 20,
+    marginTop: 10,
     
   },
   listItem: {
@@ -81,7 +83,15 @@ const styles_Profile = StyleSheet.create({
     alignItems: "center",
     width: "100%",
     alignSelf: "center",
-  }
+  },
+
+  buttonContainer: {
+    position: "absolute",
+    top: "81%",
+    width: "100%",
+    alignSelf: "center",
+ 
+  },
   
   
   

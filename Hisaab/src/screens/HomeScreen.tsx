@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
 import styles_HomeScreen from "../styles/styles.HomeScreen";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
+import { BackHandler } from "react-native";
 import db from "../database";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -31,6 +32,23 @@ const HomeScreen = () => {
   const barDataDays = ["M", "T", "W", "T", "F", "S", "S"];
 
   const [image, setImage] = useState<any>(null);
+
+
+  useEffect(() => {
+    const backAction = () => {
+      if (navigation.isFocused()) {
+        return true;
+      }
+      return false;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [navigation]);
 
   useEffect(() => {
     // Retrieve the image URI from AsyncStorage when the component mounts

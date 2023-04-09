@@ -46,7 +46,7 @@ const HomeStackNavigator = (navigation) => {
   content = (
     <HomeStack.Navigator>
         <HomeStack.Screen name="Splash" component={SplashScreen} />
-        <HomeStack.Screen name="Sign Up" component={SignUp} options={{headerBackVisible:false}} />
+        <HomeStack.Screen name="Sign Up" component={SignUp} options={{headerBackVisible:false, gestureEnabled:false}} />
         <HomeStack.Screen name="Details" component={DetailsScreen} />
         <HomeStack.Screen name="Tut1" component={Tut1} options={{headerTitle:"Start Logging"}} />
         <HomeStack.Screen name="Tut2" component={Tut2} options={{headerTitle:"Select Title and Expense"}} />
@@ -74,21 +74,7 @@ const HomeStackNavigator = (navigation) => {
        
         name="Profile" 
         component={Profile} 
-        // options={{
-        //   gestureEnabled: false,
-        //   headerLeft: () => (
-        //     <Pressable
-        //       onPressIn={() => {
-        //         navigation.navigate("Splash");
-        //       }}
-        //     >
-        //       <Image
-        //         style={{ marginTop: 3 }}
-        //         source={require("../images/Arrow.png")}
-        //       />
-        //     </Pressable>
-        //   ),
-        // }}
+        options={{ gestureEnabled: false, headerBackVisible: false, headerShown: false}}
 
 
                 

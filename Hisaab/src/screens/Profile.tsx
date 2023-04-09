@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { HeaderBackButton } from 'react-navigation';
+import { BackHandler } from "react-native";
 
 //import app name and version from package.json
 import { name, version } from "../../package.json";
@@ -36,6 +37,23 @@ const Profile = () => {
   const [text, onChangeText] = React.useState("");
 
   const [image, setImage] = useState<any>(null);
+
+
+  useEffect(() => {
+    const backAction = () => {
+      if (navigation.isFocused()) {
+        return true;
+      }
+      return false;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [navigation]);
 
   useEffect(() => {
     // Retrieve the image URI from AsyncStorage when the component mounts
@@ -128,7 +146,7 @@ const Profile = () => {
         </View>
 
         <View style={styles_Profile.helloText}>
-          <Text style={styles.heading}> Profile settings</Text>
+          <Text style={styles.heading}> Profile Settings</Text>
         </View>
       </View>
       <View style={styles_Profile.listCard}>
@@ -154,6 +172,25 @@ const Profile = () => {
         <Divider />
         <ListItem title="Goal" image={goalIcon} navigateTo="Goal Settings" />
       </View>
+
+      <View style={styles_Profile.buttonContainer}>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Splash")}
+          style={styles.appButtonContainer}
+        >
+          <Text style={styles.appButtonText}>Confirm Changes</Text>
+        </TouchableOpacity>
+        <View style={{ height: 10 }} />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("Splash")}
+          style={styles.appButtonContainerAlt}
+        >
+          <Text style={styles.appButtonText}>Cancel</Text>
+        </TouchableOpacity>
+      </View>
+
+
+
       <View style={styles_Profile.bottomVer}>
         <Text style={styles.subHeading}>{name}</Text>
         <Text style={styles.text}>V {version}</Text>

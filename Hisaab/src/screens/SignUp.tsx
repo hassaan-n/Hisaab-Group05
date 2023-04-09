@@ -1,4 +1,5 @@
-import React from "react";
+import React , { useState, useEffect }from "react";
+import { BackHandler } from "react-native";
 import {
   View,
   Text,
@@ -27,6 +28,23 @@ const SignUp = () => {
   const [number, onChangeNumber] = React.useState("");
   //props for the pin state
   const [toggle, setToggle] = React.useState(false);
+  useEffect(() => {
+    const backAction = () => {
+      if (navigation.isFocused()) {
+        return true;
+      }
+      return false;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [navigation]);
+
+
 
   //function to handle the submit button
   const Card = ({ pinstate }) => {
@@ -106,6 +124,7 @@ const SignUp = () => {
             placeholder="Enter password"
             keyboardType="numeric"
             maxLength={4}
+            secureTextEntry={true}
           />
         </View>
 

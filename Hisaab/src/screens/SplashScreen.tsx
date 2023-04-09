@@ -21,9 +21,52 @@ import styles from "../styles";
 
 const SplashScreen = () => {
   const navigation = useNavigation();
-  const [debug, setDebug] = useState(true);
+  const [debug, setDebug] = useState(false);
+  const [deployment, setDeployment] = useState(true);
+  const [signup, setSignup] = useState(false);
+  const [navigationTo, setNavigation] = useState("Sign Up");
   const isFocused = useIsFocused();
 
+
+  const MoveToSignUp = () => {
+    let content = (<View></View>);
+
+
+
+    useEffect(() => {
+      if (isFocused) {
+        setSignup(true);
+        navigation.navigate("Sign Up");
+      }
+    }, [isFocused]);
+   
+    return content;
+  };
+
+  const LoginLogic = () => {
+    let content = (<View></View>);
+    let navigate = "";
+
+    if (signup) {
+      setNavigation("Sign Up");
+      
+    }
+    else {
+      setNavigation("Home");
+      
+    }
+
+
+    useEffect(() => {
+      if (isFocused) {
+        setSignup(false);
+        navigation.navigate(navigationTo);
+      }
+    }, [isFocused]);
+
+
+    return content;
+  };
 
 
 
@@ -79,7 +122,7 @@ const SplashScreen = () => {
     } else {
       content = <View>
 
-        <MoveToHome />
+        {/* <MoveToHome /> */}
       </View>;
     }
 
@@ -97,7 +140,8 @@ const SplashScreen = () => {
     // const result = await launchImageLibrary(options?);
 
     <View style={styles.container}>
-      <Card showDebug={debug} /> 
+      {/* <Card showDebug={debug} />  */}
+      <LoginLogic />
 
 
 
