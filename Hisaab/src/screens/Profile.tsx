@@ -163,9 +163,14 @@ const Profile = () => {
           image={notificationIcon}
           navigateTo="Notifications"
         />
-  
         <Divider />
-        <ListItem title="Goal and Budget Change" image={goalIcon} navigateTo="Goals" />
+        <ListItem
+          title="Budget"
+          image={budgetIcon}
+          navigateTo="Budget Settings"
+        />
+        <Divider />
+        <ListItem title="Goal" image={goalIcon} navigateTo="Goal Settings" />
       </View>
 
       <View style={styles_Profile.buttonContainer}>
