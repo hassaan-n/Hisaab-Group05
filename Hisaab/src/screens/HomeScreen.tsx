@@ -18,6 +18,7 @@ import db from "../database";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Bar from "./Bar";
+import LongPressGestureHandler from "react-native-gesture-handler"
 
 
 const HomeScreen = () => {
@@ -32,6 +33,25 @@ const HomeScreen = () => {
   const barDataDays = ["M", "T", "W", "T", "F", "S", "S"];
 
   const [image, setImage] = useState<any>(null);
+
+  const [isDailyCollapsed, setIsDailyCollapsed] = useState(false); 
+  const [isWeekCollapsed, setIsWeekCollapsed] = useState(false); 
+  const [isRecentCollapsed, setIsRecentCollapsed] = useState(false); 
+
+  const toggleDailyCollapse = () => {
+    setIsDailyCollapsed(!isDailyCollapsed);
+  };
+
+
+  const toggleWeekCollapse = () => {
+    setIsWeekCollapsed(!isWeekCollapsed);
+  };
+
+
+  const toggleRecentCollapse = () => {
+    setIsRecentCollapsed(!isRecentCollapsed);
+  };
+
 
 
   useEffect(() => {
@@ -402,9 +422,13 @@ const HomeScreen = () => {
 
       <ScrollView>
         <View style={styles_HomeScreen.card}>
+        <TouchableOpacity onPress={toggleDailyCollapse}>
           <View style={styles_HomeScreen.cardHeader}>
             <Text style={styles_HomeScreen.cardHeading}>Daily</Text>
           </View>
+          </TouchableOpacity>
+
+          {!isDailyCollapsed && (
 
           <View style={styles_HomeScreen.dailyContainer}>
             <View style={styles_HomeScreen.dailyMiddleRow}>
@@ -445,47 +469,38 @@ const HomeScreen = () => {
 
             <RemainderIndicator percentage={ (spent/remaining) * 100 } />
           </View>
+          )}
         </View>
 
-        <View style={styles_HomeScreen.card}>
-          <View style={styles_HomeScreen.cardHeader}>
-            <Text style={styles_HomeScreen.cardHeading}>Week Overview</Text>
-            <Pressable
-              onPressIn={() => {
-                navigation.navigate("Analytics");
-              }}
-            >
-              <Image
-                style={{ marginTop: 3 }}
-                source={require("../images/Arrow.png")}
-              />
+
+      <View style={styles_HomeScreen.card}>
+      <TouchableOpacity onPress={toggleWeekCollapse}>
+        <View style={styles_HomeScreen.cardHeader}>
+          <Text style={styles_HomeScreen.cardHeading}>Week Overview</Text>
+          <Pressable onPressIn={() => navigation.navigate("Analytics")}>
+          <Image
+            style={{ marginTop: 3 }}
+            source={require("../images/Arrow.png")}
+          />
             </Pressable>
-          </View>
-          <View style={{ padding:5 }}>
-            {/* <Text
-              style={{
-                position: "absolute",
-                marginLeft: 10,
-                top: 90,
-                fontFamily: "Poppins",
-                zIndex: 2,
-                fontSize: 13,
-                transform: [{ rotate: "270deg" }],
-              }}
-            >
-              PKR
-            </Text> */}
-            <Bar />
-            <View style={styles_HomeScreen.centerText}>
-              <Text style={styles.text}>Days</Text>
-              
-            </View>
-          </View>
 
-  
         </View>
+      </TouchableOpacity>
+
+      {!isWeekCollapsed && (
+        <View style={{ padding:5 }}>
+          <Bar />
+          <View style={styles_HomeScreen.centerText}>
+            <Text style={styles.text}>Days</Text>
+          </View>
+        </View>
+      )}
+    </View>
+
+
 
         <View style={styles_HomeScreen.card}>
+      <TouchableOpacity onPress={toggleRecentCollapse}>
           <View style={styles_HomeScreen.cardHeader}>
             <Text style={styles_HomeScreen.cardHeading}>Recent Expenses</Text>
             <Pressable onPressIn={() => navigation.navigate("Logs")}>
@@ -495,7 +510,9 @@ const HomeScreen = () => {
               />
             </Pressable>
           </View>
+      </TouchableOpacity>
 
+      {!isRecentCollapsed && (
           <View style={styles_HomeScreen.cardLog} key={latest[0]?.transaction_id}>
             <View style={styles_HomeScreen.cardLeft}>
               <Text style={styles_HomeScreen.cardText}>
@@ -512,11 +529,7 @@ const HomeScreen = () => {
             <Text style={styles_HomeScreen.price}>Rs. {latest[0]?.amount || 0}</Text>
             </View>
           </View>
-
-
-
-
-
+      )}
         </View>
       </ScrollView>
     </View>
