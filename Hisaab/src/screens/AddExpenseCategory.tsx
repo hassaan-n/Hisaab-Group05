@@ -37,6 +37,28 @@ const AddExpenseCategory = ({ route }: any) => {
   };
 
  
+ 
+
+  const getLog = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM log;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+  //   //props for budget input
+  //   const [expenseTitle, onChangeTitle] = React.useState("");
+  //   //props for goal input
+  //   const [expenseAmount, onChangeAmount] = React.useState("");
+
   return (
     // mega container with all the elements
 

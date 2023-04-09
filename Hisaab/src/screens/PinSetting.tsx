@@ -25,13 +25,39 @@ const PinSetting = () => {
   const [NewPinState, onChangePinState] = React.useState("");
 
   //get current name of user id 1 from db and return as string
-  const GetCurrentPin = () => {};
+  
+  const addpin = (pin) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO user (pin) VALUES (?);",
+        [pin],
+        (_, { rowsAffected }) => {
+          if (rowsAffected > 0) {
+            console.log("added successfully");
+          }
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
 
-  const UpdatePinInDB = () => {};
-
-  const GetPinState = () => {};
-
-  const UpdatePinStateInDB = () => {};
+  
+  const getuser = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM user;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
 
   return (
     // mega container with all the elements
@@ -59,7 +85,7 @@ const PinSetting = () => {
           
           <InputField
             title="Pin"
-            placeholder={GetCurrentPin()}
+            placeholder="Enter Pin"
             onChangeText={onChangeNumber}
             value={NewPin}
             inputMode="numeric"
@@ -69,9 +95,11 @@ const PinSetting = () => {
           <View style={{ width: "100%" }}>
             <TouchableOpacity
               onPress={() => {
-                UpdatePinInDB();
-                UpdatePinStateInDB();
+                addpin(NewPin); 
+                getuser();
                 navigation.navigate("Splash");
+               
+           
               }}
               style={styles.appButtonContainer}
             >

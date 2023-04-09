@@ -81,6 +81,7 @@ const AddExpenseTitle = ({ route }: any) => {
       );
     });
   };
+    
 
   const getLog = () => {
     db.transaction((tx) => {
@@ -112,7 +113,7 @@ const AddExpenseTitle = ({ route }: any) => {
     });
   };
 
-  const difference = budgetData[0]?.current_state - logData[0]?.amount;
+const difference = budgetData[0]?.current_state;
 
   return (
     // mega container with all the elements

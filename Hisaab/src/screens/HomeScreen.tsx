@@ -247,7 +247,7 @@ const HomeScreen = () => {
 
   let tester = 0;
   let tester2 = 0;
-  let threshold = "3:00:00";
+  let threshold = "23:00:00";
   let thresh = 0;
 
    
@@ -255,7 +255,7 @@ const HomeScreen = () => {
   thresh = parseInt(threshold.slice(0, 2));
 
 
-  if (tester <= thresh) {
+  if (tester >= thresh) {
     addsaving((today-0),currentTime);
     tester2 = 69;
     today = tommorow;
