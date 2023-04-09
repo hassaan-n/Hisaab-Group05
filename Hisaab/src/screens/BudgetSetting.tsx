@@ -34,7 +34,7 @@ const BudgetSetting = () => {
 
       tx.executeSql(
         "INSERT INTO budget (current_state,budget_id,time_stamp) VALUES (?,?,?);",
-        [current_state, 1 ,currentTime],
+        [amount, 1 ,currentTime],
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) {
             console.log("Budget added successfully");
@@ -87,7 +87,7 @@ const BudgetSetting = () => {
             <TouchableOpacity
               onPress={() => {
                 const currentTime = new Date().toLocaleString();
-                addBudget(NewBudget, currentTime);
+                addbudget(NewBudget, currentTime);
                 getbudget();
                 navigation.navigate("Splash");
               }}
