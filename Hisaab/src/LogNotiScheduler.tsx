@@ -10,8 +10,8 @@ import { storeItem, getKey } from "./MyAsyncStorage";
 
 const sendNotification = async (
   title: string,
-  body: string,
-  trigger: DailyTriggerInput
+  body: string
+  //trigger: DailyTriggerInput
 ) => {
   setNotificationHandler({
     handleNotification: async () => ({
@@ -27,11 +27,11 @@ const sendNotification = async (
   //   notificationTime.setMinutes(51);
   //   notificationTime.setSeconds(0);
   //console.log(notificationTime);
-  //   const trigger: DailyTriggerInput = {
-  //     hour: 5,
-  //     minute: 2,
-  //     repeats: true,
-  //   };
+    const trigger: DailyTriggerInput = {
+      hour: 19,
+      minute: 3,
+      repeats: true,
+    };
   try {
     await cancelScheduledNotificationAsync(await getKey("log-noti"));
   } catch (e) {

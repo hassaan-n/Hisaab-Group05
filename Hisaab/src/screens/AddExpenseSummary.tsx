@@ -23,6 +23,7 @@ import db from "../database";
 import { sendBreakfastNotification } from "../RecomendNotiScheduler";
 import { sendLunchNotification } from "../RecomendNotiScheduler";
 import { sendDinnerNotification } from "../RecomendNotiScheduler";
+import sendNotification from "../LogNotiScheduler";
 
 
   
@@ -221,7 +222,7 @@ const AddExpenseSummary = ({ route }: any) => {
             .catch((error) => {
               console.error(error);
             });
-
+            sendNotification("Your Budget is updated", "Your budget is updated to " + reultant_state);
 
             // getLog();
             console.log(reultant_state);
