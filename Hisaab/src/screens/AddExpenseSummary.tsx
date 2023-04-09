@@ -16,20 +16,109 @@ import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
 import styles_HomeScreen from "../styles/styles.HomeScreen";
 import styles_Summary from "../styles/styles.Summary";
-
 import db from "../database";
 
 
+  
+
 const AddExpenseSummary = ({ route }: any) => {
+
+
+  
+  const addBudget = (current_state,currentTime) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "INSERT INTO budget (current_state,time_stamp) VALUES (?,?);",
+        [current_state, currentTime],
+        (_, { rowsAffected }) => {
+          if (rowsAffected > 0) {
+            console.log("Budget added successfully");
+          }
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+  
+  const addLog = (
+    amount,
+    transaction_title,
+    currentTime,
+    category,
+    sub_category
+  ) => {
+    db.transaction((tx) => {
+      tx.executeSql("PRAGMA table_info(log);")
+      tx.executeSql(
+        "INSERT INTO log (amount,transaction_title,time_stamp, category, sub_category) VALUES (?,?,?,?,?);",
+        [amount, transaction_title, currentTime, category, sub_category], // pass in parameters as an array
+        (_, { rowsAffected }) => {
+          if (rowsAffected > 0) {
+            console.log("title and amount added successfully");
+          }
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+
+  
+  const getLog = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM log;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          // console.log(error);
+        }
+      );
+    });
+  };
+
+
+  const [logData, setLogData] = useState<any>([]);
+
+  useEffect(() => {
+    // fetch log data from the database when the component mounts
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM log;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+          setLogData(rows._array);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  }, []);
+
+
+
+
+  
   const navigation = useNavigation();
   const { title, amount, category, sub_category, difference } = route.params;
+  console.log(title, amount, category, sub_category,);
   let Title = title;
   let Expense = amount;
   let Category = category;
   let Sub_category = sub_category;
   let reultant_state =  difference - amount;
 
-  const functionToUpdateDB = () => {};
+
+
+   
 
   return (
     // mega container with all the elements
@@ -70,7 +159,18 @@ const AddExpenseSummary = ({ route }: any) => {
 
       <View style={styles_Summary.buttonContainer}>
       <TouchableOpacity
-          onPress={() => {functionToUpdateDB(); navigation.navigate("Splash")}}
+          onPress={() => {
+            const currentTime = new Date()
+            .toLocaleString("en-CA", {
+              timeZone: "Asia/Karachi",
+              hour12: false,
+            })
+            .replace(",", "")
+            .replace("04-02", "03-29");
+            addBudget(reultant_state,currentTime);
+            addLog(Expense,Title,currentTime,Category,Sub_category);
+            getLog();
+            navigation.navigate("Splash")}}
           style={styles.appButtonContainer}
         >
           <Text style={styles.appButtonText}>Confirm</Text>

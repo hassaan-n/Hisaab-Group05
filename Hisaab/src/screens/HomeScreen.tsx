@@ -14,6 +14,7 @@ import styles from "../styles";
 import styles_HomeScreen from "../styles/styles.HomeScreen";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import db from "../database";
+import styles_Logbook from "../styles/styles.Logbook";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Bar from "./Bar";
 import { BackHandler } from 'react-native';
@@ -515,7 +516,23 @@ const HomeScreen = () => {
             </Pressable>
           </View>
 
-          <Text style={styles.subHeading}>No recent expenses</Text>
+          <View style={styles_Logbook.card} key={latest[0]?.transaction_id}>
+            <View style={styles_Logbook.cardLeft}>
+              <Text style={styles_Logbook.cardText}>
+                {latest[0]?.transaction_title || "No logs yet"}
+              </Text>
+              <Text style={styles_Logbook.card_subheading}>
+                {latest[0]?.category || "No category yet"} - {latest[0]?.sub_category}
+              </Text>
+              <Text style={styles_Logbook.card_timestmap}>
+                {latest[0]?.time_stamp}
+              </Text>
+            </View>
+            <View style={styles_Logbook.cardRight}>
+            <Text style={styles_Logbook.price}>Rs. {latest[0]?.amount || 0}</Text>
+            </View>
+          </View>
+
         </View>
       </ScrollView>
     </View>

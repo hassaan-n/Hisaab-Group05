@@ -34,28 +34,28 @@ const SubCategory = ({ route }: any) => {
     setSelectedOption(option);
   };
 
-  const addLog = (
-    amount,
-    transaction_title,
-    currentTime,
-    category,
-    sub_category
-  ) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "INSERT INTO log (amount,transaction_title,time_stamp, category, sub_category) VALUES (?,?,?,?,?);",
-        [amount, transaction_title, currentTime, category, sub_category], // pass in parameters as an array
-        (_, { rowsAffected }) => {
-          if (rowsAffected > 0) {
-            console.log("title and amount added successfully");
-          }
-        },
-        (_, error) => {
-          console.log(error);
-        }
-      );
-    });
-  };
+  // const addLog = (
+  //   amount,
+  //   transaction_title,
+  //   currentTime,
+  //   category,
+  //   sub_category
+  // ) => {
+  //   db.transaction((tx) => {
+  //     tx.executeSql(
+  //       "INSERT INTO log (amount,transaction_title,time_stamp, category, sub_category) VALUES (?,?,?,?,?);",
+  //       [amount, transaction_title, currentTime, category, sub_category], // pass in parameters as an array
+  //       (_, { rowsAffected }) => {
+  //         if (rowsAffected > 0) {
+  //           console.log("title and amount added successfully");
+  //         }
+  //       },
+  //       (_, error) => {
+  //         console.log(error);
+  //       }
+  //     );
+  //   });
+  // };
 
   const getLog = () => {
     db.transaction((tx) => {
@@ -72,20 +72,20 @@ const SubCategory = ({ route }: any) => {
     });
   };
 
-  const delLog = () => {
-    db.transaction((tx) => {
-      tx.executeSql("DROP TABLE log;");
-      console.log("table dropped");
-    });
-  };
-  const create_new_table = () => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, sub_category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
-      );
-      console.log("table created");
-    });
-  };
+  // const delLog = () => {
+  //   db.transaction((tx) => {
+  //     tx.executeSql("DROP TABLE log;");
+  //     console.log("table dropped");
+  //   });
+  // };
+  // const create_new_table = () => {
+  //   db.transaction((tx) => {
+  //     tx.executeSql(
+  //       "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, sub_category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
+  //     );
+  //     console.log("table created");
+  //   });
+  // };
  
   return (
     // mega container with all the elements
@@ -133,7 +133,7 @@ const SubCategory = ({ route }: any) => {
                 .replace(",", "")
                 .replace("04-02", "03-29");
               
-              addLog(amount, title, currentTime, category, selectedOption.name);
+              // addLog(amount, title, currentTime, category, selectedOption.name);
               getLog();
               navigation.navigate("Summary", {
                 title: title,
