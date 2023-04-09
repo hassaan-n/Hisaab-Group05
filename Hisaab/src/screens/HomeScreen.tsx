@@ -41,10 +41,8 @@ const HomeScreen = () => {
   useEffect(() => {
     const backAction = () => {
       if (navigation.isFocused()) {
-        // If user is on the home screen, prevent the back action
         return true;
       }
-      // Otherwise, allow the back action
       return false;
     };
 
