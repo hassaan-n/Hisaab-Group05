@@ -251,7 +251,6 @@ const getDateData = () => {
     );
   });
 };
-
 const getBreakfastLogs = (threshold: number): Promise<string[]> => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {

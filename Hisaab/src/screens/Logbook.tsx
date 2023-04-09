@@ -13,6 +13,7 @@ import styles_Logbook from "../styles/styles.Logbook";
 import styles from "../styles";
 import RadioButton from "../components/logradiobutton";
 import db from "../database";
+import { log } from "react-native-reanimated";
 
 const Logbook = () => {
   const navigation = useNavigation();
@@ -36,6 +37,8 @@ const Logbook = () => {
       );
     });
   }, []);
+
+   
 
   const filteredLogData = selectedRadioButton
     ? logData.filter((entry) => entry.category === selectedRadioButton)
@@ -65,7 +68,7 @@ const Logbook = () => {
                 {entry.transaction_title}
               </Text>
               <Text style={styles_Logbook.card_subheading}>
-                {entry.category} - {entry.type}
+                {entry.category} - {entry.sub_category}
               </Text>
               <Text style={styles_Logbook.card_timestmap}>
                 {entry.time_stamp}

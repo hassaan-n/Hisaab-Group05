@@ -72,20 +72,20 @@ const SubCategory = ({ route }: any) => {
     });
   };
 
-  const delLog = () => {
-    db.transaction((tx) => {
-      tx.executeSql("DROP TABLE log;");
-      console.log("table dropped");
-    });
-  };
-  const create_new_table = () => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, sub_category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
-      );
-      console.log("table created");
-    });
-  };
+  // const delLog = () => {
+  //   db.transaction((tx) => {
+  //     tx.executeSql("DROP TABLE log;");
+  //     console.log("table dropped");
+  //   });
+  // };
+  // const create_new_table = () => {
+  //   db.transaction((tx) => {
+  //     tx.executeSql(
+  //       "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, sub_category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
+  //     );
+  //     console.log("table created");
+  //   });
+  // };
  
   return (
     // mega container with all the elements

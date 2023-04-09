@@ -19,7 +19,12 @@ import styles_Summary from "../styles/styles.Summary";
 import db from "../database";
 
 
- 
+  
+
+const AddExpenseSummary = ({ route }: any) => {
+
+
+  
   const addBudget = (current_state,currentTime) => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -46,6 +51,7 @@ import db from "../database";
     sub_category
   ) => {
     db.transaction((tx) => {
+      tx.executeSql("PRAGMA table_info(log);")
       tx.executeSql(
         "INSERT INTO log (amount,transaction_title,time_stamp, category, sub_category) VALUES (?,?,?,?,?);",
         [amount, transaction_title, currentTime, category, sub_category], // pass in parameters as an array
@@ -61,8 +67,42 @@ import db from "../database";
     });
   };
 
+  
+  const getLog = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM log;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          // console.log(error);
+        }
+      );
+    });
+  };
 
-const AddExpenseSummary = ({ route }: any) => {
+
+  const [logData, setLogData] = useState<any>([]);
+
+  useEffect(() => {
+    // fetch log data from the database when the component mounts
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM log;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+          setLogData(rows._array);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  }, []);
+
 
 
 
@@ -129,6 +169,7 @@ const AddExpenseSummary = ({ route }: any) => {
             .replace("04-02", "03-29");
             addBudget(reultant_state,currentTime);
             addLog(Expense,Title,currentTime,Category,Sub_category);
+            getLog();
             navigation.navigate("Splash")}}
           style={styles.appButtonContainer}
         >

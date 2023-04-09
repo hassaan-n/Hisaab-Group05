@@ -61,19 +61,19 @@ const GoalsScreen = () => {
     });
   };
 
-  
   const droplog = () => {
     db.transaction((tx) => {
       tx.executeSql("DROP TABLE IF EXISTS log;");
       tx.executeSql(
-        "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER AUTOINCREMENT, username TEXT, category TEXT, sub_category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT, PRIMARY KEY (transaction_id, username))"
+        "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
       );
-      console.log("log table dropped and created");
+      console.log("table dropped and created");
     });
   };
-
+  
   const addBudget = (amount, currentTime,selectedRadioButton) => {
     db.transaction((tx) => {
+      tx.executeSql("ALTER TABLE log ADD COLUMN sub_category TEXT;")
       tx.executeSql("DROP TABLE IF EXISTS budget;");
       tx.executeSql(
         "CREATE TABLE IF NOT EXISTS budget (budget_id INTEGER PRIMARY KEY AUTOINCREMENT, time_stamp TIMESTAMP, current_state INTEGER, type TEXT, FOREIGN KEY ('current_state') REFERENCES budget_notifications('message'))"
@@ -163,9 +163,10 @@ const GoalsScreen = () => {
                 })
                 .replace(",", "")
                 .replace("04-02", "03-29");
+              droplog();
               addBudget(budgetAmount, currentTime,selectedRadioButton);
               // getbudget();
-              droplog();
+           
               navigation.navigate("Notis");
             }}
           >
