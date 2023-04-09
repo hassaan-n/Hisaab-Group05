@@ -173,7 +173,7 @@ const HomeScreen = () => {
     // fetch budget data from the database when the component mounts
     db.transaction((tx) => {
       tx.executeSql(
-        "SELECT current_state,type FROM budget WHERE budget_id = 1;",
+        "SELECT current_state, MAX(budget_id) FROM budget;",
         [],
         (_, { rows }) => {
           setBudgetData(rows._array);
@@ -382,7 +382,7 @@ const HomeScreen = () => {
   const difference = (remaining- logData[0]?.amount);
 
   return (
-    // mega container with all the elements
+     
     <View style={styles.container}>
       <View style={styles_HomeScreen.welcomeContainer}>
         <View style={styles_HomeScreen.helloText}>
