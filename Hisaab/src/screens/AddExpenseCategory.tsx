@@ -38,28 +38,28 @@ const AddExpenseCategory = ({ route }: any) => {
     setSelectedOption(option);
   };
 
-  const addLog = (amount, transaction_title, currentTime, category) => {
-    db.transaction((tx) => {
-      // tx.executeSql("DROP TABLE IF EXISTS log;");
-      // tx.executeSql(
-      //   "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
-      // );
+  // const addLog = (amount, transaction_title, currentTime, category) => {
+  //   db.transaction((tx) => {
+  //     // tx.executeSql("DROP TABLE IF EXISTS log;");
+  //     // tx.executeSql(
+  //     //   "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
+  //     // );
 
-      //console.log("table dropped and created");
-      tx.executeSql(
-        "INSERT INTO log (amount,transaction_title,time_stamp, category) VALUES (?,?,?,?);",
-        [amount, transaction_title, currentTime, category], // pass in parameters as an array
-        (_, { rowsAffected }) => {
-          if (rowsAffected > 0) {
-            console.log("title and amount added successfully");
-          }
-        },
-        (_, error) => {
-          console.log(error);
-        }
-      );
-    });
-  };
+  //     //console.log("table dropped and created");
+  //     tx.executeSql(
+  //       "INSERT INTO log (amount,transaction_title,time_stamp, category) VALUES (?,?,?,?);",
+  //       [amount, transaction_title, currentTime, category], // pass in parameters as an array
+  //       (_, { rowsAffected }) => {
+  //         if (rowsAffected > 0) {
+  //           console.log("title and amount added successfully");
+  //         }
+  //       },
+  //       (_, error) => {
+  //         console.log(error);
+  //       }
+  //     );
+  //   });
+  // };
 
   const getLog = () => {
     db.transaction((tx) => {
@@ -127,7 +127,6 @@ const AddExpenseCategory = ({ route }: any) => {
                   hour12: false,
                 })
                 .replace(",", "")
-                .replace("04-02", "03-29");
                 // addLog(amount, title, currentTime, selectedOption.name);
                 getLog();
               }
@@ -164,14 +163,14 @@ const AddExpenseCategory = ({ route }: any) => {
 
 
               if (selectedOption.name !== "Food" || selectedOption.name !== "Transport") {
-                navigation.navigate("Splash");
-              } else {
                 navigation.navigate("Sub Category", {
                   title: title,
                   amount: amount,
                   category: selectedOption.name,
                   difference: difference,
                 });
+            
+                
               }
             }}
           >
@@ -252,7 +251,6 @@ const getDateData = () => {
     );
   });
 };
-
 const getBreakfastLogs = (threshold: number): Promise<string[]> => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {

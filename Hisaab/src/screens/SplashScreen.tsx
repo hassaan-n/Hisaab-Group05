@@ -36,12 +36,14 @@ const SplashScreen = () => {
 
     <View style={styles.container}>
       <Text style={styles.heading}>Hisaab</Text>
+      <View style={{ height: 25 }}></View>
       <TouchableOpacity
           onPress={() => navigation.navigate("Sign Up")}
           style={styles.appButtonContainer}
         >
           <Text style={styles.appButtonText}>Signup</Text>
         </TouchableOpacity>
+        <View style={{ height: 15 }}></View>
 
         <TouchableOpacity
           onPress={() => navigation.navigate("Home")}
@@ -49,6 +51,7 @@ const SplashScreen = () => {
         >
           <Text style={styles.appButtonText}>Home</Text>
         </TouchableOpacity>
+        <View style={{ height: 15 }}></View>
 
         <TouchableOpacity
           onPress={() => navigation.navigate("Summary")}
