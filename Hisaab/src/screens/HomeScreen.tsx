@@ -213,7 +213,7 @@ const HomeScreen = () => {
 
 
   let remaining: number;
-
+  
   if (budgetData && budgetData.length > 0 && budgetData[0]?.type === "Weekly") {
     remaining = budgetData[0]?.current_state / 7;
   } else {

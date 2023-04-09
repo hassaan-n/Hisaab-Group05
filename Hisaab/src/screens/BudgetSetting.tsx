@@ -23,7 +23,7 @@ const BudgetSetting = () => {
   const navigation = useNavigation();
   const [NewBudget, onChangeNumber] = React.useState("");
   
-  const addbudget = (amount, currentTime) => {
+  const addBudget = (amount,currentTime) => {
     db.transaction((tx) => {
       tx.executeSql("DROP TABLE IF EXISTS budget;");
       tx.executeSql(
