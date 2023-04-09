@@ -79,7 +79,7 @@ const BudgetSetting = () => {
             title="Enter New Budget"
             onChangeText={onChangeNumber}
             value={NewBudget}
-            inputMode="Numeric"
+            inputMode="numeric"
           />
           <View style={{ marginBottom: 25 }}></View>
 
@@ -89,7 +89,7 @@ const BudgetSetting = () => {
                 const currentTime = new Date().toLocaleString();
                 addBudget(NewBudget, currentTime);
                 getbudget();
-                navigation.goBack();
+                navigation.navigate("Splash");
               }}
               style={styles.appButtonContainer}
             >

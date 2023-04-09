@@ -62,7 +62,7 @@ const PinSetting = () => {
             placeholder={GetCurrentPin()}
             onChangeText={onChangeNumber}
             value={NewPin}
-            inputMode="Numeric"
+            inputMode="numeric"
           />
           <View style={{ marginBottom: 25 }}></View>
 
@@ -71,7 +71,7 @@ const PinSetting = () => {
               onPress={() => {
                 UpdatePinInDB();
                 UpdatePinStateInDB();
-                navigation.goBack();
+                navigation.navigate("Splash");
               }}
               style={styles.appButtonContainer}
             >

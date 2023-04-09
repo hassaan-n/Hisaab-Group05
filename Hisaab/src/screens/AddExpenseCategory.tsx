@@ -16,9 +16,6 @@ import styles_AddExpenseCategory from "../styles/styles.AddExpenseCategory";
 import styles from "../styles";
 import db from "../database";
 
-import { sendBreakfastNotification } from "../RecomendNotiScheduler";
-import { sendLunchNotification } from "../RecomendNotiScheduler";
-import { sendDinnerNotification } from "../RecomendNotiScheduler";
 
 const AddExpenseCategory = ({ route }: any) => {
   const navigation = useNavigation();
@@ -32,55 +29,14 @@ const AddExpenseCategory = ({ route }: any) => {
     { name: "Grocery", id: 4 },
     { name: "Subscription", id: 5 },
     { name: "Other", id: 7 },
+    
   ];
 
   const handleOptionSelect = (option: any) => {
     setSelectedOption(option);
   };
 
-  // const addLog = (amount, transaction_title, currentTime, category) => {
-  //   db.transaction((tx) => {
-  //     // tx.executeSql("DROP TABLE IF EXISTS log;");
-  //     // tx.executeSql(
-  //     //   "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
-  //     // );
-
-  //     //console.log("table dropped and created");
-  //     tx.executeSql(
-  //       "INSERT INTO log (amount,transaction_title,time_stamp, category) VALUES (?,?,?,?);",
-  //       [amount, transaction_title, currentTime, category], // pass in parameters as an array
-  //       (_, { rowsAffected }) => {
-  //         if (rowsAffected > 0) {
-  //           console.log("title and amount added successfully");
-  //         }
-  //       },
-  //       (_, error) => {
-  //         console.log(error);
-  //       }
-  //     );
-  //   });
-  // };
-
-  const getLog = () => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "SELECT * FROM log;",
-        [],
-        (_, { rows }) => {
-          console.log(rows);
-        },
-        (_, error) => {
-          console.log(error);
-        }
-      );
-    });
-  };
-
-  //   //props for budget input
-  //   const [expenseTitle, onChangeTitle] = React.useState("");
-  //   //props for goal input
-  //   const [expenseAmount, onChangeAmount] = React.useState("");
-
+ 
   return (
     // mega container with all the elements
 
@@ -118,60 +74,34 @@ const AddExpenseCategory = ({ route }: any) => {
           <TouchableOpacity
             style={styles.appButtonContainer}
             onPress={() => {
+
+              if (selectedOption === null) {
+                alert("Please select a category");
+              } else {
+  
+  
+                if (selectedOption.name == "Food" || selectedOption.name == "Transport") {
+                  navigation.navigate("Sub Category", {
+                    title: title,
+                    amount: amount,
+                    category: selectedOption.name,
+                    difference: difference,
+                  });
+
+                } else {
+                    navigation.navigate("Summary", {
+                    title: title,
+                    amount: amount,
+                    category: selectedOption.name,
+                    difference: difference,
+                  });
+
               
-              if(selectedOption.name != "Food")
-              {
-                const currentTime = new Date()
-                .toLocaleString("en-CA", {
-                  timeZone: "Asia/Karachi",
-                  hour12: false,
-                })
-                .replace(",", "")
-                // addLog(amount, title, currentTime, selectedOption.name);
-                getLog();
+                }
               }
-              getBreakfastLogs(1000)
-              .then((titles) => {
-                const message = titles.join(', ');
-                sendBreakfastNotification("Breakfast Recommendations", message);
-                console.log(message); 
-              })
-              .catch((error) => {
-                console.error(error);
-              });
 
-              getLunchLogs(1000)
-              .then((titles) => {
-                const message = titles.join(', ');
-                sendLunchNotification("Lunch Recommendations", message);
-                console.log(message); 
-              })
-              .catch((error) => {
-                console.error(error);
-              });
-
-              getDinnerLogs(1000)
-              .then((titles) => {
-                const message = titles.join(', ');
-                sendDinnerNotification("Dinner Recommendations", message);
-                console.log(message); 
-              })
-              .catch((error) => {
-                console.error(error);
-              });
-
-
-
-              if (selectedOption.name !== "Food" || selectedOption.name !== "Transport") {
-                navigation.navigate("Sub Category", {
-                  title: title,
-                  amount: amount,
-                  category: selectedOption.name,
-                  difference: difference,
-                });
             
-                
-              }
+            
             }}
           >
             <Text style={styles.appButtonText}>Submit</Text>
@@ -251,66 +181,66 @@ const getDateData = () => {
     );
   });
 };
-const getBreakfastLogs = (threshold: number): Promise<string[]> => {
-  return new Promise((resolve, reject) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        'SELECT transaction_title FROM log WHERE category = ? AND sub_category = ? AND amount < ? ORDER BY RANDOM() LIMIT 2',
-        ['Food', 'Breakfast', threshold],
-        (_, { rows }) => {
-          const data = rows._array;
-          const titles = data.map((row) => row.transaction_title);
+// const getBreakfastLogs = (threshold: number): Promise<string[]> => {
+//   return new Promise((resolve, reject) => {
+//     db.transaction((tx) => {
+//       tx.executeSql(
+//         'SELECT transaction_title FROM log WHERE category = ? AND sub_category = ? AND amount < ? ORDER BY RANDOM() LIMIT 2',
+//         ['Food', 'Breakfast', threshold],
+//         (_, { rows }) => {
+//           const data = rows._array;
+//           const titles = data.map((row) => row.transaction_title);
 
-          resolve(titles);
-        },
-        (_, error) => {
-          reject(error);
-        },
-      );
-    });
-  });
-};
+//           resolve(titles);
+//         },
+//         (_, error) => {
+//           reject(error);
+//         },
+//       );
+//     });
+//   });
+// };
 
 
-const getLunchLogs = (threshold: number): Promise<string[]> => {
-  return new Promise((resolve, reject) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        'SELECT transaction_title FROM log WHERE category = ? AND sub_category = ? AND amount < ? ORDER BY RANDOM() LIMIT 2',
-        ['Food', 'Lunch', threshold],
-        (_, { rows }) => {
-          const data = rows._array;
-          const titles = data.map((row) => row.transaction_title);
+// const getLunchLogs = (threshold: number): Promise<string[]> => {
+//   return new Promise((resolve, reject) => {
+//     db.transaction((tx) => {
+//       tx.executeSql(
+//         'SELECT transaction_title FROM log WHERE category = ? AND sub_category = ? AND amount < ? ORDER BY RANDOM() LIMIT 2',
+//         ['Food', 'Lunch', threshold],
+//         (_, { rows }) => {
+//           const data = rows._array;
+//           const titles = data.map((row) => row.transaction_title);
 
-          resolve(titles);
-        },
-        (_, error) => {
-          reject(error);
-        },
-      );
-    });
-  });
-};
+//           resolve(titles);
+//         },
+//         (_, error) => {
+//           reject(error);
+//         },
+//       );
+//     });
+//   });
+// };
 
-const getDinnerLogs = (threshold: number): Promise<string[]> => {
-  return new Promise((resolve, reject) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        'SELECT transaction_title FROM log WHERE category = ? AND sub_category = ? AND amount < ? ORDER BY RANDOM() LIMIT 2',
-        ['Food', 'Dinner', threshold],
-        (_, { rows }) => {
-          const data = rows._array;
-          const titles = data.map((row) => row.transaction_title);
+// const getDinnerLogs = (threshold: number): Promise<string[]> => {
+//   return new Promise((resolve, reject) => {
+//     db.transaction((tx) => {
+//       tx.executeSql(
+//         'SELECT transaction_title FROM log WHERE category = ? AND sub_category = ? AND amount < ? ORDER BY RANDOM() LIMIT 2',
+//         ['Food', 'Dinner', threshold],
+//         (_, { rows }) => {
+//           const data = rows._array;
+//           const titles = data.map((row) => row.transaction_title);
 
-          resolve(titles);
-        },
-        (_, error) => {
-          reject(error);
-        },
-      );
-    });
-  });
-};
+//           resolve(titles);
+//         },
+//         (_, error) => {
+//           reject(error);
+//         },
+//       );
+//     });
+//   });
+// };
 
 export default AddExpenseCategory;
 

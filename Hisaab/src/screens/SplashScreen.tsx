@@ -10,23 +10,85 @@ import {
   ScrollView,
   Modal,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
-//import app name and version from package.json
-import { name, version } from "../../package.json";
-
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import styles from "../styles";
 
 
 
+//usetate for  sigunp boolean
+
+
 const SplashScreen = () => {
   const navigation = useNavigation();
+  const [debug, setDebug] = useState(true);
+  const isFocused = useIsFocused();
+
+
+
 
   //function to move to home screen
   const MoveToHome = () => {
-    navigation.navigate("Home");
+
+    
+    let content = (<View></View>);
+
+    useEffect(() => {
+      if (isFocused) {
+        navigation.navigate("Home");
+      }
+    }, [isFocused]);
+   
+    return content;
   };
+
+  const Card = ({ showDebug }) => {
+    let content;
+
+    if (showDebug) {
+      content = (
+        <View>
+        <Text style={styles.heading}>Hisaab</Text>
+     <View style={{ height: 25 }}></View>
+     <TouchableOpacity
+         onPress={() => {navigation.navigate("Sign Up"); setDebug(false);}}
+         style={styles.appButtonContainer}
+       >
+         <Text style={styles.appButtonText}>Signup</Text>
+       </TouchableOpacity>
+       <View style={{ height: 15 }}></View>
+
+       <TouchableOpacity
+         onPress={() => navigation.navigate("Home")}
+         style={styles.appButtonContainer}
+       >
+         <Text style={styles.appButtonText}>Home</Text>
+       </TouchableOpacity>
+       <View style={{ height: 15 }}></View>
+
+       <TouchableOpacity
+         onPress={() => navigation.navigate("Summary")}
+         style={styles.appButtonContainer}
+       >
+         <Text style={styles.appButtonText}>Splashscreen</Text>
+       </TouchableOpacity>
+
+     </View>
+   
+      );
+    } else {
+      content = <View>
+
+        <MoveToHome />
+      </View>;
+    }
+
+    return <View style={{ padding: 0 }}>{content}</View>;
+  };
+
+
+
+
 
   
   return (
@@ -35,31 +97,16 @@ const SplashScreen = () => {
     // const result = await launchImageLibrary(options?);
 
     <View style={styles.container}>
-      <Text style={styles.heading}>Hisaab</Text>
-      <View style={{ height: 25 }}></View>
-      <TouchableOpacity
-          onPress={() => navigation.navigate("Sign Up")}
-          style={styles.appButtonContainer}
-        >
-          <Text style={styles.appButtonText}>Signup</Text>
-        </TouchableOpacity>
-        <View style={{ height: 15 }}></View>
+      <Card showDebug={debug} /> 
 
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Home")}
-          style={styles.appButtonContainer}
-        >
-          <Text style={styles.appButtonText}>Home</Text>
-        </TouchableOpacity>
-        <View style={{ height: 15 }}></View>
 
-        <TouchableOpacity
-          onPress={() => navigation.navigate("Summary")}
-          style={styles.appButtonContainer}
-        >
-          <Text style={styles.appButtonText}>Splashscreen</Text>
-        </TouchableOpacity>
 
+
+
+
+
+      
+      
 
       
     

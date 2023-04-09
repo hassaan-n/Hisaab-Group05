@@ -71,7 +71,7 @@ const NotificationSetting = () => {
               onPress={() => {
                 UpdatePinInDB();
                 UpdatePinStateInDB();
-                navigation.goBack();
+                navigation.navigate("Splash");
               }}
               style={styles.appButtonContainer}
             >

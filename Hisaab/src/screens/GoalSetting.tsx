@@ -88,7 +88,7 @@ const GoalSetting = () => {
               onPress={() => {
                 addGoal(NewGoal);
                 getGoal();
-                navigation.goBack();
+                navigation.navigate("Splash");
               }}
               style={styles.appButtonContainer}
             >

@@ -21,6 +21,7 @@ const styles_SignUp = StyleSheet.create({
 
     textContainer: {
         alignItems: "center",
+        alignContent: "center",
         paddingTop: 30,
         paddingBottom: 70,
     },

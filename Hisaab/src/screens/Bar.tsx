@@ -42,18 +42,37 @@ const Bar = () => {
       <BarChart
         data={data}
         width={300}
-        height={200}
+        height={120}
+        fromZero={true}
         chartConfig={{
           backgroundGradientFrom: '#f2f8f2',
           backgroundGradientTo: '#f2f8f2',
           decimalPlaces: 0,
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          color: (opacity = 1) => `rgba(85, 197, 149, ${opacity})`,
           labelColor: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
           style: {
             borderRadius: 16,
-            borderColor: 'black',
+            borderColor: '#55C595',
             borderWidth: 5,
+            
+          
+            
+            
           },
+          //y axis props
+          formatYLabel: (value) => {
+            return 'Rs. '+ value;
+          },
+          propsForLabels: {
+            fontSize: 10,
+            fill: '#000000',
+          },
+
+   
+     
+
+          
+      
           propsForDots: {
             r: '6',
             strokeWidth: '2',

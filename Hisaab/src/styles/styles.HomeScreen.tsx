@@ -16,7 +16,8 @@ const styles_HomeScreen = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     width: "100%",
-    marginBottom: 15,
+    marginBottom: 10,
+    marginTop: 40,
   },
 
   profilePicture: {
@@ -132,7 +133,60 @@ const styles_HomeScreen = StyleSheet.create({
     alignItems: 'center',
     alignContent: 'center',
     left: 1,
-  }
+  },
+
+
+
+
+
+  cardLog: {
+
+   
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderWidth: 0.01,
+    borderColor: '#FFFFFF',
+    borderRadius: 5,
+    height: 80,
+    padding: 10,
+    backgroundColor: '#FFFFFF',
+    margin: 10,
+
+},
+cardLeft: {
+    justifyContent: 'center',
+    
+},
+cardRight: {
+    
+},
+
+cardText: {
+    fontFamily: "Poppins-Bold",
+    fontSize: 20,
+},
+
+price: {
+ 
+    fontSize: 20,
+    fontFamily: "Poppins-Bold",
+    // fontWeight: 'bold',
+},
+card_subheading: {
+    
+  fontSize: 16,
+  fontFamily: "Poppins-Bold",
+
+},
+
+card_timestmap: {
+
+ 
+  fontSize: 12,
+  fontFamily: "Poppins",
+
+  
+},
 
 });
 

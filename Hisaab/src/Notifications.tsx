@@ -76,7 +76,7 @@ const NotificationScheduler = () => {
           // onPress={() => {navigation.navigate("Tut1"); addUser(text,toggle,number); getAllUsers();}}
 
           onPress={() => {
-            navigation.navigate("Let's Start");
+            navigation.navigate("Splash");
             // const currentTime = new Date().toLocaleString();
             // console.log(typeof currentTime);
             // console.log(currentTime);

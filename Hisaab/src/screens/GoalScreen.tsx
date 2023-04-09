@@ -96,22 +96,8 @@ const GoalsScreen = () => {
     });
   };
 
-  
 
-  const getbudget = () => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "SELECT * FROM budget;",
-        [],
-        (_, { rows }) => {
-          console.log(rows);
-        },
-        (_, error) => {
-          console.log(error);
-        }
-      );
-    });
-  };
+  
 
   return (
     // mega container with all the elements
@@ -129,7 +115,7 @@ const GoalsScreen = () => {
           <TextInput
             style={styles.input}
             onChangeText={onChangeBudget}
-            placeholder={"400"}
+            placeholder={"15000"}
             keyboardType="numeric"
             value={budgetAmount}
           />
@@ -152,6 +138,30 @@ const GoalsScreen = () => {
           <TouchableOpacity
             style={styles.appButtonContainer}
             onPress={() => {
+
+              if (selectedRadioButton == "") {
+                alert("Please Select a Budget Cycle");
+                return;
+              }
+
+              if (budgetAmount == "") {
+                alert("Please Enter a Budget");
+                return;
+              }
+              if (goalAmount == "") {
+                alert("Please Enter a Goal");
+                return;
+              }
+
+              if (parseInt(budgetAmount) < parseInt(goalAmount)) {
+                alert("Budget should be greater than Goal");
+                return;
+              }
+          
+              else
+              {
+ 
+              
               // console.log(selectedRadioButton);
               addGoal(selectedRadioButton, goalAmount);
               // addBudget(budgetAmount);
@@ -167,7 +177,8 @@ const GoalsScreen = () => {
               addBudget(budgetAmount, currentTime,selectedRadioButton);
               // getbudget();
            
-              navigation.navigate("Notis");
+              navigation.navigate("Let's Start");
+              }
             }}
           >
             <Text style={styles.appButtonText}>Submit</Text>

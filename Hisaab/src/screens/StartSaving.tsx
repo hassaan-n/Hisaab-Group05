@@ -25,7 +25,7 @@ const StartSaving = () => {
       {/* Button Sectoion*/}
       <View style={styles_StartSaving.buttonContainer}>
         <TouchableOpacity
-          onPress={() => navigation.navigate("Home")}
+          onPress={() => navigation.navigate("Splash")}
           style={styles.appButtonContainer}
         >
           <Text style={styles.appButtonText}>Continue</Text>

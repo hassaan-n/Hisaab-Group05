@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     //alignItems: 'center',
     padding: 30,
+    paddingTop: 20,
 
   },
   appButtonContainer: {

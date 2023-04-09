@@ -24,57 +24,31 @@ const SubCategory = ({ route }: any) => {
   const [selectedOption, setSelectedOption] = React.useState(null);
 
 
-  // const options = () => {
-  //   if (category === "Food") {
-  //     return [
-  //       { name: "Breakfast", id: 1 },
-  //       { name: "Lunch", id: 2 },
-  //       { name: "Dinner", id: 3 },
-  //       { name: "Snacks", id: 4 },
-  //     ];
-  //   } else if (category === "Transport") {
-  //     return [
-  //       { name: "Fuel", id: 1 },
-  //       { name: "Taxi", id: 2 },
-  //     ];
-  //   }
-  // };
+  const options_setter = () => {
+    if (category === "Food") {
+      return [
+        { name: "Breakfast", id: 1 },
+        { name: "Lunch", id: 2 },
+        { name: "Dinner", id: 3 },
+        { name: "Snacks", id: 4 },
+      ];
+    } else if (category === "Transport") {
+      return [
+        { name: "Fuel", id: 1 },
+        { name: "Taxi", id: 2 },
+      ];
+    }
+  };
   
 
 
-  const options = [
-    { name: "Breakfast", id: 1 },
-    { name: "Lunch", id: 2 },
-    { name: "Dinner", id: 3 },
-    { name: "Snacks", id: 4 },
-  ];
+  const options = options_setter();
 
   const handleOptionSelect = (option: any) => {
     setSelectedOption(option);
   };
 
-  // const addLog = (
-  //   amount,
-  //   transaction_title,
-  //   currentTime,
-  //   category,
-  //   sub_category
-  // ) => {
-  //   db.transaction((tx) => {
-  //     tx.executeSql(
-  //       "INSERT INTO log (amount,transaction_title,time_stamp, category, sub_category) VALUES (?,?,?,?,?);",
-  //       [amount, transaction_title, currentTime, category, sub_category], // pass in parameters as an array
-  //       (_, { rowsAffected }) => {
-  //         if (rowsAffected > 0) {
-  //           console.log("title and amount added successfully");
-  //         }
-  //       },
-  //       (_, error) => {
-  //         console.log(error);
-  //       }
-  //     );
-  //   });
-  // };
+
 
   const getLog = () => {
     db.transaction((tx) => {
@@ -143,14 +117,15 @@ const SubCategory = ({ route }: any) => {
           <TouchableOpacity
             style={styles.appButtonContainer}
             onPress={() => {
+
+              if (selectedOption === null) {
+                alert("Please select a category");
+                return;
+              }
+              else
+              {
+            
                
-              const currentTime = new Date()
-                .toLocaleString("en-CA", {
-                  timeZone: "Asia/Karachi",
-                  hour12: false,
-                })
-                .replace(",", "")
-                .replace("04-02", "03-29");
               
               // addLog(amount, title, currentTime, category, selectedOption.name);
               getLog();
@@ -161,6 +136,10 @@ const SubCategory = ({ route }: any) => {
                 difference: difference,
                 sub_category: selectedOption.name,
               });
+
+              }
+               
+       
             }}
           >
             <Text style={styles.appButtonText}>Submit</Text>

@@ -25,7 +25,9 @@ const styles_Summary = StyleSheet.create({
 
 
   buttonContainer: {
-    top: 120,
+    position: "absolute",
+    bottom: 10,
+    alignSelf: "center",
     width: "100%",
     paddingTop:20,
     paddingBottom: 20,

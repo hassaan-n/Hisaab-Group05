@@ -14,12 +14,10 @@ import styles from "../styles";
 import styles_HomeScreen from "../styles/styles.HomeScreen";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import db from "../database";
-import styles_Logbook from "../styles/styles.Logbook";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Bar from "./Bar";
-import { BackHandler } from 'react-native';
 
-import VerticalBarGraph from "@chartiful/react-native-vertical-bar-graph";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
@@ -78,10 +76,12 @@ const HomeScreen = () => {
     let colorState: string = "#55C595";
     percentage = Math.round(percentage);
 
-    if (percentage <= 30) {
-      colorState = "#E3242B";
-    } else if (percentage <= 80) {
+    if (percentage >= 80) {
       colorState = "#55C595";
+      
+
+    } else if (percentage >= 30) {
+      colorState = "#E3242B";
     }
 
     let content = (
@@ -116,13 +116,20 @@ const HomeScreen = () => {
     let colorState: string = "#55C595";
     let colorState2: string = "#FFFFFF";
 
-    if (percentage <= 30) {
+    if (percentage >= 80) {
+      colorState = "#55C595";
+      // colorState2 = "#F2B5AA";
+    } else if (percentage >= 30) {
       colorState = "#E3242B";
       colorState2 = "#F2B5AA";
-    } else if (percentage <= 80) {
-      colorState = "#55C595";
+      // "#E3242B"
     }
-    percentage = Math.round(100 - percentage);
+    console.log(percentage);
+
+    if (percentage >= 100) {
+      percentage=100;
+    }
+    // percentage = Math.round(percentage);
 
     let content = (
       <AnimatedCircularProgress
@@ -312,39 +319,7 @@ const HomeScreen = () => {
     });
   };
 
-  const [budgetAmount, onChangeBudget] = React.useState("");
 
-  const addBudget = (current_state, currentTime) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "INSERT INTO budget (current_state,time_stamp) VALUES (?,?);",
-        [current_state, currentTime],
-        (_, { rowsAffected }) => {
-          if (rowsAffected > 0) {
-            console.log("Budget added successfully");
-          }
-        },
-        (_, error) => {
-          // console.log(error);
-        }
-      );
-    });
-  };
-
-  const getLog = () => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "SELECT * FROM log;",
-        [],
-        (_, { rows }) => {
-          console.log(rows);
-        },
-        (_, error) => {
-          // console.log(error);
-        }
-      );
-    });
-  };
 
   const getsavings= () => {
     db.transaction((tx) => {
@@ -379,7 +354,7 @@ const HomeScreen = () => {
   };
 
   
-  const difference = (remaining- logData[0]?.amount);
+
 
   return (
     // mega container with all the elements
@@ -403,10 +378,7 @@ const HomeScreen = () => {
               source={profilePicture}
             />
           )}
-          {/* <Image
-            style={styles_HomeScreen.profilePicture}
-            source={profilePicture}
-          /> */}
+
         </Pressable>
       </View>
 
@@ -440,7 +412,7 @@ const HomeScreen = () => {
                 navigation.navigate("Add Expense")}}>
                 <View style={styles_HomeScreen.addButton}>
                   <Image source={require("../images/Add.png")} />
-                  <RemainderRing percentage={(1000 - difference)/10 | 0 } />
+                  <RemainderRing percentage={(spent/remaining) * 100 } />
                 </View>
               </Pressable>
 
@@ -471,38 +443,28 @@ const HomeScreen = () => {
               />
             </Pressable>
           </View>
-          <View style={{ top: 5 }}>
-            <Text
+          <View style={{ padding:5 }}>
+            {/* <Text
               style={{
                 position: "absolute",
-                left: -1,
+                marginLeft: 10,
                 top: 90,
+                fontFamily: "Poppins",
                 zIndex: 2,
                 fontSize: 13,
                 transform: [{ rotate: "270deg" }],
               }}
             >
               PKR
-            </Text>
+            </Text> */}
             <Bar />
             <View style={styles_HomeScreen.centerText}>
-              <Text>Days</Text>
+              <Text style={styles.text}>Days</Text>
+              
             </View>
           </View>
 
-          {/* <VerticalBarGraph
-            data={barData}
-            labels={barDataDays}
-            width={290}
-            height={140}
-            barRadius={5}
-            barWidthPercentage={0.2}
-            barColor="#55C595"
-            baseConfig={{
-              hasXAxisBackgroundLines: false,
-            }}
-            style={styles_HomeScreen.graph}
-          /> */}
+  
         </View>
 
         <View style={styles_HomeScreen.card}>
@@ -516,22 +478,26 @@ const HomeScreen = () => {
             </Pressable>
           </View>
 
-          <View style={styles_Logbook.card} key={latest[0]?.transaction_id}>
-            <View style={styles_Logbook.cardLeft}>
-              <Text style={styles_Logbook.cardText}>
+          <View style={styles_HomeScreen.cardLog} key={latest[0]?.transaction_id}>
+            <View style={styles_HomeScreen.cardLeft}>
+              <Text style={styles_HomeScreen.cardText}>
                 {latest[0]?.transaction_title || "No logs yet"}
               </Text>
-              <Text style={styles_Logbook.card_subheading}>
+              <Text style={styles_HomeScreen.card_subheading}>
                 {latest[0]?.category || "No category yet"} - {latest[0]?.sub_category}
               </Text>
-              <Text style={styles_Logbook.card_timestmap}>
+              <Text style={styles_HomeScreen.card_timestmap}>
                 {latest[0]?.time_stamp}
               </Text>
             </View>
-            <View style={styles_Logbook.cardRight}>
-            <Text style={styles_Logbook.price}>Rs. {latest[0]?.amount || 0}</Text>
+            <View style={styles_HomeScreen.cardRight}>
+            <Text style={styles_HomeScreen.price}>Rs. {latest[0]?.amount || 0}</Text>
             </View>
           </View>
+
+
+
+
 
         </View>
       </ScrollView>

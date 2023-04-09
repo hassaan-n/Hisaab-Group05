@@ -21,9 +21,10 @@ const styles_AddExpenseTitle = StyleSheet.create({
 
   buttonContainer: {
     position: "absolute",
-    top: 175,
+    top: 100,
+    alignSelf: "center",
     width: "100%",
-    paddingTop: 20,
+    paddingTop:20,
     paddingBottom: 20,
   },
 });

@@ -19,6 +19,12 @@ import styles_Summary from "../styles/styles.Summary";
 import db from "../database";
 
 
+
+import { sendBreakfastNotification } from "../RecomendNotiScheduler";
+import { sendLunchNotification } from "../RecomendNotiScheduler";
+import { sendDinnerNotification } from "../RecomendNotiScheduler";
+
+
   
 
 const AddExpenseSummary = ({ route }: any) => {
@@ -113,7 +119,8 @@ const AddExpenseSummary = ({ route }: any) => {
   let Title = title;
   let Expense = amount;
   let Category = category;
-  let Sub_category = sub_category;
+  //set sub category as not applicaple if value is null 
+  const Sub_category = sub_category ? sub_category : "Not Applicable";
   let reultant_state =  difference - amount;
 
 
@@ -142,17 +149,17 @@ const AddExpenseSummary = ({ route }: any) => {
           <Text style={styles.text}>{Expense}</Text>
           <View style={{ height: 5 }}></View>
 
-          <Text style={styles.textBold}>Title:</Text>
+          <Text style={styles.textBold}>Category:</Text>
           <Text style={styles.text}>{Category}</Text>
           <View style={{ height: 5 }}></View>
 
-          <Text style={styles.textBold}>Title:</Text>
+          <Text style={styles.textBold}>Subcategory:</Text>
           <Text style={styles.text}>{Sub_category}</Text>
           <View style={{ height: 5 }}></View>
 
           <Text style={styles.textBold}>remaining:</Text>
           <Text style={styles.text}>{reultant_state}</Text>
-          <View style={{ height: 5 }}></View>
+          <View style={{ height: 10 }}></View>
 
         </View>
       </View>
@@ -166,16 +173,49 @@ const AddExpenseSummary = ({ route }: any) => {
               hour12: false,
             })
             .replace(",", "")
-            .replace("04-02", "03-29");
             addBudget(reultant_state,currentTime);
             addLog(Expense,Title,currentTime,Category,Sub_category);
             getLog();
+
+
+            // notification code
+            getBreakfastLogs(1000)
+            .then((titles) => {
+              const message = titles.join(', ');
+              sendBreakfastNotification("Breakfast Recommendations", message);
+              console.log(message); 
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+
+            getLunchLogs(1000)
+            .then((titles) => {
+              const message = titles.join(', ');
+              sendLunchNotification("Lunch Recommendations", message);
+              console.log(message); 
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+
+            getDinnerLogs(1000)
+            .then((titles) => {
+              const message = titles.join(', ');
+              sendDinnerNotification("Dinner Recommendations", message);
+              console.log(message); 
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+
+
             navigation.navigate("Splash")}}
           style={styles.appButtonContainer}
         >
           <Text style={styles.appButtonText}>Confirm</Text>
         </TouchableOpacity>
-        <View style={{ height: 5 }}></View>
+        <View style={{ height: 10 }}></View>
         <TouchableOpacity
           onPress={() => navigation.navigate("Splash")}
           style={styles.appButtonContainerAlt}
@@ -189,5 +229,71 @@ const AddExpenseSummary = ({ route }: any) => {
     </View>
   );
 };
+
+
+
+
+const getBreakfastLogs = (threshold: number): Promise<string[]> => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT transaction_title FROM log WHERE category = ? AND sub_category = ? AND amount < ? ORDER BY RANDOM() LIMIT 2',
+        ['Food', 'Breakfast', threshold],
+        (_, { rows }) => {
+          const data = rows._array;
+          const titles = data.map((row) => row.transaction_title);
+
+          resolve(titles);
+        },
+        (_, error) => {
+          reject(error);
+        },
+      );
+    });
+  });
+};
+
+
+const getLunchLogs = (threshold: number): Promise<string[]> => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT transaction_title FROM log WHERE category = ? AND sub_category = ? AND amount < ? ORDER BY RANDOM() LIMIT 2',
+        ['Food', 'Lunch', threshold],
+        (_, { rows }) => {
+          const data = rows._array;
+          const titles = data.map((row) => row.transaction_title);
+
+          resolve(titles);
+        },
+        (_, error) => {
+          reject(error);
+        },
+      );
+    });
+  });
+};
+
+const getDinnerLogs = (threshold: number): Promise<string[]> => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        'SELECT transaction_title FROM log WHERE category = ? AND sub_category = ? AND amount < ? ORDER BY RANDOM() LIMIT 2',
+        ['Food', 'Dinner', threshold],
+        (_, { rows }) => {
+          const data = rows._array;
+          const titles = data.map((row) => row.transaction_title);
+
+          resolve(titles);
+        },
+        (_, error) => {
+          reject(error);
+        },
+      );
+    });
+  });
+};
+
+
 
 export default AddExpenseSummary;

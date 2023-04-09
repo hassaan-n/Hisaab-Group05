@@ -55,7 +55,9 @@ const SignUp = () => {
   return (
     // mega container with all the elements
     // <View style={[styles_HomeScreen.card, { marginTop: 40}]}>
-    <View style={styles.container }>
+
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container }>
       {/* image inside the container */}
       <View style={[styles_HomeScreen.imageContainer]}>
         <Image source={require("../images/hisaab.png")} />
@@ -103,6 +105,7 @@ const SignUp = () => {
             value={number}
             placeholder="Enter password"
             keyboardType="numeric"
+            maxLength={4}
           />
         </View>
 
@@ -112,7 +115,7 @@ const SignUp = () => {
       {/* Button Sectoion*/}
       <View style={styles_HomeScreen.buttonContainer}>
         <TouchableOpacity
-          // onPress={() => {navigation.navigate("Tut1"); addUser(text,toggle,number); getAllUsers();}}
+          
 
           onPress={() => {
             if (text == "" || (number == "" && toggle)) {
@@ -133,16 +136,9 @@ const SignUp = () => {
                 }
               }
             });
-            //addUser(text, toggle, number);
-            // sendNotification(
-            //   "Welcome to Hisaab!",
-            //   "You have successfully signed up!"
-            // );
+       
             navigation.navigate("Tut1");
-            // getAllUsers();
-            // const currentTime = new Date().toLocaleString();
-            // console.log(typeof currentTime);
-            // console.log(currentTime);
+    
           }}
           style={styles.appButtonContainer}
         >
@@ -150,6 +146,9 @@ const SignUp = () => {
         </TouchableOpacity>
       </View>
     </View>
+      
+    </TouchableWithoutFeedback>
+    
   );
 };
 

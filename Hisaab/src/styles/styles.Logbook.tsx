@@ -33,21 +33,17 @@ const styles_Logbook = StyleSheet.create({
 
     card_subheading: {
     
-        // position: "absolute",
-        fontSize: 13,
+        fontSize: 16,
         fontFamily: "Poppins-Bold",
-        // marginLeft:10,
-        // paddingTop:33,
-    
+      
       },
 
       card_timestmap: {
     
-        // position: "absolute",
-        fontSize: 10,
+       
+        fontSize: 12,
         fontFamily: "Poppins",
-        // marginLeft:8,
-        // paddingTop:50,
+     
         
       },
 
@@ -61,7 +57,7 @@ const styles_Logbook = StyleSheet.create({
         borderRadius: 5,
         height: 80,
         padding: 10,
-        backgroundColor: '#55C595',
+        backgroundColor: '#F2F8F2',
         marginVertical: 10,
     },
     cardLeft: {
@@ -69,20 +65,16 @@ const styles_Logbook = StyleSheet.create({
         
     },
     cardRight: {
-
-    justifyContent: 'center',
         
     },
 
     cardText: {
-
+        fontFamily: "Poppins-Bold",
         fontSize: 20,
-        fontWeight: 'bold',
     },
 
     price: {
-        // marginLeft: 240,
-        // marginVertical: -30,
+     
         fontSize: 20,
         fontFamily: "Poppins-Bold",
         // fontWeight: 'bold',

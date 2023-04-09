@@ -79,7 +79,7 @@ const ProfileNameSetting = () => {
               <TouchableOpacity
                 onPress={() => {addName(NewName); 
                   getuser();
-                  navigation.goBack()}}
+                  navigation.navigate("Splash");}}
                 style={styles.appButtonContainer}
               >
                 <Text style={styles.appButtonText}>Continue</Text>

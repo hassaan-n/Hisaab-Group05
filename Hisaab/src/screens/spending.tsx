@@ -43,6 +43,8 @@ const SpendingChart = () => {
         data={data}
         width={300}
         height={200}
+        fromZero={true}
+
         chartConfig={{
           backgroundGradientFrom: '#f2f8f2',
           backgroundGradientTo: '#f2f8f2',

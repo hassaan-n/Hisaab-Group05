@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import * as Notifications from 'expo-notifications';
+import * as Notifications from "expo-notifications";
 import {
   View,
   Text,
@@ -63,10 +63,9 @@ const AddExpenseTitle = ({ route }: any) => {
     });
   }, []);
 
-   
   const [budgetAmount, onChangeBudget] = React.useState("");
 
-  const addBudget = (current_state,currentTime) => {
+  const addBudget = (current_state, currentTime) => {
     db.transaction((tx) => {
       tx.executeSql(
         "INSERT INTO budget (current_state,time_stamp) VALUES (?,?);",
@@ -113,81 +112,79 @@ const AddExpenseTitle = ({ route }: any) => {
     });
   };
 
-
   const difference = budgetData[0]?.current_state - logData[0]?.amount;
- 
-    return (
-      // mega container with all the elements
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-        <View style={styles.container}>
-          <View style={styles_AddExpenseTitle.inputSingleContainer}>
-            <Text style={styles.text}>Please Enter the</Text>
-            <Text style={styles.heading}>Title</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={onChangeTitle}
-              placeholder={"Burger"}
-              value={transaction_title}
-            />
-          </View>
-  
-          <View style={styles_AddExpenseTitle.inputSingleContainer}>
-            <Text style={styles.text}>Please Enter the</Text>
-            <Text style={styles.heading}>Expense</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={onChangeAmount}
-              placeholder={"1000"}
-              keyboardType="numeric"
-              value={amount}
-              autoFocus={true}
-            />
-          </View>
 
-          <View style={styles_Logbook.card}>
+  return (
+    // mega container with all the elements
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <View style={styles_AddExpenseTitle.inputSingleContainer}>
+          <Text style={styles.text}>Please Enter the</Text>
+          <Text style={styles.heading}>Title</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeTitle}
+            placeholder={"Burger"}
+            value={transaction_title}
+          />
+        </View>
+
+        <View style={styles_AddExpenseTitle.inputSingleContainer}>
+          <Text style={styles.text}>Please Enter the</Text>
+          <Text style={styles.heading}>Expense</Text>
+          <TextInput
+            style={styles.input}
+            onChangeText={onChangeAmount}
+            placeholder={"1000"}
+            keyboardType="numeric"
+            value={amount}
+            autoFocus={true}
+          />
+        </View>
+
+        <View style={styles_Logbook.card}>
           <View style={styles_Logbook.cardLeft}>
             <Text style={styles_Logbook.cardText}>Total Budget Remaining</Text>
             <Text style={styles_Logbook.price}>Rs. {difference}</Text>
           </View>
         </View>
 
-      
-          <KeyboardAvoidingView>
-            <View style={styles_AddExpenseTitle.buttonContainer}>
-              <TouchableOpacity
-                style={styles.appButtonContainer}
-  
-                onPress={() => {
-  
-                  const currentTime = new Date().toLocaleString();
-                  // addLog(amount,transaction_title,currentTime);
-                  // getLog();
-
-                  const currentTime2 = new Date().toLocaleString();
-                  // addBudget(difference,currentTime2);
+        <KeyboardAvoidingView>
+          <View style={styles_AddExpenseTitle.buttonContainer}>
+            <TouchableOpacity
+              style={styles.appButtonContainer}
+              onPress={() => {
+                if (transaction_title == "") {
+                  alert("Please enter a title");
+                  return;
+                }
+                if (amount == "") {
+                  alert("Please enter an amount");
+                  return;
+                } else {
                   navigation.navigate("Choose Category", {
                     title: transaction_title,
                     amount: amount,
                     difference: difference,
                   });
-                  
-                }}
-              >
-                <Text style={styles.appButtonText}>Submit</Text>
-              </TouchableOpacity>
-              <View style={{ marginTop: 10 }}></View>
-  
-              <TouchableOpacity
-                style={styles.appButtonContainerAlt}
-                onPress={() => navigation.navigate("Home")}
-              >
-                <Text style={styles.appButtonText}>Cancel</Text>
-              </TouchableOpacity>
-            </View>
-          </KeyboardAvoidingView>
-        </View>
-      </TouchableWithoutFeedback>
-    );
-  };
-  
-  export default AddExpenseTitle;
+                }
+              }}
+            >
+              <Text style={styles.appButtonText}>Submit</Text>
+            </TouchableOpacity>
+            <View style={{ marginTop: 10 }}></View>
+
+            <TouchableOpacity
+              style={styles.appButtonContainerAlt}
+              onPress={() => navigation.navigate("Home")}
+            >
+              <Text style={styles.appButtonText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </KeyboardAvoidingView>
+      </View>
+    </TouchableWithoutFeedback>
+  );
+};
+
+export default AddExpenseTitle;

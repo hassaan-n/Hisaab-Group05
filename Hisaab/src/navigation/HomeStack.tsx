@@ -1,6 +1,7 @@
 import * as React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
+
 import SignUp from "../screens/SignUp";
 import DetailsScreen from "../screens/DetailsScreen";
 // import LoginScreen from '../screens/LoginScreen';
@@ -27,35 +28,40 @@ import Notifications from "../Notifications";
 import SubCategory from "../screens/AddSubCategory";
 import SplashScreen from "../screens/SplashScreen";
 import AddExpenseSummary from "../screens/AddExpenseSummary";
+import NotificationScheduler from "../Notifications";
+import { View, Text, Button, Image, Pressable } from 'react-native';
+
+import { TouchableOpacity } from "react-native-gesture-handler";
+
 //need to implement in this file
 //first needs to check if intiial sigup is done, if done then load the home screen direcrlt or show pin as per settings
 
 const HomeStack = createNativeStackNavigator();
 
 
-const HomeStackNavigator = () => {
+const HomeStackNavigator = (navigation) => {
 
 
   let content = null;
   content = (
     <HomeStack.Navigator>
         <HomeStack.Screen name="Splash" component={SplashScreen} />
-        <HomeStack.Screen name="Sign Up" component={SignUp} />
+        <HomeStack.Screen name="Sign Up" component={SignUp} options={{headerBackVisible:false}} />
         <HomeStack.Screen name="Details" component={DetailsScreen} />
-        <HomeStack.Screen name="Tut1" component={Tut1} />
-        <HomeStack.Screen name="Tut2" component={Tut2} />
-        <HomeStack.Screen name="Tut3" component={Tut3} />
-        <HomeStack.Screen name="Tut4" component={Tut4} />
-        <HomeStack.Screen name="Tut5" component={Tut5} />
-        <HomeStack.Screen name="Tut6" component={Tut6} />
-        <HomeStack.Screen name="Goals" component={GoalsScreen} />
-        <HomeStack.Screen name="Notis" component={Notifications} />
+        <HomeStack.Screen name="Tut1" component={Tut1} options={{headerTitle:"Start Logging"}} />
+        <HomeStack.Screen name="Tut2" component={Tut2} options={{headerTitle:"Select Title and Expense"}} />
+        <HomeStack.Screen name="Tut3" component={Tut3} options={{headerTitle:"Seelct a Catgeory for your Expense"}} />
+        <HomeStack.Screen name="Tut4" component={Tut4} options={{headerTitle:"Select a Subcategory"}} />
+        <HomeStack.Screen name="Tut5" component={Tut5} options={{headerTitle:"Home Features Overview"}} />
+        <HomeStack.Screen name="Tut6" component={Tut6} options={{headerTitle:"Budget and Goal Setup"}} />
+        <HomeStack.Screen name="Goals" component={GoalsScreen} options={{headerTitle:"Initial Setup"}} />
+        
         <HomeStack.Screen name="Sub Category" component={SubCategory} />
         <HomeStack.Screen name="Let's Start" component={StartSaving} />
         <HomeStack.Screen
           name="Home"
           component={Home}
-          options={{ gestureEnabled: false, headerBackVisible: false }}
+          options={{ gestureEnabled: false, headerBackVisible: false, headerShown: false}}
         />
         <HomeStack.Screen name="Add Expense" component={AddExpenseTitle} />
         <HomeStack.Screen
@@ -64,7 +70,33 @@ const HomeStackNavigator = () => {
         />
         <HomeStack.Screen name="Analytics" component={Analytics} />
         <HomeStack.Screen name="Logs" component={Logbook} />
-        <HomeStack.Screen name="Profile" component={Profile} />
+        <HomeStack.Screen 
+       
+        name="Profile" 
+        component={Profile} 
+        // options={{
+        //   gestureEnabled: false,
+        //   headerLeft: () => (
+        //     <Pressable
+        //       onPressIn={() => {
+        //         navigation.navigate("Splash");
+        //       }}
+        //     >
+        //       <Image
+        //         style={{ marginTop: 3 }}
+        //         source={require("../images/Arrow.png")}
+        //       />
+        //     </Pressable>
+        //   ),
+        // }}
+
+
+                
+        />
+
+
+        
+     
         <HomeStack.Screen
           name="Profile Settings"
           component={ProfileNameSetting}
@@ -77,6 +109,7 @@ const HomeStackNavigator = () => {
         <HomeStack.Screen name="Budget Settings" component={BudgetSetting} />
         <HomeStack.Screen name="Goal Settings" component={GoalSetting} />
         <HomeStack.Screen name="Summary" component={AddExpenseSummary} />
+        <HomeStack.Screen name="Notifications" component={NotificationScheduler} />
       </HomeStack.Navigator>
 
 

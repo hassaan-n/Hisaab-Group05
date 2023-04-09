@@ -23,6 +23,10 @@ import InputField from "../components/InputField";
 
 import * as ImagePicker from "expo-image-picker";
 
+
+
+
+
 const Profile = () => {
   const navigation = useNavigation();
   const username = "Hassan";
@@ -139,7 +143,7 @@ const Profile = () => {
         <ListItem
           title="Notification"
           image={notificationIcon}
-          navigateTo="Notification Settings"
+          navigateTo="Notifications"
         />
         <Divider />
         <ListItem

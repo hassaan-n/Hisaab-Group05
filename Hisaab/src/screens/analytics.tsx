@@ -74,13 +74,12 @@ const Analytics = () => {
     // mega container with all the elements
     <ScrollView style={{ flex: 1 }}>
       <View style={styles.container}>
+      <Text style={[styles.text, {left:5}]}>Review your spending patterns</Text>
+        <Text style={[styles.heading, {left: 5}]}>Analytics</Text>
         {/* <View style={styles_analytics.analytics}> */}
-        <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-            <Image source={require("../images/back.png")} style={styles.backButton} />
-          </TouchableOpacity>
-        <View style={[styles_HomeScreen.card, { marginTop: 40}]}>
-          <Text style={[styles.text, {left:5}]}>Review your spending patterns</Text>
-          <Text style={[styles.heading, {left: 5}]}>Analytics</Text>
+        
+        <View style={[styles_HomeScreen.card]}>
+          
         </View>
 
         <View style={styles_HomeScreen.card}>
