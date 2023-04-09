@@ -255,9 +255,7 @@ const HomeScreen = () => {
     tommorow = remaining;
   }
   
-
-
-  
+ 
   const [latest, setlatest] = useState([]);
 
   useEffect(() => {
