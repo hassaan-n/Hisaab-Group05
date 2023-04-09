@@ -23,8 +23,21 @@ import db from "../database";
 
 const AddExpenseSummary = ({ route }: any) => {
 
+  const getbudget = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM budget;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
 
-  
   const addBudget = (current_state,currentTime) => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -169,7 +182,9 @@ const AddExpenseSummary = ({ route }: any) => {
             .replace("04-02", "03-29");
             addBudget(reultant_state,currentTime);
             addLog(Expense,Title,currentTime,Category,Sub_category);
-            getLog();
+            // getLog();
+            console.log(reultant_state);
+            getbudget();
             navigation.navigate("Splash")}}
           style={styles.appButtonContainer}
         >

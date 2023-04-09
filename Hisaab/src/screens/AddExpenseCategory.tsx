@@ -37,29 +37,7 @@ const AddExpenseCategory = ({ route }: any) => {
   const handleOptionSelect = (option: any) => {
     setSelectedOption(option);
   };
-
-  // const addLog = (amount, transaction_title, currentTime, category) => {
-  //   db.transaction((tx) => {
-  //     // tx.executeSql("DROP TABLE IF EXISTS log;");
-  //     // tx.executeSql(
-  //     //   "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
-  //     // );
-
-  //     //console.log("table dropped and created");
-  //     tx.executeSql(
-  //       "INSERT INTO log (amount,transaction_title,time_stamp, category) VALUES (?,?,?,?);",
-  //       [amount, transaction_title, currentTime, category], // pass in parameters as an array
-  //       (_, { rowsAffected }) => {
-  //         if (rowsAffected > 0) {
-  //           console.log("title and amount added successfully");
-  //         }
-  //       },
-  //       (_, error) => {
-  //         console.log(error);
-  //       }
-  //     );
-  //   });
-  // };
+ 
 
   const getLog = () => {
     db.transaction((tx) => {

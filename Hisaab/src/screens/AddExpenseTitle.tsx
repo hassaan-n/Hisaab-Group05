@@ -63,25 +63,7 @@ const AddExpenseTitle = ({ route }: any) => {
     });
   }, []);
 
-   
-  const [budgetAmount, onChangeBudget] = React.useState("");
-
-  const addBudget = (current_state,currentTime) => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        "INSERT INTO budget (current_state,time_stamp) VALUES (?,?);",
-        [current_state, currentTime],
-        (_, { rowsAffected }) => {
-          if (rowsAffected > 0) {
-            console.log("Budget added successfully");
-          }
-        },
-        (_, error) => {
-          console.log(error);
-        }
-      );
-    });
-  };
+    
 
   const getLog = () => {
     db.transaction((tx) => {
@@ -113,8 +95,7 @@ const AddExpenseTitle = ({ route }: any) => {
     });
   };
 
-
-  const difference = budgetData[0]?.current_state - logData[0]?.amount;
+  const difference = budgetData[0]?.current_state;
  
     return (
       // mega container with all the elements
