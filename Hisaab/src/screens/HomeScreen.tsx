@@ -173,7 +173,7 @@ const HomeScreen = () => {
     // fetch budget data from the database when the component mounts
     db.transaction((tx) => {
       tx.executeSql(
-        "SELECT current_state, MAX(budget_id) FROM budget;",
+        "SELECT current_state,type FROM budget WHERE budget_id = 1;",
         [],
         (_, { rows }) => {
           setBudgetData(rows._array);
@@ -206,7 +206,7 @@ const HomeScreen = () => {
 
 
   let remaining: number;
-  
+
   if (budgetData && budgetData.length > 0 && budgetData[0]?.type === "Weekly") {
     remaining = budgetData[0]?.current_state / 7;
   } else {
