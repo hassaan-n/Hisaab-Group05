@@ -21,7 +21,7 @@ import styles from "../styles";
 
 const SplashScreen = () => {
   const navigation = useNavigation();
-  const [debug, setDebug] = useState(false);
+  const [debug, setDebug] = useState(true);
   const [deployment, setDeployment] = useState(true);
   const [signup, setSignup] = useState(false);
   const [navigationTo, setNavigation] = useState("Sign Up");
@@ -122,7 +122,7 @@ const SplashScreen = () => {
     } else {
       content = <View>
 
-        {/* <MoveToHome /> */}
+        <MoveToHome />
       </View>;
     }
 
@@ -140,8 +140,8 @@ const SplashScreen = () => {
     // const result = await launchImageLibrary(options?);
 
     <View style={styles.container}>
-      {/* <Card showDebug={debug} />  */}
-      <LoginLogic />
+      <Card showDebug={debug} /> 
+      {/* <LoginLogic /> */}
 
 
 

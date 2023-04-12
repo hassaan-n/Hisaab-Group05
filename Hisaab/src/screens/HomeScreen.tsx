@@ -18,7 +18,7 @@ import db from "../database";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Bar from "./Bar";
-import LongPressGestureHandler from "react-native-gesture-handler"
+
 
 
 const HomeScreen = () => {
@@ -32,11 +32,16 @@ const HomeScreen = () => {
   const barData = [20, 45, 28, 80, 99, 43, 24];
   const barDataDays = ["M", "T", "W", "T", "F", "S", "S"];
 
+  const [ringColor, setRingColor] = useState("#55C595");
+
   const [image, setImage] = useState<any>(null);
 
+
+  //editable layouts
   const [isDailyCollapsed, setIsDailyCollapsed] = useState(false); 
   const [isWeekCollapsed, setIsWeekCollapsed] = useState(false); 
   const [isRecentCollapsed, setIsRecentCollapsed] = useState(false); 
+  const [altLayout, setAltLayout] = useState(false);
 
   const toggleDailyCollapse = () => {
     setIsDailyCollapsed(!isDailyCollapsed);
@@ -51,6 +56,109 @@ const HomeScreen = () => {
   const toggleRecentCollapse = () => {
     setIsRecentCollapsed(!isRecentCollapsed);
   };
+
+
+
+
+  const WeekOverviewCard = () => {
+    let content = (
+      <View style={styles_HomeScreen.card}>
+        <TouchableOpacity onPress={toggleWeekCollapse}>
+          <View style={styles_HomeScreen.cardHeader}>
+            <Text style={styles_HomeScreen.cardHeading}>Week Overview</Text>
+            <Pressable onPressIn={() => navigation.navigate("Analytics")}>
+            <Image
+              style={{ marginTop: 3 }}
+              source={require("../images/Arrow.png")}
+            />
+              </Pressable>
+
+          </View>
+        </TouchableOpacity>
+
+        {!isWeekCollapsed && (
+          <View style={{ padding:5 }}>
+            <Bar />
+            <View style={styles_HomeScreen.centerText}>
+              <Text style={styles.text}>Days</Text>
+            </View>
+          </View>
+        )}
+        </View>
+    )
+    return content;
+  };
+
+  const RecentExpenseCard = () => {
+    let content = (
+      <View style={styles_HomeScreen.card}>
+        <TouchableOpacity onPress={toggleRecentCollapse}>
+            <View style={styles_HomeScreen.cardHeader}>
+              <Text style={styles_HomeScreen.cardHeading}>Recent Expenses</Text>
+              <Pressable onPressIn={() => navigation.navigate("Logs")}>
+                <Image
+                  style={{ marginTop: 3 }}
+                  source={require("../images/Arrow.png")}
+                />
+              </Pressable>
+            </View>
+        </TouchableOpacity>
+
+        {!isRecentCollapsed && (
+            <View style={styles_HomeScreen.cardLog} key={latest[0]?.transaction_id}>
+              <View style={styles_HomeScreen.cardLeft}>
+                <Text style={styles_HomeScreen.cardText}>
+                  {latest[0]?.transaction_title || "No logs yet"}
+                </Text>
+                <Text style={styles_HomeScreen.card_subheading}>
+                  {latest[0]?.category || "No category yet"} - {latest[0]?.sub_category}
+                </Text>
+                <Text style={styles_HomeScreen.card_timestmap}>
+                  {latest[0]?.time_stamp}
+                </Text>
+              </View>
+              <View style={styles_HomeScreen.cardRight}>
+              <Text style={styles_HomeScreen.price}>Rs. {latest[0]?.amount || 0}</Text>
+              </View>
+            </View>
+        )}
+        </View>
+    )
+    return content;
+  };
+
+  const RecentandExpenseCards = () => {
+    let content = (<View></View>)
+
+    if (altLayout) {
+      content = (
+        <View>
+          <WeekOverviewCard />
+          <RecentExpenseCard />
+        </View>
+      )
+      
+    } else {
+      content = (
+        <View>
+        <RecentExpenseCard />
+        <WeekOverviewCard />
+        </View>
+      )
+    }
+    return content;
+  }
+
+
+
+      
+
+
+
+
+
+
+
 
 
 
@@ -113,14 +221,14 @@ const HomeScreen = () => {
   const RemainderIndicator = ({ percentage }) => {
     let colorState: string = "#55C595";
     percentage = Math.round(percentage);
+    
 
     if (percentage >= 80) {
-      colorState = "#55C595";
+      // colorState = "#55C595";
+      setRingColor("#E3242B");
       
 
-    } else if (percentage >= 30) {
-      colorState = "#E3242B";
-    }
+    } 
 
     let content = (
       <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -128,7 +236,7 @@ const HomeScreen = () => {
           style={{
             fontFamily: "Poppins-Bold",
             fontSize: 18,
-            color: colorState,
+            color: ringColor,
           }}
         >
           {" "}
@@ -155,16 +263,18 @@ const HomeScreen = () => {
     let colorState2: string = "#FFFFFF";
 
     if (percentage >= 80) {
-      colorState = "#55C595";
-      // colorState2 = "#F2B5AA";
-    } else if (percentage >= 30) {
+      
       colorState = "#E3242B";
       colorState2 = "#F2B5AA";
+      // colorState2 = "#F2B5AA";
+    } else if (percentage >= 30) {
+      colorState = "#55C595";
       // "#E3242B"
     }
     console.log(percentage);
 
     if (percentage >= 100) {
+      colorState = "#E3242B";
       percentage=100;
     }
     // percentage = Math.round(percentage);
@@ -472,65 +582,28 @@ const HomeScreen = () => {
           )}
         </View>
 
-
-      <View style={styles_HomeScreen.card}>
-      <TouchableOpacity onPress={toggleWeekCollapse}>
-        <View style={styles_HomeScreen.cardHeader}>
-          <Text style={styles_HomeScreen.cardHeading}>Week Overview</Text>
-          <Pressable onPressIn={() => navigation.navigate("Analytics")}>
-          <Image
-            style={{ marginTop: 3 }}
-            source={require("../images/Arrow.png")}
-          />
-            </Pressable>
-
-        </View>
-      </TouchableOpacity>
-
-      {!isWeekCollapsed && (
-        <View style={{ padding:5 }}>
-          <Bar />
-          <View style={styles_HomeScreen.centerText}>
-            <Text style={styles.text}>Days</Text>
-          </View>
-        </View>
-      )}
-    </View>
+        <RecentandExpenseCards/>
 
 
+       
 
-        <View style={styles_HomeScreen.card}>
-      <TouchableOpacity onPress={toggleRecentCollapse}>
-          <View style={styles_HomeScreen.cardHeader}>
-            <Text style={styles_HomeScreen.cardHeading}>Recent Expenses</Text>
-            <Pressable onPressIn={() => navigation.navigate("Logs")}>
-              <Image
-                style={{ marginTop: 3 }}
-                source={require("../images/Arrow.png")}
-              />
-            </Pressable>
-          </View>
-      </TouchableOpacity>
 
-      {!isRecentCollapsed && (
-          <View style={styles_HomeScreen.cardLog} key={latest[0]?.transaction_id}>
-            <View style={styles_HomeScreen.cardLeft}>
-              <Text style={styles_HomeScreen.cardText}>
-                {latest[0]?.transaction_title || "No logs yet"}
-              </Text>
-              <Text style={styles_HomeScreen.card_subheading}>
-                {latest[0]?.category || "No category yet"} - {latest[0]?.sub_category}
-              </Text>
-              <Text style={styles_HomeScreen.card_timestmap}>
-                {latest[0]?.time_stamp}
-              </Text>
-            </View>
-            <View style={styles_HomeScreen.cardRight}>
-            <Text style={styles_HomeScreen.price}>Rs. {latest[0]?.amount || 0}</Text>
-            </View>
-          </View>
-      )}
-        </View>
+    
+
+        
+
+        {/* //view toggle button */}
+        
+        <TouchableOpacity
+          onPress={() => setAltLayout(!altLayout)}
+          style={styles.appButtonContainerGreen}
+        >
+          <Text style={styles.appButtonText}>Change Layout</Text>
+        </TouchableOpacity>
+   
+          
+        
+      
       </ScrollView>
     </View>
   );
