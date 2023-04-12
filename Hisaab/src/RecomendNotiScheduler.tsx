@@ -103,7 +103,7 @@ export const sendDinnerNotification = async (title: string, body: string) => {
   //   notificationTime.setSeconds(0);
   //console.log(notificationTime);
   const trigger: DailyTriggerInput = {
-    hour: 7,
+    hour: 19,
     minute: 0,
     repeats: true,
   };
