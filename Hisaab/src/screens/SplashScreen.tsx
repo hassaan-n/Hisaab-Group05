@@ -13,6 +13,7 @@ import {
 
 import { useNavigation, useIsFocused } from "@react-navigation/native";
 import styles from "../styles";
+import db from "../database";
 
 
 
@@ -28,45 +29,24 @@ const SplashScreen = () => {
   const isFocused = useIsFocused();
 
 
-  const MoveToSignUp = () => {
-    let content = (<View></View>);
+ 
 
 
-
-    useEffect(() => {
-      if (isFocused) {
-        setSignup(true);
-        navigation.navigate("Sign Up");
-      }
-    }, [isFocused]);
    
-    return content;
+
+
+  //delete all records from user table by runniung sql query delte all from user
+  const clearUSerTable = () => {
+    db.transaction((tx) => {
+      tx.executeSql("DELETE FROM user");
+    });
   };
 
-  const LoginLogic = () => {
-    let content = (<View></View>);
-    let navigate = "";
 
-    if (signup) {
-      setNavigation("Sign Up");
-      
-    }
-    else {
-      setNavigation("Home");
-      
-    }
+    
 
 
-    useEffect(() => {
-      if (isFocused) {
-        setSignup(false);
-        navigation.navigate(navigationTo);
-      }
-    }, [isFocused]);
 
-
-    return content;
-  };
 
 
 
@@ -110,10 +90,10 @@ const SplashScreen = () => {
        <View style={{ height: 15 }}></View>
 
        <TouchableOpacity
-         onPress={() => navigation.navigate("Summary")}
+         onPress={() => clearUSerTable()}
          style={styles.appButtonContainer}
        >
-         <Text style={styles.appButtonText}>Splashscreen</Text>
+         <Text style={styles.appButtonText}>Su</Text>
        </TouchableOpacity>
 
      </View>
