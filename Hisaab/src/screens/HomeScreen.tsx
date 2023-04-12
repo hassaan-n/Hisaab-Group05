@@ -293,7 +293,7 @@ const HomeScreen = () => {
   thresh = parseInt(threshold.slice(0, 2));
 
 
-  if (tester >= thresh) {
+  if (tester === thresh) {
     addsaving((today-0),currentTime);
     tester2 = 69;
     today = tommorow;
