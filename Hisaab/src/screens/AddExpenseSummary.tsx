@@ -103,6 +103,61 @@ const AddExpenseSummary = ({ route }: any) => {
     });
   };
 
+  
+  const [budgetData, setBudgetData] = useState([]);
+
+  useEffect(() => {
+    // fetch budget data from the database when the component mounts
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT current_state,type FROM budget WHERE budget_id = 1;",
+        [],
+        (_, { rows }) => {
+          setBudgetData(rows._array);
+        },
+        (_, error) => {
+          //console.log(error);
+        }
+      );
+    });
+  }, []);
+
+
+
+  const [latestbudgetData, setlatestBudgetData] = useState([]);
+
+  useEffect(() => {
+    
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT current_state, MAX(budget_id) FROM budget;",
+        [],
+        (_, { rows }) => {
+          setlatestBudgetData(rows._array);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  }, []);
+
+
+  let remaining: number;
+
+  if (budgetData && budgetData.length > 0 && budgetData[0]?.type === "Weekly") {
+    remaining = budgetData[0]?.current_state / 7;
+  } else {
+    remaining = budgetData[0]?.current_state / 30;
+  }
+
+  let spent = 0;
+  spent = budgetData[0]?.current_state  - latestbudgetData[0]?.current_state 
+
+  let today = 0;
+
+  today = remaining - spent
+
 
   const [logData, setLogData] = useState<any>([]);
 
@@ -191,9 +246,11 @@ const AddExpenseSummary = ({ route }: any) => {
             addLog(Expense,Title,currentTime,Category,Sub_category);
             getLog();
 
+            
+
 
             // notification code
-            getBreakfastLogs(1000)
+            getBreakfastLogs(today/2)
             .then((titles) => {
               const message = titles.join(', ');
               sendBreakfastNotification("Breakfast Recommendations", message);
@@ -203,7 +260,7 @@ const AddExpenseSummary = ({ route }: any) => {
               console.error(error);
             });
 
-            getLunchLogs(1000)
+            getLunchLogs(today/2)
             .then((titles) => {
               const message = titles.join(', ');
               sendLunchNotification("Lunch Recommendations", message);
@@ -213,7 +270,7 @@ const AddExpenseSummary = ({ route }: any) => {
               console.error(error);
             });
 
-            getDinnerLogs(1000)
+            getDinnerLogs(today)
             .then((titles) => {
               const message = titles.join(', ');
               sendDinnerNotification("Dinner Recommendations", message);

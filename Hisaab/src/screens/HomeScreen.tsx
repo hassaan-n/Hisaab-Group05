@@ -239,8 +239,6 @@ const HomeScreen = () => {
     if (percentage >= 80) {
       // colorState = "#55C595";
       setRingColor("#E3242B");
-      
-
     } 
 
     let content = (
