@@ -137,8 +137,9 @@ const SplashScreen = () => {
     // const result = await launchImageLibrary(options?);
 
     <View style={styles.container}>
-      <Card showDebug={debug} />
-      {/* <LoginLogic /> */}
+      <MoveToHome/>
+      {/* <Card showDebug={debug} /> */}
+      <LoginLogic />
     </View>
   );
 };
