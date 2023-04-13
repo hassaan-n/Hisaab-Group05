@@ -19,8 +19,9 @@ import { getKey, storeItem } from "../MyAsyncStorage";
 import Toggle from "react-native-toggle-input";
 //import { sendNotification } from "../Notifications";
 
-const SignUp = ({ route }: any) => {
+const SignUp = ({route} : any) => {
   const navigation = useNavigation();
+
 
   //props for the profile input
   const [text, onChangeText] = React.useState("");
@@ -47,7 +48,7 @@ const SignUp = ({ route }: any) => {
   //function to handle the submit button
   const Card = ({ pinstate }) => {
     let content;
-r
+
     if (pinstate) {
       content = (
         <View style={styles_HomeScreen.inputSingleContainer}>
@@ -74,6 +75,15 @@ r
       console.log("Sign in stored successfully");
     } catch (e) {
       console.log("Failed to store the data to the storage");
+    }
+  };
+
+  const storePin = async (key: any) => {
+    try {
+      await storeItem("pin", key);
+      console.log("pin stored successfully");
+    } catch (e) {
+      console.log("Failed to store pin in storage");
     }
   };
 
@@ -153,7 +163,7 @@ r
                 } else {
                   if (nameExists) {
                     alert(`User with name ${text} already exists`);
-                    navigation.navigate("Login", { name: text });
+                    navigation.navigate("Login", {name:text});
                     return;
                   } // true or false
                   else {
@@ -163,6 +173,7 @@ r
                 }
               });
               storingData(true);
+              storePin(number);
               navigation.navigate("Tut1");
             }}
             style={styles.appButtonContainer}

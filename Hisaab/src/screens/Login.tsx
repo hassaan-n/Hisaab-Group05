@@ -22,235 +22,181 @@ import Toggle from "react-native-toggle-input";
 const Login = ({ route }: any) => {
   const navigation = useNavigation();
 
-  //props for the profile input
-  const [text, onChangeText] = React.useState("");
-  //props for the pin input
-  const [number, onChangeNumber] = React.useState("");
-  //props for the pin state
+  // const [enteredPin, onChangePin] = useState("");
+  // //props for the pin state
 
-  //store name from route 
-  const name = route.params.name;
+  // //store name from route
+  // const name = route.params.name;
+  // const [actualPin, setActualPin] = useState({});
+  // let myPin:any = 0;
 
-  const [pinstate, setpinstate] = useState([]);
-  const [pin, setPin] = useState("");
+  const [enteredPin, onChangePin] = useState<string>("");
+  // const [actualPin, setActualPin] = useState<string | null>(null);
+  const [actualPin, setActualPin] = useState<any>();
+  let myPin: string | null = null;
+  const name: string = route.params.name;
 
-  useEffect(() => {
-    db.transaction((tx) => {
-      tx.executeSql(
-        `SELECT pin FROM user WHERE name = ?;`,
-        [name],
-        (_, { rows }) => {
-          if (rows.length > 0) {
-            const pin = rows.item(0).pin;
-            // do something with the pin value, such as storing it in state
-            setPin(pin);
-          }
-        },
-        (_, error) => {
-          console.log(error);
-        }
-      );
-    });
-  }, [name]);
+  const MoveTohome = () => {
+    navigation.navigate("Home");
+    return <View></View>;
+  };
 
-
-  return (
+  // useEffect(() => {
+  //   getPin(name)
+  //     .then((pin) => {
+  //       if (pin) {
+  //         // Task 1: PIN is not null
+  //         // myPin = pin;
+  //         // setActualPin(pin)
+  //         // Flow(pin);
+  //         alert("compare pin")
+  //         console.log("Task 1:",myPin,pin,actualPin);
+  //       } else {
+  //         alert("navi home")
+  //         console.log("Task 2");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, [name]);
   
 
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        {/* image inside the container */}
-        <View style={[styles_HomeScreen.imageContainer]}>
-          <Image source={require("../images/hisaab.png")} />
-        </View>
+  const Flow = () => {
+    const checkPin = async () => {
+      const pin = await getKey("pin");
+      console.log("pin", pin);
+      if (pin) {
+        setActualPin(pin);
+      } else {
+        setActualPin(null);
+      }
+    };
+    useEffect(() => {
+      checkPin();
+    }, [checkPin]);
 
-        {/* Wwelcome section inside the container */}
-        <View style={styles_HomeScreen.welcomeContainer}>
-          <Text style={styles.heading}>Welcome!</Text>
-          <Text style={styles.text}>
-            Enter the following details to get started!
-          </Text>
-        </View>
-
-        {/* Input section inside the container which contains seperate items as single containers */}
-        <View style={styles_HomeScreen.inputContainer}>
-          
-        
-
-          
-
-          <View style={styles_HomeScreen.inputSingleContainer}>
-            <Text style={styles.subHeading}>Pin</Text>
-            <TextInput
-              style={styles.input}
-              onChangeText={onChangeNumber}
-              value={number}
-              placeholder="Enter password"
-              keyboardType="numeric"
-              maxLength={4}
-              secureTextEntry={true}
-            />
-          </View>
-
-          
-        </View>
-
-        {/* Button Sectoion*/}
-        <View style={styles_HomeScreen.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              //check if the user of name text exists
-              userExists(name, (exists, error) => {
-                if (exists) {
-                  //if the user exists, check if the pin is correct
-                  getPinState(name, (pinstate, error) => {
-                    //if pinstate is null navigate to home 
-                    if (pinstate === null) {
-                      // navigation.navigate("Home");
-                      alert("Pinstate is null");
-                      
-                    }
-                    //if pinstate is true, check if the pin is correct
-                    else if (pinstate) {
-                      //if the pin is correct, navigate to home
-                      if (number === number) {
-                        // navigation.navigate("Home");
-                        alert("Pin is correct");
-                      } else {
-                        //if the pin is incorrect, show an error
-                        alert("Incorrect Pin");
-                      }
-                    }
-               
-                  });
-                } else {
-                  //if the user does not exist, show an error
-                  alert("User does not exist");
-                }
-              });
-
-    
-              
-            }}
-            style={styles.appButtonContainer}
-          >
-            <Text style={styles.appButtonText}>Continue</Text>
-          </TouchableOpacity>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        </View>
-
-
-
-
-        <View style={styles_HomeScreen.buttonContainer}>
-          <TouchableOpacity
-            onPress={() => {
-              alert(pinstate);
-              console.log(pinstate);
-            }}
-
-           
-            style={styles.appButtonContainer}
-          >
-            <Text style={styles.appButtonText}>pin</Text>
-          </TouchableOpacity>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        </View>
+    let content = (
+      <View>
+        <Text>lora</Text>
       </View>
-    </TouchableWithoutFeedback>
+    );
+
+    // if (actualPin === null) {
+      if(true){
+        console.log("pin",actualPin)
+      content = (
+        <View>
+          <MoveTohome />
+        </View>
+      );
+      return content;
+    } else {
+      content = (
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+          <View style={styles.container}>
+            {/* image inside the container */}
+            <View style={[styles_HomeScreen.imageContainer]}>
+              <Image source={require("../images/hisaab.png")} />
+            </View>
+
+            {/* Wwelcome section inside the container */}
+            <View style={styles_HomeScreen.welcomeContainer}>
+              <Text style={styles.heading}>Welcome!</Text>
+              <Text style={styles.text}>
+                Enter the following details to get started!
+              </Text>
+            </View>
+
+            {/* Input section inside the container which contains seperate items as single containers */}
+            <View style={styles_HomeScreen.inputContainer}>
+              <View style={styles_HomeScreen.inputSingleContainer}>
+                <Text style={styles.subHeading}>Pin</Text>
+                <TextInput
+                  style={styles.input}
+                  onChangeText={onChangePin}
+                  value={enteredPin}
+                  placeholder="Enter password"
+                  keyboardType="numeric"
+                  maxLength={4}
+                  secureTextEntry={true}
+                />
+              </View>
+            </View>
+
+            {/* Button Sectoion*/}
+            <View style={styles_HomeScreen.buttonContainer}>
+              <TouchableOpacity
+                onPress={() => {
+                  //if pin is same as entered pin
+                  if (actualPin === enteredPin) {
+                    navigation.navigate("Home");
+                  } else {
+                    alert("Wrong Pin");
+                  }
+                }}
+                style={styles.appButtonContainer}
+              >
+                <Text style={styles.appButtonText}>Continue</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </TouchableWithoutFeedback>
+      );
+    }
+    return content;
+  };
+  return (
+    <View>
+      <Flow />
+    </View>
   );
 };
-
-
-
-const userExists = (name, callback) => {
-  db.transaction((tx) => {
-    tx.executeSql(
-      "SELECT * FROM user WHERE name = ?;",
-      [name],
-      (_, { rows: { _array } }) => {
-        if (_array.length === 0) {
-          callback(false);
-        } else {
-          callback(true);
-        }
-      },
-      (_, error) => {
-        callback(null, error);
-      }
-    );
-  });
-};
-
-//function that fetches the pinstate of the user from the database and returns it
-const getPinState = (name, callback) => {
-  db.transaction((tx) => {
-    tx.executeSql(
-      `SELECT pinstate FROM user WHERE name = ${name};`,
-      [name],
-      (_, { rows: { _array } }) => {
-        if (_array.length === 0) {
-          callback(false);
-        } else {
-          callback(true);
-        }
-      },
-      (_, error) => {
-        callback(null, error);
-      }
-    );
-  });
-};
-
-//funcition that fetches the pin of the user from the database and returns it
-// const getPin = (name, callback) => {
-//   db.transaction((tx) => {
-//     tx.executeSql(
-//       `SELECT pin FROM user WHERE name = ${name};`,
-//       [name],
-//       (_, { rows: { _array } }) => {
-//         if (_array.length === 0) {
-//           callback(false);
-//         } else {
-//           callback(true);
-//         }
-//       },
-//       (_, error) => {
-//         callback(null, error);
-//       }
-//     );
-//   });
-// };
-
-
-
-
-
-
-
 
 export default Login;
 
 // DROP TABLE IF EXISTS user
+
+// const getPin  = (name) => {
+//   return new Promise((resolve, reject) => {
+//     db.transaction((tx) => {
+//       tx.executeSql(
+//         "SELECT pin FROM user WHERE name = ?",
+//         [name],
+//         (_, { rows }) => {
+//           if (rows.length > 0) {
+//             const pin = rows.item(0).pin;
+//             resolve(pin);
+//           } else {
+//             reject(new Error("No user found with that name"));
+//           }
+//         },
+//         (_, error) => {
+//           reject(error);
+//         }
+//       );
+//     });
+//   });
+// };
+
+const getPin = (name: string) => {
+  return new Promise((resolve, reject) => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT pin FROM user WHERE name = ?",
+        [name],
+        (_, { rows }) => {
+          if (rows.length > 0) {
+            const pin: number = rows.item(0).pin;
+            resolve(pin);
+          } else {
+            reject(new Error("No user found with that name"));
+          }
+        },
+        (_, error) => {
+          reject(error);
+        }
+      );
+    });
+  });
+};
