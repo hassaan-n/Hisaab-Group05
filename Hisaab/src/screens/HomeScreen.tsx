@@ -41,7 +41,7 @@ const HomeScreen = () => {
   const [isDailyCollapsed, setIsDailyCollapsed] = useState(false); 
   const [isWeekCollapsed, setIsWeekCollapsed] = useState(false); 
   const [isRecentCollapsed, setIsRecentCollapsed] = useState(false); 
-  const [altLayout, setAltLayout] = useState(false);
+  const [altLayout, setAltLayout] = useState<any>(null);
 
   const toggleDailyCollapse = () => {
     setIsDailyCollapsed(!isDailyCollapsed);
@@ -129,6 +129,11 @@ const HomeScreen = () => {
 
   const RecentandExpenseCards = () => {
     let content = (<View></View>)
+    //fetch value of altLayout from async storage
+    getData().then((value) => {
+      setAltLayout(value);
+    })
+
 
     if (altLayout) {
       content = (
@@ -150,17 +155,25 @@ const HomeScreen = () => {
   }
 
 
+  //function to store the layout state in async storage
+  const storeData = async (value) => {
+    try {
+      const jsonValue = JSON.stringify(value)
+      await AsyncStorage.setItem('@layout', jsonValue)
+    } catch (e) {
+      // saving error
+    }
+  }
 
-      
-
-
-
-
-
-
-
-
-
+  //function to retrieve the layout state from async storage
+  const getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem('@Layout')
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch(e) {
+      // error reading value
+    }
+  }
 
   useEffect(() => {
     const backAction = () => {
@@ -595,7 +608,11 @@ const HomeScreen = () => {
         {/* //view toggle button */}
         
         <TouchableOpacity
-          onPress={() => setAltLayout(!altLayout)}
+          onPress={() => {
+          //save to async storage
+          setAltLayout(!altLayout)
+          AsyncStorage.setItem('@Layout', JSON.stringify(!altLayout))
+          }}
           style={styles.appButtonContainerGreen}
         >
           <Text style={styles.appButtonText}>Change Layout</Text>

@@ -19,7 +19,7 @@ import { getKey } from "../MyAsyncStorage";
 
 const SplashScreen = () => {
   const navigation = useNavigation();
-  const [debug, setDebug] = useState(true);
+  const [debug, setDebug] = useState(false);
   const [deployment, setDeployment] = useState(true);
   const [signup, setSignup] = useState(false);
   const [navigationTo, setNavigation] = useState("Sign Up");
@@ -91,7 +91,7 @@ const SplashScreen = () => {
     if (!signedin) {
       content = (
         <View>
-          <Text style={styles.heading}>Hisaab</Text>
+          {/* <Text style={styles.heading}>Hisaab</Text>
           <View style={{ height: 25 }}></View>
           <TouchableOpacity
             onPress={() => {
@@ -117,7 +117,7 @@ const SplashScreen = () => {
             style={styles.appButtonContainer}
           >
             <Text style={styles.appButtonText}>Splashscreen</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
       );
     } else {
