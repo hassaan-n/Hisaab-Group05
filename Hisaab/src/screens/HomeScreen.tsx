@@ -403,26 +403,27 @@ const HomeScreen = () => {
   .replace(",", "")
   .replace("04-02", "03-29");
 
-
-  let tester = 0;
+  let tester1 = 0;
   let tester2 = 0;
-  let threshold = "23:00:00";
-  let thresh = 0;
+  let threshold = "23:59:00";
+  let thresh1 = 0;
+  let thresh2 = 0;
 
    
-  tester = parseInt(currentTime.slice(11, 13));
-  thresh = parseInt(threshold.slice(0, 2));
+  tester1 = parseInt(currentTime.slice(11, 13));
+  tester2 = parseInt(currentTime.slice(15, 17));
+
+  thresh1 = parseInt(threshold.slice(0, 2));
+  thresh2= parseInt(threshold.slice(4,6));
 
 
-  if (tester === thresh) {
+  if ((tester1+tester2) > (thresh1+thresh2)) {
     addsaving((today-0),currentTime);
-    tester2 = 69;
+    console.log(tester1+tester2)
+    console.log(tester1+tester2)
     today = tommorow;
     tommorow = remaining;
   }
-  
-
-
   
   const [latest, setlatest] = useState([]);
 
