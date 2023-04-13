@@ -152,7 +152,9 @@ const SignUp = () => {
                   console.error(error);
                 } else {
                   if (nameExists) {
-                    alert(`User with name ${text} already exists`);
+                    alert(`Welcome Back!`);
+                    navigation.navigate("Home")
+
                     return;
                   } // true or false
                   else {
