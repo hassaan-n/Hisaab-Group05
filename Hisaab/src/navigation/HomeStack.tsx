@@ -29,6 +29,7 @@ import SubCategory from "../screens/AddSubCategory";
 import SplashScreen from "../screens/SplashScreen";
 import AddExpenseSummary from "../screens/AddExpenseSummary";
 import NotificationScheduler from "../Notifications";
+import Login from "../screens/Login";
 import { View, Text, Button, Image, Pressable } from 'react-native';
 
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -47,6 +48,7 @@ const HomeStackNavigator = (navigation) => {
     <HomeStack.Navigator>
         <HomeStack.Screen name="Splash" component={SplashScreen} />
         <HomeStack.Screen name="Sign Up" component={SignUp} options={{headerBackVisible:false, gestureEnabled:false}} />
+        <HomeStack.Screen name="Login" component={Login} options={{headerBackVisible:false, gestureEnabled:false}} />
         <HomeStack.Screen name="Details" component={DetailsScreen} />
         <HomeStack.Screen name="Tut1" component={Tut1} options={{headerTitle:"Start Logging"}} />
         <HomeStack.Screen name="Tut2" component={Tut2} options={{headerTitle:"Select Title and Expense"}} />

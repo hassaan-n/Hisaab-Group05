@@ -19,7 +19,7 @@ import { getKey, storeItem } from "../MyAsyncStorage";
 import Toggle from "react-native-toggle-input";
 //import { sendNotification } from "../Notifications";
 
-const SignUp = () => {
+const SignUp = ({ route }: any) => {
   const navigation = useNavigation();
 
   //props for the profile input
@@ -47,7 +47,7 @@ const SignUp = () => {
   //function to handle the submit button
   const Card = ({ pinstate }) => {
     let content;
-
+r
     if (pinstate) {
       content = (
         <View style={styles_HomeScreen.inputSingleContainer}>
@@ -153,6 +153,7 @@ const SignUp = () => {
                 } else {
                   if (nameExists) {
                     alert(`User with name ${text} already exists`);
+                    navigation.navigate("Login", { name: text });
                     return;
                   } // true or false
                   else {
