@@ -1,4 +1,4 @@
-import React , { useState, useEffect }from "react";
+import React, { useState, useEffect } from "react";
 import { BackHandler } from "react-native";
 import {
   View,
@@ -37,14 +37,12 @@ const SignUp = () => {
     };
 
     const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
+      "hardwareBackPress",
       backAction
     );
 
     return () => backHandler.remove();
   }, [navigation]);
-
-
 
   //function to handle the submit button
   const Card = ({ pinstate }) => {
@@ -70,104 +68,109 @@ const SignUp = () => {
     return <View style={{ padding: 0 }}>{content}</View>;
   };
 
+  const storingData = async (key: any) => {
+    try {
+      await storeItem("signed-in", key);
+      console.log("Sign in stored successfully");
+    } catch (e) {
+      console.log("Failed to store the data to the storage");
+    }
+  };
+
   return (
     // mega container with all the elements
     // <View style={[styles_HomeScreen.card, { marginTop: 40}]}>
 
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container }>
-      {/* image inside the container */}
-      <View style={[styles_HomeScreen.imageContainer]}>
-        <Image source={require("../images/hisaab.png")} />
-      </View>
-
-      {/* Wwelcome section inside the container */}
-      <View style={styles_HomeScreen.welcomeContainer}>
-        <Text style={styles.heading}>Welcome!</Text>
-        <Text style={styles.text}>
-          Enter the following details to get started!
-        </Text>
-      </View>
-
-      {/* Input section inside the container which contains seperate items as single containers */}
-      <View style={styles_HomeScreen.inputContainer}>
-        {/* Profile*/}
-        <View style={styles_HomeScreen.inputSingleContainer}>
-          <Text style={styles.subHeading}>Profile Name</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={onChangeText}
-            placeholder={"Enter your name"}
-            value={text}
-          />
+      <View style={styles.container}>
+        {/* image inside the container */}
+        <View style={[styles_HomeScreen.imageContainer]}>
+          <Image source={require("../images/hisaab.png")} />
         </View>
 
-        {/* Pin Toggle*/}
-        <View style={styles_HomeScreen.inputSingleContainer}>
-          <Text style={styles.subHeading}>Enable Pin</Text>
-          <Toggle
-            color={"#000000"}
-            size={20}
-            filled={true}
-            circleColor={"white"}
-            toggle={toggle}
-            setToggle={setToggle}
-          />
+        {/* Wwelcome section inside the container */}
+        <View style={styles_HomeScreen.welcomeContainer}>
+          <Text style={styles.heading}>Welcome!</Text>
+          <Text style={styles.text}>
+            Enter the following details to get started!
+          </Text>
         </View>
 
-        <View style={styles_HomeScreen.inputSingleContainer}>
-          <Text style={styles.subHeading}>Pin</Text>
-          <TextInput
-            style={styles.input}
-            onChangeText={onChangeNumber}
-            value={number}
-            placeholder="Enter password"
-            keyboardType="numeric"
-            maxLength={4}
-            secureTextEntry={true}
-          />
+        {/* Input section inside the container which contains seperate items as single containers */}
+        <View style={styles_HomeScreen.inputContainer}>
+          {/* Profile*/}
+          <View style={styles_HomeScreen.inputSingleContainer}>
+            <Text style={styles.subHeading}>Profile Name</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={onChangeText}
+              placeholder={"Enter your name"}
+              value={text}
+            />
+          </View>
+
+          {/* Pin Toggle*/}
+          <View style={styles_HomeScreen.inputSingleContainer}>
+            <Text style={styles.subHeading}>Enable Pin</Text>
+            <Toggle
+              color={"#000000"}
+              size={20}
+              filled={true}
+              circleColor={"white"}
+              toggle={toggle}
+              setToggle={setToggle}
+            />
+          </View>
+
+          <View style={styles_HomeScreen.inputSingleContainer}>
+            <Text style={styles.subHeading}>Pin</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={onChangeNumber}
+              value={number}
+              placeholder="Enter password"
+              keyboardType="numeric"
+              maxLength={4}
+              secureTextEntry={true}
+            />
+          </View>
+
+          {/* <Card pinstate={toggle} /> */}
         </View>
 
-        {/* <Card pinstate={toggle} /> */}
-      </View>
-
-      {/* Button Sectoion*/}
-      <View style={styles_HomeScreen.buttonContainer}>
-        <TouchableOpacity
-          
-
-          onPress={() => {
-            if (text == "" || (number == "" && toggle)) {
-              alert("Please fill all the fields");
-              return;
-            }
-
-            userExists(text, (nameExists, error) => {
-              if (error) {
-                console.error(error);
-              } else {
-                if (nameExists) {
-                  alert(`User with name ${text} already exists`);
-                } // true or false
-                else {
-                  addUser(text, toggle, number);
-                  navigation.navigate("Tut1");
-                }
+        {/* Button Sectoion*/}
+        <View style={styles_HomeScreen.buttonContainer}>
+          <TouchableOpacity
+            onPress={() => {
+              if (text == "" || (number == "" && toggle)) {
+                alert("Please fill all the fields");
+                return;
               }
-            });
-       
-            navigation.navigate("Tut1");
-    
-          }}
-          style={styles.appButtonContainer}
-        >
-          <Text style={styles.appButtonText}>Continue</Text>
-        </TouchableOpacity>
+
+              userExists(text, (nameExists, error) => {
+                if (error) {
+                  console.error(error);
+                } else {
+                  if (nameExists) {
+                    alert(`User with name ${text} already exists`);
+                    return;
+                  } // true or false
+                  else {
+                    addUser(text, toggle, number);
+                    navigation.navigate("Tut1");
+                  }
+                }
+              });
+              storingData(true);
+              navigation.navigate("Tut1");
+            }}
+            style={styles.appButtonContainer}
+          >
+            <Text style={styles.appButtonText}>Continue</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
-      
     </TouchableWithoutFeedback>
-    
   );
 };
 
