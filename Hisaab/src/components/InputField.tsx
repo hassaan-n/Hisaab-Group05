@@ -16,7 +16,7 @@ import styles from "../styles";
 
 
 
-const InputField = ({ title, placeholder,onChangeText, value, inputMode }) => {
+const InputField = ({ title, placeholder,onChangeText, value, inputMode,maxLength }) => {
     return (
       <View style={styles.inputSingleContainer}>
       <Text style={styles.text}>{title}</Text>
@@ -26,6 +26,7 @@ const InputField = ({ title, placeholder,onChangeText, value, inputMode }) => {
         placeholder={placeholder}
         value={value}
         keyboardType={inputMode}
+        maxLength={maxLength}
       />
     </View>
     );

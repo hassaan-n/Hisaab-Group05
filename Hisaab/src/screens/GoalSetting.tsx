@@ -29,6 +29,12 @@ const GoalSetting = () => {
   const addGoal = (amount: string) => {
     const timestamp = new Date().toISOString();
     db.transaction((tx) => {
+
+      tx.executeSql("DROP TABLE IF EXISTS savings;");
+      tx.executeSql(
+        "CREATE TABLE IF NOT EXISTS savings (savings_id INTEGER PRIMARY KEY AUTOINCREMENT, time_stamp TIMESTAMP, amount INTEGER)"
+      );
+
       tx.executeSql(
         "INSERT INTO goal (amount, time_stamp) VALUES (?, ?);",
         [amount, timestamp],

@@ -28,8 +28,8 @@ const sendNotification = async (
   //   notificationTime.setSeconds(0);
   //console.log(notificationTime);
     const trigger: DailyTriggerInput = {
-      hour: 19,
-      minute: 3,
+      hour: 12,
+      minute: 51,
       repeats: true,
     };
   try {

@@ -67,6 +67,13 @@ const GoalsScreen = () => {
       tx.executeSql(
         "CREATE TABLE IF NOT EXISTS log (transaction_id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, category TEXT, time_stamp TIMESTAMP, amount INTEGER, transaction_title TEXT)"
       );
+
+      tx.executeSql("DROP TABLE IF EXISTS savings;");
+      tx.executeSql(
+        "CREATE TABLE IF NOT EXISTS savings (savings_id INTEGER PRIMARY KEY AUTOINCREMENT, time_stamp TIMESTAMP, amount INTEGER)"
+      );
+
+
       console.log("table dropped and created");
     });
   };
@@ -95,6 +102,23 @@ const GoalsScreen = () => {
       );
     });
   };
+
+  
+  const getbudget = () => {
+    db.transaction((tx) => {
+      tx.executeSql(
+        "SELECT * FROM budget;",
+        [],
+        (_, { rows }) => {
+          console.log(rows);
+        },
+        (_, error) => {
+          console.log(error);
+        }
+      );
+    });
+  };
+  
 
 
   
@@ -175,7 +199,7 @@ const GoalsScreen = () => {
                 .replace("04-02", "03-29");
               droplog();
               addBudget(budgetAmount, currentTime,selectedRadioButton);
-              // getbudget();
+              getbudget();
            
               navigation.navigate("Let's Start");
               }

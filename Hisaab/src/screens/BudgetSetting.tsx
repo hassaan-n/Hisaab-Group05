@@ -13,7 +13,7 @@ import {
 
 import { useNavigation } from "@react-navigation/native";
 import styles from "../styles";
-
+import RadioButton from "../components/radioButton";
 import InputField from "../components/InputField";
 import styles_SettingsBox from "../styles/styles.SettingsBox";
 import db from "../database";
@@ -22,19 +22,20 @@ import Toggle from "react-native-toggle-input";
 const BudgetSetting = () => {
   const navigation = useNavigation();
   const [NewBudget, onChangeNumber] = React.useState("");
+  const [selectedRadioButton, setSelectedRadioButton] = React.useState("");
   
-  const addbudget = (amount, currentTime) => {
+  const addbudget = (amount, currentTime,type) => {
     db.transaction((tx) => {
       tx.executeSql("DROP TABLE IF EXISTS budget;");
       tx.executeSql(
-        "CREATE TABLE IF NOT EXISTS budget (budget_id INTEGER PRIMARY KEY, time_stamp TIMESTAMP, current_state INTEGER, FOREIGN KEY ('current_state') REFERENCES budget_notifications('message'))"
+        "CREATE TABLE IF NOT EXISTS budget (budget_id INTEGER PRIMARY KEY AUTOINCREMENT, time_stamp TIMESTAMP, current_state INTEGER, type TEXT, FOREIGN KEY ('current_state') REFERENCES budget_notifications('message'))"
       );
 
       console.log("table dropped and created");
 
       tx.executeSql(
-        "INSERT INTO budget (current_state,budget_id,time_stamp) VALUES (?,?,?);",
-        [amount, 1 ,currentTime],
+        "INSERT INTO budget (current_state,time_stamp,type) VALUES (?,?,?);",
+        [amount,currentTime,type],
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) {
             console.log("Budget added successfully");
@@ -81,13 +82,14 @@ const BudgetSetting = () => {
             value={NewBudget}
             inputMode="numeric"
           />
+            <RadioButton onRadioButtonPress={setSelectedRadioButton} />
           <View style={{ marginBottom: 25 }}></View>
 
           <View style={{ width: "100%" }}>
             <TouchableOpacity
               onPress={() => {
                 const currentTime = new Date().toLocaleString();
-                addbudget(NewBudget, currentTime);
+                addbudget(NewBudget, currentTime,selectedRadioButton);
                 getbudget();
                 navigation.navigate("Splash");
               }}
