@@ -39,13 +39,24 @@ const NotificationScheduler = () => {
         minute: notificationMinute,
         repeats: true,
       };
-      sendNotification(notificationTitle, notificationBody, trigger);
+      //sendNotification(notificationTitle, notificationBody, trigger);
+      storingTime(hour, minute);
       alert(
-        `Notification scheduled for ${notificationHour}:${notificationMinute}`
+        `Notification scheduled for ${notificationHour}:${notificationMinute}. Please enter a new log to apply changes.`
       );
     } else {
       // alert("Invalid time input!");
       return 0;
+    }
+  };
+
+  const storingTime = async (hour: any, min: any) => {
+    try {
+      await storeItem("budget-noti-hour", hour);
+      await storeItem("budget-noti-minute", min);
+      console.log("time stored successfully");
+    } catch (e) {
+      console.log("Failed to store the data to the storage");
     }
   };
 
@@ -83,26 +94,17 @@ const NotificationScheduler = () => {
           <View style={{ width: "100%" }}>
             <TouchableOpacity
               onPress={() => {
-
                 if (hour == "" || minute == "") {
                   alert("Please enter a valid time");
-                 
-                }
-                else if (parseInt(hour) < 0 || parseInt(hour) > 23) {
+                } else if (parseInt(hour) < 0 || parseInt(hour) > 23) {
                   alert("Please enter a valid hour");
-                
-                }
-                else if (parseInt(minute) < 0 || parseInt(minute) > 59) {
+                } else if (parseInt(minute) < 0 || parseInt(minute) > 59) {
                   alert("Please enter a valid minute");
-                  
-                }
-                else {
+                } else {
                   handleScheduleNotification();
                   navigation.navigate("Splash");
                 }
-
               }}
-
               style={styles.appButtonContainer}
             >
               <Text style={styles.appButtonText}>Continue</Text>
@@ -121,7 +123,7 @@ const NotificationScheduler = () => {
           </View>
         </View>
       </View>
-{/* 
+      {/* 
       <Button
         title="Schedule Notification"
         onPress={handleScheduleNotification}

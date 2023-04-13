@@ -27,15 +27,20 @@ const sendNotification = async (
   //   notificationTime.setMinutes(51);
   //   notificationTime.setSeconds(0);
   //console.log(notificationTime);
-    const trigger: DailyTriggerInput = {
-      hour: 12,
-      minute: 51,
-      repeats: true,
-    };
+  let hour = await getKey("budget-noti-hour");
+  let minute = await getKey("budget-noti-minute");
+  hour = parseInt(hour);
+  minute = parseInt(minute);
+  console.log("time reciwved", hour, minute);
+  const trigger: DailyTriggerInput = {
+    hour: hour,
+    minute: minute,
+    repeats: true,
+  };
   try {
     await cancelScheduledNotificationAsync(await getKey("log-noti"));
   } catch (e) {
-    console.log(e);
+    console.log("error", e);
   }
 
   console.log(trigger);

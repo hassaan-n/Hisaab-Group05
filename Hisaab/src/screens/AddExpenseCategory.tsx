@@ -16,7 +16,6 @@ import styles_AddExpenseCategory from "../styles/styles.AddExpenseCategory";
 import styles from "../styles";
 import db from "../database";
 
-
 const AddExpenseCategory = ({ route }: any) => {
   const navigation = useNavigation();
   const { title, amount, difference } = route.params;
@@ -27,17 +26,13 @@ const AddExpenseCategory = ({ route }: any) => {
     { name: "Transport", id: 2 },
     { name: "Laundry", id: 3 },
     { name: "Grocery", id: 4 },
-    { name: "Subscription", id: 5 },
+    { name: "Subscriptions", id: 5 },
     { name: "Other", id: 7 },
-    
   ];
 
   const handleOptionSelect = (option: any) => {
     setSelectedOption(option);
   };
-
- 
- 
 
   const getLog = () => {
     db.transaction((tx) => {
@@ -96,34 +91,28 @@ const AddExpenseCategory = ({ route }: any) => {
           <TouchableOpacity
             style={styles.appButtonContainer}
             onPress={() => {
-
               if (selectedOption === null) {
                 alert("Please select a category");
               } else {
-  
-  
-                if (selectedOption.name == "Food" || selectedOption.name == "Transport") {
+                if (
+                  selectedOption.name == "Food" ||
+                  selectedOption.name == "Transport"
+                ) {
                   navigation.navigate("Sub Category", {
                     title: title,
                     amount: amount,
                     category: selectedOption.name,
                     difference: difference,
                   });
-
                 } else {
-                    navigation.navigate("Summary", {
+                  navigation.navigate("Summary", {
                     title: title,
                     amount: amount,
                     category: selectedOption.name,
                     difference: difference,
                   });
-
-              
                 }
               }
-
-            
-            
             }}
           >
             <Text style={styles.appButtonText}>Submit</Text>
@@ -222,7 +211,6 @@ const getDateData = () => {
 //     });
 //   });
 // };
-
 
 // const getLunchLogs = (threshold: number): Promise<string[]> => {
 //   return new Promise((resolve, reject) => {
