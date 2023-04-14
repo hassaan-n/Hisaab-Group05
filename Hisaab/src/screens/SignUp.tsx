@@ -92,7 +92,8 @@ const SignUp = () => {
         <View style={styles_HomeScreen.welcomeContainer}>
           <Text style={styles.heading}>Welcome!</Text>
           <Text style={styles.text}>
-            Enter the following details to get started!
+            Enter the following details to signup or login if user already
+            created!
           </Text>
         </View>
 
@@ -153,7 +154,7 @@ const SignUp = () => {
                 } else {
                   if (nameExists) {
                     alert(`Welcome Back!`);
-                    navigation.navigate("Home")
+                    navigation.navigate("Home");
 
                     return;
                   } // true or false
