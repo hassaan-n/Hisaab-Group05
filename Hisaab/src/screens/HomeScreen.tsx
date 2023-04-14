@@ -23,7 +23,7 @@ import Bar from "./Bar";
 
 const HomeScreen = () => {
   const navigation = useNavigation();
-   
+
   const profilePicture = require("../images/hisaab.png");
   const tomorrowBudget = 200;
   const todayRemaining = 400;
@@ -38,9 +38,9 @@ const HomeScreen = () => {
 
 
   //editable layouts
-  const [isDailyCollapsed, setIsDailyCollapsed] = useState(false); 
-  const [isWeekCollapsed, setIsWeekCollapsed] = useState(false); 
-  const [isRecentCollapsed, setIsRecentCollapsed] = useState(false); 
+  const [isDailyCollapsed, setIsDailyCollapsed] = useState(false);
+  const [isWeekCollapsed, setIsWeekCollapsed] = useState(false);
+  const [isRecentCollapsed, setIsRecentCollapsed] = useState(false);
   const [altLayout, setAltLayout] = useState<any>(null);
 
   const toggleDailyCollapse = () => {
@@ -72,27 +72,27 @@ const HomeScreen = () => {
                 return;
               }
 
-            navigation.navigate("Analytics");
-          
-          }}>
-            <Image
-              style={{ marginTop: 3 }}
-              source={require("../images/Arrow.png")}
-            />
-              </Pressable>
+              navigation.navigate("Analytics");
+
+            }}>
+              <Image
+                style={{ marginTop: 3 }}
+                source={require("../images/Arrow.png")}
+              />
+            </Pressable>
 
           </View>
         </TouchableOpacity>
 
         {!isWeekCollapsed && (
-          <View style={{ padding:5 }}>
+          <View style={{ padding: 5 }}>
             <Bar />
             <View style={styles_HomeScreen.centerText}>
               <Text style={styles.text}>Days</Text>
             </View>
           </View>
         )}
-        </View>
+      </View>
     )
     return content;
   };
@@ -101,43 +101,43 @@ const HomeScreen = () => {
     let content = (
       <View style={styles_HomeScreen.card}>
         <TouchableOpacity onPress={toggleRecentCollapse}>
-            <View style={styles_HomeScreen.cardHeader}>
-              <Text style={styles_HomeScreen.cardHeading}>Recent Expenses</Text>
-              <Pressable onPressIn={() => {
-                if ((latest[0]?.amount || 0) == 0) {
-                  alert("Please log something first.");
-                  return;
-                }
-                navigation.navigate("Logs");
+          <View style={styles_HomeScreen.cardHeader}>
+            <Text style={styles_HomeScreen.cardHeading}>Recent Expenses</Text>
+            <Pressable onPressIn={() => {
+              if ((latest[0]?.amount || 0) == 0) {
+                alert("Please log something first.");
+                return;
+              }
+              navigation.navigate("Logs");
 
-                }}>
-                <Image
-                  style={{ marginTop: 3 }}
-                  source={require("../images/Arrow.png")}
-                />
-              </Pressable>
-            </View>
+            }}>
+              <Image
+                style={{ marginTop: 3 }}
+                source={require("../images/Arrow.png")}
+              />
+            </Pressable>
+          </View>
         </TouchableOpacity>
 
         {!isRecentCollapsed && (
-            <View style={styles_HomeScreen.cardLog} key={latest[0]?.transaction_id}>
-              <View style={styles_HomeScreen.cardLeft}>
-                <Text style={styles_HomeScreen.cardText}>
-                  {latest[0]?.transaction_title || "No logs yet"}
-                </Text>
-                <Text style={styles_HomeScreen.card_subheading}>
-                  {latest[0]?.category || "No category yet"} - {latest[0]?.sub_category}
-                </Text>
-                <Text style={styles_HomeScreen.card_timestmap}>
-                  {latest[0]?.time_stamp}
-                </Text>
-              </View>
-              <View style={styles_HomeScreen.cardRight}>
-              <Text style={styles_HomeScreen.price}>Rs. {latest[0]?.amount || 0}</Text>
-              </View>
+          <View style={styles_HomeScreen.cardLog} key={latest[0]?.transaction_id}>
+            <View style={styles_HomeScreen.cardLeft}>
+              <Text style={styles_HomeScreen.cardText}>
+                {latest[0]?.transaction_title || "No logs yet"}
+              </Text>
+              <Text style={styles_HomeScreen.card_subheading}>
+                {latest[0]?.category || "No category yet"} - {latest[0]?.sub_category}
+              </Text>
+              <Text style={styles_HomeScreen.card_timestmap}>
+                {latest[0]?.time_stamp}
+              </Text>
             </View>
+            <View style={styles_HomeScreen.cardRight}>
+              <Text style={styles_HomeScreen.price}>Rs. {latest[0]?.amount || 0}</Text>
+            </View>
+          </View>
         )}
-        </View>
+      </View>
     )
     return content;
   };
@@ -157,12 +157,12 @@ const HomeScreen = () => {
           <RecentExpenseCard />
         </View>
       )
-      
+
     } else {
       content = (
         <View>
-        <RecentExpenseCard />
-        <WeekOverviewCard />
+          <RecentExpenseCard />
+          <WeekOverviewCard />
         </View>
       )
     }
@@ -185,7 +185,7 @@ const HomeScreen = () => {
     try {
       const jsonValue = await AsyncStorage.getItem('@Layout')
       return jsonValue != null ? JSON.parse(jsonValue) : null;
-    } catch(e) {
+    } catch (e) {
       // error reading value
     }
   }
@@ -222,7 +222,7 @@ const HomeScreen = () => {
   }, []);
 
   useEffect(() => {
-    const intervalId = setInterval(() => {}, 10000); // Refresh every second
+    const intervalId = setInterval(() => { }, 10000); // Refresh every second
 
     return () => clearInterval(intervalId);
   }, []);
@@ -249,12 +249,12 @@ const HomeScreen = () => {
   const RemainderIndicator = ({ percentage }) => {
     let colorState: string = "#55C595";
     percentage = Math.round(percentage);
-    
+
 
     if (percentage >= 80) {
       // colorState = "#55C595";
       setRingColor("#E3242B");
-    } 
+    }
 
     let content = (
       <View style={{ justifyContent: "center", alignItems: "center" }}>
@@ -289,7 +289,7 @@ const HomeScreen = () => {
     let colorState2: string = "#FFFFFF";
 
     if (percentage >= 80) {
-      
+
       colorState = "#E3242B";
       colorState2 = "#F2B5AA";
       // colorState2 = "#F2B5AA";
@@ -301,7 +301,7 @@ const HomeScreen = () => {
 
     if (percentage >= 100) {
       colorState = "#E3242B";
-      percentage=100;
+      percentage = 100;
     }
     // percentage = Math.round(percentage);
 
@@ -335,7 +335,7 @@ const HomeScreen = () => {
     db.transaction((tx) => {
       tx.executeSql(
         "INSERT INTO savings (amount,time_stamp) VALUES (?, ?);",
-        [amount, currentTime], 
+        [amount, currentTime],
         (_, { rowsAffected }) => {
           if (rowsAffected > 0) {
             console.log("savings added successfully");
@@ -348,7 +348,7 @@ const HomeScreen = () => {
     });
   };
 
-        
+
 
   useEffect(() => {
     // fetch budget data from the database when the component mounts
@@ -370,7 +370,7 @@ const HomeScreen = () => {
   const [latestbudgetData, setlatestBudgetData] = useState([]);
 
   useEffect(() => {
-    
+
     db.transaction((tx) => {
       tx.executeSql(
         "SELECT current_state, MAX(budget_id) FROM budget;",
@@ -395,7 +395,7 @@ const HomeScreen = () => {
   }
 
   let spent = 0;
-  spent = budgetData[0]?.current_state  - latestbudgetData[0]?.current_state 
+  spent = budgetData[0]?.current_state - latestbudgetData[0]?.current_state
 
   let today = 0;
 
@@ -403,20 +403,20 @@ const HomeScreen = () => {
 
   let tommorow = 0;
   if ((remaining - spent) <= 0) {
-    tommorow =  remaining + today
+    tommorow = remaining + today
   }
-  else{
+  else {
     tommorow = remaining
   }
 
 
   const currentTime = new Date()
-  .toLocaleString("en-CA", {
-    timeZone: "Asia/Karachi",
-    hour12: false,
-  })
-  .replace(",", "")
-  .replace("04-02", "03-29");
+    .toLocaleString("en-CA", {
+      timeZone: "Asia/Karachi",
+      hour12: false,
+    })
+    .replace(",", "")
+    .replace("04-02", "03-29");
 
   let tester1 = 0;
   let tester2 = 0;
@@ -424,22 +424,22 @@ const HomeScreen = () => {
   let thresh1 = 0;
   let thresh2 = 0;
 
-   
+
   tester1 = parseInt(currentTime.slice(11, 13));
   tester2 = parseInt(currentTime.slice(15, 17));
 
   thresh1 = parseInt(threshold.slice(0, 2));
-  thresh2= parseInt(threshold.slice(4,6));
+  thresh2 = parseInt(threshold.slice(4, 6));
 
 
-  if ((tester1+tester2) > (thresh1+thresh2)) {
-    addsaving((today-0),currentTime);
-    console.log(tester1+tester2)
-    console.log(tester1+tester2)
+  if ((tester1 + tester2) >= (thresh1 + thresh2)) {
+    addsaving((today - 0), currentTime);
+    console.log(tester1 + tester2)
+    console.log(tester1 + tester2)
     today = tommorow;
     tommorow = remaining;
   }
-  
+
   const [latest, setlatest] = useState([]);
 
   useEffect(() => {
@@ -496,7 +496,7 @@ const HomeScreen = () => {
 
 
 
-  const getsavings= () => {
+  const getsavings = () => {
     db.transaction((tx) => {
       tx.executeSql(
         "SELECT * FROM savings;",
@@ -528,7 +528,7 @@ const HomeScreen = () => {
     700;
   };
 
-  
+
 
 
   return (
@@ -559,82 +559,83 @@ const HomeScreen = () => {
 
       <ScrollView>
         <View style={styles_HomeScreen.card}>
-        <TouchableOpacity onPress={toggleDailyCollapse}>
-          <View style={styles_HomeScreen.cardHeader}>
-            <Text style={styles_HomeScreen.cardHeading}>Daily</Text>
-          </View>
+          <TouchableOpacity onPress={toggleDailyCollapse}>
+            <View style={styles_HomeScreen.cardHeader}>
+              <Text style={styles_HomeScreen.cardHeading}>Daily</Text>
+            </View>
           </TouchableOpacity>
 
           {!isDailyCollapsed && (
 
-          <View style={styles_HomeScreen.dailyContainer}>
-            <View style={styles_HomeScreen.dailyMiddleRow}>
-              <View style={styles_HomeScreen.budgetNumberContainer}>
-                <Text style={styles_HomeScreen.budgetNumber}>
-                  { today | 0}
-                </Text>
-                <Text style={styles_HomeScreen.budgetText}>Remaining</Text>
+            <View style={styles_HomeScreen.dailyContainer}>
+              <View style={styles_HomeScreen.dailyMiddleRow}>
+                <View style={styles_HomeScreen.budgetNumberContainer}>
+                  <Text style={styles_HomeScreen.budgetNumber}>
+                    {today | 0}
+                  </Text>
+                  <Text style={styles_HomeScreen.budgetText}>Remaining</Text>
+                </View>
+
+                <Pressable onPressIn={() => {
+                  getsavings();
+                  const currentTime = new Date()
+                    .toLocaleString("en-CA", {
+                      timeZone: "Asia/Karachi",
+                      hour12: false,
+                    })
+                    .replace(",", "")
+                    .replace("04-02", "03-29");
+                  console.log(currentTime.slice(11, 19))
+                  getbudget();
+
+                  navigation.navigate("Add Expense")
+                }}>
+                  <View style={styles_HomeScreen.addButton}>
+                    <Image source={require("../images/Add.png")} />
+                    <RemainderRing percentage={(spent / remaining) * 100} />
+                  </View>
+                </Pressable>
+
+                <View style={styles_HomeScreen.budgetNumberContainer}>
+                  <Text style={styles_HomeScreen.budgetNumber}>
+                    {tommorow | 0}
+                  </Text>
+                  <Text style={styles_HomeScreen.budgetText}>Tomorrow</Text>
+                </View>
+
               </View>
 
-              <Pressable onPressIn={() => {
-               getsavings();
-              const currentTime = new Date()
-              .toLocaleString("en-CA", {
-                timeZone: "Asia/Karachi",
-                hour12: false,
-              })
-              .replace(",", "")
-              .replace("04-02", "03-29");
-              console.log(currentTime.slice(11,19))
-                getbudget();
-                
-                navigation.navigate("Add Expense")}}>
-                <View style={styles_HomeScreen.addButton}>
-                  <Image source={require("../images/Add.png")} />
-                  <RemainderRing percentage={(spent/remaining) * 100 } />
-                </View>
-              </Pressable>
-
-              <View style={styles_HomeScreen.budgetNumberContainer}>
-              <Text style={styles_HomeScreen.budgetNumber}>
-                {tommorow |  0 }
-              </Text>
-              <Text style={styles_HomeScreen.budgetText}>Tomorrow</Text>
+              <RemainderIndicator percentage={(spent / remaining) * 100} />
             </View>
-
-            </View>
-
-            <RemainderIndicator percentage={ (spent/remaining) * 100 } />
-          </View>
           )}
         </View>
 
-        <RecentandExpenseCards/>
+        <RecentandExpenseCards />
 
 
-       
 
 
-    
 
-        
+
+
+
 
         {/* //view toggle button */}
-        
+
         <TouchableOpacity
           onPress={() => {
-          //save to async storage
-          setAltLayout(!altLayout)
-          AsyncStorage.setItem('@Layout', JSON.stringify(!altLayout))
+            //save to async storage
+            setAltLayout(!altLayout)
+            AsyncStorage.setItem('@Layout', JSON.stringify(!altLayout))
           }}
           style={styles.appButtonContainerGreen}
         >
           <Text style={styles.appButtonText}>Change Layout</Text>
         </TouchableOpacity>
-   
-          
-        
-      
+
+
+
+
       </ScrollView>
     </View>
   );
