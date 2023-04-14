@@ -12,6 +12,10 @@ export const sendBreakfastNotification = async (
   title: string,
   body: string
 ) => {
+  if (body.length < 37) {
+    console.log("body length less than 37 in breakfast");
+    return;
+  }
   setNotificationHandler({
     handleNotification: async () => ({
       shouldShowAlert: true,
@@ -50,6 +54,10 @@ export const sendBreakfastNotification = async (
 };
 
 export const sendLunchNotification = async (title: string, body: string) => {
+  if (body.length < 37) {
+    console.log("body length less than 37 in lunch");
+    return;
+  }
   setNotificationHandler({
     handleNotification: async () => ({
       shouldShowAlert: true,
@@ -88,6 +96,11 @@ export const sendLunchNotification = async (title: string, body: string) => {
 };
 
 export const sendDinnerNotification = async (title: string, body: string) => {
+  if (body.length < 37) {
+    console.log("body length less than 37 in dinner");
+    return;
+  }
+
   setNotificationHandler({
     handleNotification: async () => ({
       shouldShowAlert: true,

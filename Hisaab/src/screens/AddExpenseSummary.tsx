@@ -18,18 +18,12 @@ import styles_HomeScreen from "../styles/styles.HomeScreen";
 import styles_Summary from "../styles/styles.Summary";
 import db from "../database";
 
-
-
 import { sendBreakfastNotification } from "../RecomendNotiScheduler";
 import { sendLunchNotification } from "../RecomendNotiScheduler";
 import { sendDinnerNotification } from "../RecomendNotiScheduler";
 import sendNotification from "../LogNotiScheduler";
 
-
-  
-
 const AddExpenseSummary = ({ route }: any) => {
-
   const getbudget = () => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -45,7 +39,7 @@ const AddExpenseSummary = ({ route }: any) => {
     });
   };
 
-  const addBudget = (current_state,currentTime) => {
+  const addBudget = (current_state, currentTime) => {
     db.transaction((tx) => {
       tx.executeSql(
         "INSERT INTO budget (current_state,time_stamp) VALUES (?,?);",
@@ -62,7 +56,6 @@ const AddExpenseSummary = ({ route }: any) => {
     });
   };
 
-  
   const addLog = (
     amount,
     transaction_title,
@@ -71,7 +64,7 @@ const AddExpenseSummary = ({ route }: any) => {
     sub_category
   ) => {
     db.transaction((tx) => {
-      tx.executeSql("PRAGMA table_info(log);")
+      tx.executeSql("PRAGMA table_info(log);");
       tx.executeSql(
         "INSERT INTO log (amount,transaction_title,time_stamp, category, sub_category) VALUES (?,?,?,?,?);",
         [amount, transaction_title, currentTime, category, sub_category], // pass in parameters as an array
@@ -87,7 +80,6 @@ const AddExpenseSummary = ({ route }: any) => {
     });
   };
 
-  
   const getLog = () => {
     db.transaction((tx) => {
       tx.executeSql(
@@ -103,7 +95,6 @@ const AddExpenseSummary = ({ route }: any) => {
     });
   };
 
-  
   const [budgetData, setBudgetData] = useState([]);
 
   useEffect(() => {
@@ -122,12 +113,9 @@ const AddExpenseSummary = ({ route }: any) => {
     });
   }, []);
 
-
-
   const [latestbudgetData, setlatestBudgetData] = useState([]);
 
   useEffect(() => {
-    
     db.transaction((tx) => {
       tx.executeSql(
         "SELECT current_state, MAX(budget_id) FROM budget;",
@@ -142,7 +130,6 @@ const AddExpenseSummary = ({ route }: any) => {
     });
   }, []);
 
-
   let remaining: number;
 
   if (budgetData && budgetData.length > 0 && budgetData[0]?.type === "Weekly") {
@@ -152,12 +139,11 @@ const AddExpenseSummary = ({ route }: any) => {
   }
 
   let spent = 0;
-  spent = budgetData[0]?.current_state  - latestbudgetData[0]?.current_state 
+  spent = budgetData[0]?.current_state - latestbudgetData[0]?.current_state;
 
   let today = 0;
 
-  today = remaining - spent
-
+  today = remaining - spent;
 
   const [logData, setLogData] = useState<any>([]);
 
@@ -178,23 +164,15 @@ const AddExpenseSummary = ({ route }: any) => {
     });
   }, []);
 
-
-
-
-  
   const navigation = useNavigation();
   const { title, amount, category, sub_category, difference } = route.params;
-  console.log(title, amount, category, sub_category,);
+  console.log(title, amount, category, sub_category);
   let Title = title;
   let Expense = amount;
   let Category = category;
-  //set sub category as not applicaple if value is null 
+  //set sub category as not applicaple if value is null
   const Sub_category = sub_category ? sub_category : "Not Applicable";
-  let reultant_state =  difference - amount;
-
-
-
-   
+  let reultant_state = difference - amount;
 
   return (
     // mega container with all the elements
@@ -229,62 +207,66 @@ const AddExpenseSummary = ({ route }: any) => {
           <Text style={styles.textBold}>remaining:</Text>
           <Text style={styles.text}>{reultant_state}</Text>
           <View style={{ height: 10 }}></View>
-
         </View>
       </View>
 
       <View style={styles_Summary.buttonContainer}>
-      <TouchableOpacity
+        <TouchableOpacity
           onPress={() => {
             const currentTime = new Date()
-            .toLocaleString("en-CA", {
-              timeZone: "Asia/Karachi",
-              hour12: false,
-            })
-            .replace(",", "")
-            addBudget(reultant_state,currentTime);
-            addLog(Expense,Title,currentTime,Category,Sub_category);
+              .toLocaleString("en-CA", {
+                timeZone: "Asia/Karachi",
+                hour12: false,
+              })
+              .replace(",", "");
+            addBudget(reultant_state, currentTime);
+            addLog(Expense, Title, currentTime, Category, Sub_category);
             getLog();
 
-            
-
-
             // notification code
-            getBreakfastLogs(today/2)
-            .then((titles) => {
-              const message = titles.join(', ');
-              sendBreakfastNotification("Breakfast Recommendations", message);
-              console.log(message); 
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+            getBreakfastLogs(today / 3)
+              .then((titles) => {
+                const message =
+                  "These food options fit your budget: " + titles.join(", ");
 
-            getLunchLogs(today/2)
-            .then((titles) => {
-              const message = titles.join(', ');
-              sendLunchNotification("Lunch Recommendations", message);
-              console.log(message); 
-            })
-            .catch((error) => {
-              console.error(error);
-            });
+                sendBreakfastNotification("Breakfast Recommendations", message);
+                console.log(message);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+
+            getLunchLogs(today / 2)
+              .then((titles) => {
+                const message =
+                  "These food options fit your budget: " + titles.join(", ");
+                sendLunchNotification("Lunch Recommendations", message);
+                console.log(message);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
 
             getDinnerLogs(today)
-            .then((titles) => {
-              const message = titles.join(', ');
-              sendDinnerNotification("Dinner Recommendations", message);
-              console.log(message); 
-            })
-            .catch((error) => {
-              console.error(error);
-            });
-            sendNotification("Your Budget is updated", "Your budget is updated to " + reultant_state);
+              .then((titles) => {
+                const message =
+                  "These food options fit your budget: " + titles.join(", ");
+                sendDinnerNotification("Dinner Recommendations", message);
+                console.log(message);
+              })
+              .catch((error) => {
+                console.error(error);
+              });
+            sendNotification(
+              "Your Budget is updated",
+              "Your budget is updated to " + reultant_state
+            );
 
             // getLog();
             console.log(reultant_state);
             getbudget();
-            navigation.navigate("Splash")}}
+            navigation.navigate("Splash");
+          }}
           style={styles.appButtonContainer}
         >
           <Text style={styles.appButtonText}>Confirm</Text>
@@ -296,23 +278,17 @@ const AddExpenseSummary = ({ route }: any) => {
         >
           <Text style={styles.appButtonText}>Cancel</Text>
         </TouchableOpacity>
-
-
       </View>
-      
     </View>
   );
 };
-
-
-
 
 const getBreakfastLogs = (threshold: number): Promise<string[]> => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        'SELECT transaction_title FROM log WHERE category = ? AND sub_category = ? AND amount < ? ORDER BY RANDOM() LIMIT 2',
-        ['Food', 'Breakfast', threshold],
+        "SELECT transaction_title FROM log WHERE category = ? AND sub_category = ? AND amount < ? ORDER BY RANDOM() LIMIT 2",
+        ["Food", "Breakfast", threshold],
         (_, { rows }) => {
           const data = rows._array;
           const titles = data.map((row) => row.transaction_title);
@@ -321,19 +297,18 @@ const getBreakfastLogs = (threshold: number): Promise<string[]> => {
         },
         (_, error) => {
           reject(error);
-        },
+        }
       );
     });
   });
 };
 
-
 const getLunchLogs = (threshold: number): Promise<string[]> => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        'SELECT transaction_title FROM log WHERE category = ? AND sub_category = ? AND amount < ? ORDER BY RANDOM() LIMIT 2',
-        ['Food', 'Lunch', threshold],
+        "SELECT transaction_title FROM log WHERE category = ? AND sub_category = ? AND amount < ? ORDER BY RANDOM() LIMIT 2",
+        ["Food", "Lunch", threshold],
         (_, { rows }) => {
           const data = rows._array;
           const titles = data.map((row) => row.transaction_title);
@@ -342,7 +317,7 @@ const getLunchLogs = (threshold: number): Promise<string[]> => {
         },
         (_, error) => {
           reject(error);
-        },
+        }
       );
     });
   });
@@ -352,8 +327,8 @@ const getDinnerLogs = (threshold: number): Promise<string[]> => {
   return new Promise((resolve, reject) => {
     db.transaction((tx) => {
       tx.executeSql(
-        'SELECT transaction_title FROM log WHERE category = ? AND sub_category = ? AND amount < ? ORDER BY RANDOM() LIMIT 2',
-        ['Food', 'Dinner', threshold],
+        "SELECT transaction_title FROM log WHERE category = ? AND sub_category = ? AND amount < ? ORDER BY RANDOM() LIMIT 2",
+        ["Food", "Dinner", threshold],
         (_, { rows }) => {
           const data = rows._array;
           const titles = data.map((row) => row.transaction_title);
@@ -362,12 +337,10 @@ const getDinnerLogs = (threshold: number): Promise<string[]> => {
         },
         (_, error) => {
           reject(error);
-        },
+        }
       );
     });
   });
 };
-
-
 
 export default AddExpenseSummary;
