@@ -66,7 +66,15 @@ const HomeScreen = () => {
         <TouchableOpacity onPress={toggleWeekCollapse}>
           <View style={styles_HomeScreen.cardHeader}>
             <Text style={styles_HomeScreen.cardHeading}>Week Overview</Text>
-            <Pressable onPressIn={() => navigation.navigate("Analytics")}>
+            <Pressable onPressIn={() => {
+              if ((latest[0]?.amount || 0) == 0) {
+                alert("Please log something first.");
+                return;
+              }
+
+            navigation.navigate("Analytics");
+          
+          }}>
             <Image
               style={{ marginTop: 3 }}
               source={require("../images/Arrow.png")}
@@ -95,7 +103,14 @@ const HomeScreen = () => {
         <TouchableOpacity onPress={toggleRecentCollapse}>
             <View style={styles_HomeScreen.cardHeader}>
               <Text style={styles_HomeScreen.cardHeading}>Recent Expenses</Text>
-              <Pressable onPressIn={() => navigation.navigate("Logs")}>
+              <Pressable onPressIn={() => {
+                if ((latest[0]?.amount || 0) == 0) {
+                  alert("Please log something first.");
+                  return;
+                }
+                navigation.navigate("Logs");
+
+                }}>
                 <Image
                   style={{ marginTop: 3 }}
                   source={require("../images/Arrow.png")}
